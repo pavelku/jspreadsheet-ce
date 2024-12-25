@@ -106,6 +106,7 @@ export const loadUp = function() {
 export const loadDown = function() {
     const obj = this;
     console.log('loadDown');
+    dispatch.call(obj, 'onlazyloaddown', obj);
     // Search
     let results;
 
