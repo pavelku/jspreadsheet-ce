@@ -1,3 +1,4 @@
+import dispatch from './dispatch.js';
 /**
  * Go to a page in a lazyLoading
  */

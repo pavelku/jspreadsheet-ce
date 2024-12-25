@@ -2492,6 +2492,8 @@ const getColumnNameFromId = function (cellId) {
 /* harmony export */   p6: function() { return /* binding */ loadDown; },
 /* harmony export */   wu: function() { return /* binding */ loadPage; }
 /* harmony export */ });
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(946);
+
 /**
  * Go to a page in a lazyLoading
  */
@@ -2600,7 +2602,7 @@ const loadUp = function() {
 const loadDown = function() {
     const obj = this;
     console.log('loadDown');
-    dispatch.call(obj, 'onlazyloaddown', obj);
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloaddown', obj);
     // Search
     let results;
 
@@ -4786,21 +4788,21 @@ var __webpack_exports__ = {};
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "default": function() { return /* binding */ src_src; }
+  "default": function() { return /* binding */ src; }
 });
 
 ;// ./src/utils/libraryBase.js
-const src_lib = {
+const lib = {
     jspreadsheet: {}
 };
 
-/* harmony default export */ var src_libraryBase = (src_lib);
+/* harmony default export */ var libraryBase = (lib);
 // EXTERNAL MODULE: ./src/utils/dispatch.js
-var src_dispatch = __webpack_require__(946);
+var dispatch = __webpack_require__(946);
 // EXTERNAL MODULE: ./src/utils/internal.js
-var src_internal = __webpack_require__(45);
+var internal = __webpack_require__(45);
 // EXTERNAL MODULE: ./src/utils/history.js
-var src_utils_history = __webpack_require__(126);
+var utils_history = __webpack_require__(126);
 ;// ./src/utils/editor.js
 
 
@@ -4814,7 +4816,7 @@ var src_utils_history = __webpack_require__(126);
  * @param object cell
  * @return void
  */
-const src_openEditor = function(cell, empty, e) {
+const openEditor = function(cell, empty, e) {
     const obj = this;
 
     // Get cell position
@@ -4822,7 +4824,7 @@ const src_openEditor = function(cell, empty, e) {
     const x = cell.getAttribute('data-x');
 
     // On edition start
-    src_dispatch/* default */.A.call(obj, 'oneditionstart', obj, cell, parseInt(x), parseInt(y));
+    dispatch/* default */.A.call(obj, 'oneditionstart', obj, cell, parseInt(x), parseInt(y));
 
     // Overflow
     if (x > 0) {
@@ -4861,7 +4863,7 @@ const src_openEditor = function(cell, empty, e) {
             obj.options.columns[x].type.openEditor(cell, obj.options.data[y][x], parseInt(x), parseInt(y), obj, obj.options.columns[x], e);
 
             // On edition start
-            src_dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
+            dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
         } else {
             // Native functions
             if (obj.options.columns && obj.options.columns[x] && obj.options.columns[x].type == 'hidden') {
@@ -4901,7 +4903,7 @@ const src_openEditor = function(cell, empty, e) {
                 const editor = createEditor('div');
 
                 // On edition start
-                src_dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
+                dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
 
                 const options = {
                     data: data,
@@ -4913,7 +4915,7 @@ const src_openEditor = function(cell, empty, e) {
                     height:editor.style.minHeight,
                     position: (obj.options.tableOverflow == true || obj.parent.config.fullscreen == true) ? true : false,
                     onclose:function() {
-                        src_closeEditor.call(obj, cell, true);
+                        closeEditor.call(obj, cell, true);
                     }
                 };
                 if (obj.options.columns[x].options && obj.options.columns[x].options.type) {
@@ -4926,7 +4928,7 @@ const src_openEditor = function(cell, empty, e) {
                 // Create editor
                 const editor = createEditor('input');
 
-                src_dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
+                dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
 
                 editor.value = value;
 
@@ -4938,7 +4940,7 @@ const src_openEditor = function(cell, empty, e) {
                 options.value = obj.options.data[y][x];
                 options.opened = true;
                 options.onclose = function(el, value) {
-                    src_closeEditor.call(obj, cell, true);
+                    closeEditor.call(obj, cell, true);
                 }
                 // Current value
                 if (obj.options.columns[x].type == 'color') {
@@ -4957,7 +4959,7 @@ const src_openEditor = function(cell, empty, e) {
                 // Create editor
                 const editor = createEditor('div');
 
-                src_dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
+                dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
 
                 editor.style.position = 'relative';
                 const div = document.createElement('div');
@@ -4980,7 +4982,7 @@ const src_openEditor = function(cell, empty, e) {
                 // Create editor
                 const editor = createEditor('div');
 
-                src_dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
+                dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
 
                 editor.style.position = 'relative';
                 const div = document.createElement('div');
@@ -5010,7 +5012,7 @@ const src_openEditor = function(cell, empty, e) {
                     editor = createEditor('input');
                 }
 
-                src_dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
+                dispatch/* default */.A.call(obj, 'oncreateeditor', obj, cell, parseInt(x), parseInt(y), null, obj.options.columns[x]);
 
                 editor.focus();
                 editor.value = value;
@@ -5019,10 +5021,10 @@ const src_openEditor = function(cell, empty, e) {
                 const options = obj.options.columns && obj.options.columns[x];
 
                 // Apply format when is not a formula
-                if (! (0,src_internal/* isFormula */.dw)(value)) {
+                if (! (0,internal/* isFormula */.dw)(value)) {
                     if (options) {
                         // Format
-                        const opt = (0,src_internal/* getMask */.rS)(options);
+                        const opt = (0,internal/* getMask */.rS)(options);
 
                         if (opt) {
                             // Masking
@@ -5045,7 +5047,7 @@ const src_openEditor = function(cell, empty, e) {
                 }
 
                 editor.onblur = function() {
-                    src_closeEditor.call(obj, cell, true);
+                    closeEditor.call(obj, cell, true);
                 };
                 editor.scrollLeft = editor.scrollWidth;
             }
@@ -5060,7 +5062,7 @@ const src_openEditor = function(cell, empty, e) {
  * @param boolean save
  * @return void
  */
-const src_closeEditor = function(cell, save) {
+const closeEditor = function(cell, save) {
     const obj = this;
 
     const x = parseInt(cell.getAttribute('data-x'));
@@ -5106,10 +5108,10 @@ const src_closeEditor = function(cell, save) {
 
                 if (options) {
                     // Format
-                    const opt = (0,src_internal/* getMask */.rS)(options);
+                    const opt = (0,internal/* getMask */.rS)(options);
                     if (opt) {
                         // Keep numeric in the raw data
-                        if (value !== '' && ! (0,src_internal/* isFormula */.dw)(value) && typeof(value) !== 'number') {
+                        if (value !== '' && ! (0,internal/* isFormula */.dw)(value) && typeof(value) !== 'number') {
                             const t = jSuites.mask.extract(value, opt, true);
                             if (t && t.value !== '') {
                                 value = t.value;
@@ -5147,7 +5149,7 @@ const src_closeEditor = function(cell, save) {
     }
 
     // On edition end
-    src_dispatch/* default */.A.call(obj, 'oneditionend', obj, cell, x, y, value, save);
+    dispatch/* default */.A.call(obj, 'oneditionend', obj, cell, x, y, value, save);
 
     // Remove editor class
     cell.classList.remove('editor');
@@ -5159,7 +5161,7 @@ const src_closeEditor = function(cell, save) {
 /**
  * Toogle
  */
-const src_setCheckRadioValue = function() {
+const setCheckRadioValue = function() {
     const obj = this;
 
     const records = [];
@@ -5170,13 +5172,13 @@ const src_setCheckRadioValue = function() {
 
         if (obj.options.columns[x].type == 'checkbox' || obj.options.columns[x].type == 'radio') {
             // Update cell
-            records.push(src_internal/* updateCell */.k9.call(obj, x, y, ! obj.options.data[y][x]));
+            records.push(internal/* updateCell */.k9.call(obj, x, y, ! obj.options.data[y][x]));
         }
     }
 
     if (records.length) {
         // Update history
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action:'setValue',
             records:records,
             selection:obj.selectedCell,
@@ -5192,16 +5194,16 @@ const src_setCheckRadioValue = function() {
             };
         });
 
-        src_dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
+        dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
     }
 }
 // EXTERNAL MODULE: ./src/utils/lazyLoading.js
-var src_lazyLoading = __webpack_require__(992);
+var lazyLoading = __webpack_require__(992);
 ;// ./src/utils/keys.js
 
 
 
-const src_upGet = function(x, y) {
+const upGet = function(x, y) {
     const obj = this;
 
     x = parseInt(x);
@@ -5221,7 +5223,7 @@ const src_upGet = function(x, y) {
     return y;
 }
 
-const src_upVisible = function(group, direction) {
+const upVisible = function(group, direction) {
     const obj = this;
 
     let x, y;
@@ -5242,7 +5244,7 @@ const src_upVisible = function(group, direction) {
             }
         }
     } else {
-        y = src_upGet.call(obj, x, y);
+        y = upGet.call(obj, x, y);
     }
 
     if (group == 0) {
@@ -5254,16 +5256,16 @@ const src_upVisible = function(group, direction) {
     }
 }
 
-const src_up = function(shiftKey, ctrlKey) {
+const up = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
         if (obj.selectedCell[3] > 0) {
-            src_upVisible.call(obj, 1, ctrlKey ? 0 : 1)
+            upVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
     } else {
         if (obj.selectedCell[1] > 0) {
-            src_upVisible.call(obj, 0, ctrlKey ? 0 : 1)
+            upVisible.call(obj, 0, ctrlKey ? 0 : 1)
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
@@ -5275,15 +5277,15 @@ const src_up = function(shiftKey, ctrlKey) {
     // Change page
     if (obj.options.lazyLoading == true) {
         if (obj.selectedCell[1] == 0 || obj.selectedCell[3] == 0) {
-            src_lazyLoading/* loadPage */.wu.call(obj, 0);
+            lazyLoading/* loadPage */.wu.call(obj, 0);
             obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
         } else {
-            if (src_lazyLoading/* loadValidation */.AG.call(obj)) {
+            if (lazyLoading/* loadValidation */.AG.call(obj)) {
                 obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
             } else {
                 const item = parseInt(obj.tbody.firstChild.getAttribute('data-y'));
                 if (obj.selectedCell[1] - item < 30) {
-                    src_lazyLoading/* loadUp */.G_.call(obj);
+                    lazyLoading/* loadUp */.G_.call(obj);
                     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
                 }
             }
@@ -5295,10 +5297,10 @@ const src_up = function(shiftKey, ctrlKey) {
         }
     }
 
-    src_internal/* updateScroll */.Rs.call(obj, 1);
+    internal/* updateScroll */.Rs.call(obj, 1);
 }
 
-const src_rightGet = function(x, y) {
+const rightGet = function(x, y) {
     const obj = this;
 
     x = parseInt(x);
@@ -5319,7 +5321,7 @@ const src_rightGet = function(x, y) {
     return x;
 }
 
-const src_rightVisible = function(group, direction) {
+const rightVisible = function(group, direction) {
     const obj = this;
 
     let x, y;
@@ -5340,7 +5342,7 @@ const src_rightVisible = function(group, direction) {
             }
         }
     } else {
-        x = src_rightGet.call(obj, x, y);
+        x = rightGet.call(obj, x, y);
     }
 
     if (group == 0) {
@@ -5352,26 +5354,26 @@ const src_rightVisible = function(group, direction) {
     }
 }
 
-const src_right = function(shiftKey, ctrlKey) {
+const right = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
         if (obj.selectedCell[2] < obj.headers.length - 1) {
-            src_rightVisible.call(obj, 1, ctrlKey ? 0 : 1)
+            rightVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
     } else {
         if (obj.selectedCell[0] < obj.headers.length - 1) {
-            src_rightVisible.call(obj, 0, ctrlKey ? 0 : 1)
+            rightVisible.call(obj, 0, ctrlKey ? 0 : 1)
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
-    src_internal/* updateScroll */.Rs.call(obj, 2);
+    internal/* updateScroll */.Rs.call(obj, 2);
 }
 
-const src_downGet = function(x, y) {
+const downGet = function(x, y) {
     const obj = this;
 
     x = parseInt(x);
@@ -5391,7 +5393,7 @@ const src_downGet = function(x, y) {
     return y;
 }
 
-const src_downVisible = function(group, direction) {
+const downVisible = function(group, direction) {
     const obj = this;
 
     let x, y;
@@ -5412,7 +5414,7 @@ const src_downVisible = function(group, direction) {
             }
         }
     } else {
-        y = src_downGet.call(obj, x, y);
+        y = downGet.call(obj, x, y);
     }
 
     if (group == 0) {
@@ -5424,16 +5426,16 @@ const src_downVisible = function(group, direction) {
     }
 }
 
-const src_down = function(shiftKey, ctrlKey) {
+const down = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
         if (obj.selectedCell[3] < obj.records.length - 1) {
-            src_downVisible.call(obj, 1, ctrlKey ? 0 : 1)
+            downVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
     } else {
         if (obj.selectedCell[1] < obj.records.length - 1) {
-            src_downVisible.call(obj, 0, ctrlKey ? 0 : 1)
+            downVisible.call(obj, 0, ctrlKey ? 0 : 1)
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
@@ -5444,15 +5446,15 @@ const src_down = function(shiftKey, ctrlKey) {
     // Change page
     if (obj.options.lazyLoading == true) {
         if ((obj.selectedCell[1] == obj.records.length - 1 || obj.selectedCell[3] == obj.records.length - 1)) {
-            src_lazyLoading/* loadPage */.wu.call(obj, -1);
+            lazyLoading/* loadPage */.wu.call(obj, -1);
             obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
         } else {
-            if (src_lazyLoading/* loadValidation */.AG.call(obj)) {
+            if (lazyLoading/* loadValidation */.AG.call(obj)) {
                 obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
             } else {
                 const item = parseInt(obj.tbody.lastChild.getAttribute('data-y'));
                 if (item - obj.selectedCell[3] < 30) {
-                    src_lazyLoading/* loadDown */.p6.call(obj);
+                    lazyLoading/* loadDown */.p6.call(obj);
                     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
                 }
             }
@@ -5464,10 +5466,10 @@ const src_down = function(shiftKey, ctrlKey) {
         }
     }
 
-    src_internal/* updateScroll */.Rs.call(obj, 3);
+    internal/* updateScroll */.Rs.call(obj, 3);
 }
 
-const src_leftGet = function(x, y) {
+const leftGet = function(x, y) {
     const obj = this;
 
     x = parseInt(x);
@@ -5487,7 +5489,7 @@ const src_leftGet = function(x, y) {
     return x;
 }
 
-const src_leftVisible = function(group, direction) {
+const leftVisible = function(group, direction) {
     const obj = this;
 
     let x, y;
@@ -5508,7 +5510,7 @@ const src_leftVisible = function(group, direction) {
             }
         }
     } else {
-        x = src_leftGet.call(obj, x, y);
+        x = leftGet.call(obj, x, y);
     }
 
     if (group == 0) {
@@ -5520,39 +5522,39 @@ const src_leftVisible = function(group, direction) {
     }
 }
 
-const src_left = function(shiftKey, ctrlKey) {
+const left = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
         if (obj.selectedCell[2] > 0) {
-            src_leftVisible.call(obj, 1, ctrlKey ? 0 : 1)
+            leftVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
     } else {
         if (obj.selectedCell[0] > 0) {
-            src_leftVisible.call(obj, 0, ctrlKey ? 0 : 1)
+            leftVisible.call(obj, 0, ctrlKey ? 0 : 1)
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
-    src_internal/* updateScroll */.Rs.call(obj, 0);
+    internal/* updateScroll */.Rs.call(obj, 0);
 }
 
-const src_first = function(shiftKey, ctrlKey) {
+const first = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
         if (ctrlKey) {
             obj.selectedCell[3] = 0;
         } else {
-            src_leftVisible.call(obj, 1, 0);
+            leftVisible.call(obj, 1, 0);
         }
     } else {
         if (ctrlKey) {
             obj.selectedCell[1] = 0;
         } else {
-            src_leftVisible.call(obj, 0, 0);
+            leftVisible.call(obj, 0, 0);
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
@@ -5560,7 +5562,7 @@ const src_first = function(shiftKey, ctrlKey) {
 
     // Change page
     if (obj.options.lazyLoading == true && (obj.selectedCell[1] == 0 || obj.selectedCell[3] == 0)) {
-        src_lazyLoading/* loadPage */.wu.call(obj, 0);
+        lazyLoading/* loadPage */.wu.call(obj, 0);
     } else if (obj.options.pagination > 0) {
         const pageNumber = obj.whichPage(obj.selectedCell[3]);
         if (pageNumber != obj.pageNumber) {
@@ -5569,23 +5571,23 @@ const src_first = function(shiftKey, ctrlKey) {
     }
 
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
-    src_internal/* updateScroll */.Rs.call(obj, 1);
+    internal/* updateScroll */.Rs.call(obj, 1);
 }
 
-const src_last = function(shiftKey, ctrlKey) {
+const last = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
         if (ctrlKey) {
             obj.selectedCell[3] = obj.records.length - 1;
         } else {
-            src_rightVisible.call(obj, 1, 0);
+            rightVisible.call(obj, 1, 0);
         }
     } else {
         if (ctrlKey) {
             obj.selectedCell[1] = obj.records.length - 1;
         } else {
-            src_rightVisible.call(obj, 0, 0);
+            rightVisible.call(obj, 0, 0);
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
@@ -5593,7 +5595,7 @@ const src_last = function(shiftKey, ctrlKey) {
 
     // Change page
     if (obj.options.lazyLoading == true && (obj.selectedCell[1] == obj.records.length - 1 || obj.selectedCell[3] == obj.records.length - 1)) {
-        src_lazyLoading/* loadPage */.wu.call(obj, -1);
+        lazyLoading/* loadPage */.wu.call(obj, -1);
     } else if (obj.options.pagination > 0) {
         const pageNumber = obj.whichPage(obj.selectedCell[3]);
         if (pageNumber != obj.pageNumber) {
@@ -5602,16 +5604,16 @@ const src_last = function(shiftKey, ctrlKey) {
     }
 
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
-    src_internal/* updateScroll */.Rs.call(obj, 3);
+    internal/* updateScroll */.Rs.call(obj, 3);
 }
 // EXTERNAL MODULE: ./src/utils/merges.js
-var src_merges = __webpack_require__(441);
+var merges = __webpack_require__(441);
 // EXTERNAL MODULE: ./src/utils/selection.js
-var src_selection = __webpack_require__(268);
+var selection = __webpack_require__(268);
 // EXTERNAL MODULE: ./src/utils/helpers.js
-var src_helpers = __webpack_require__(595);
+var helpers = __webpack_require__(595);
 // EXTERNAL MODULE: ./src/utils/internalHelpers.js
-var src_internalHelpers = __webpack_require__(887);
+var internalHelpers = __webpack_require__(887);
 ;// ./src/utils/copyPaste.js
 
 
@@ -5628,7 +5630,7 @@ var src_internalHelpers = __webpack_require__(887);
  * @param delimiter - \t default to keep compatibility with excel
  * @return string value
  */
-const src_copy = function(highlighted, delimiter, returnData, includeHeaders, download, isCut, processed) {
+const copy = function(highlighted, delimiter, returnData, includeHeaders, download, isCut, processed) {
     const obj = this;
 
     if (! delimiter) {
@@ -5784,7 +5786,7 @@ const src_copy = function(highlighted, delimiter, returnData, includeHeaders, do
             Math.max(obj.selectedCell[1], obj.selectedCell[3]),
         ];
 
-        const result = src_dispatch/* default */.A.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut);
+        const result = dispatch/* default */.A.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut);
 
         if (result) {
             strLabel = result;
@@ -5804,11 +5806,11 @@ const src_copy = function(highlighted, delimiter, returnData, includeHeaders, do
         obj.data = str;
     }
     // Keep non visible information
-    obj.hashString = src_selection/* hash */.tW.call(obj, obj.data);
+    obj.hashString = selection/* hash */.tW.call(obj, obj.data);
 
     // Any exiting border should go
     if (! returnData) {
-        src_selection/* removeCopyingSelection */.kA.call(obj);
+        selection/* removeCopyingSelection */.kA.call(obj);
 
         // Border
         if (obj.highlighted) {
@@ -5839,11 +5841,11 @@ const src_copy = function(highlighted, delimiter, returnData, includeHeaders, do
  * @param integer row number
  * @return string value
  */
-const src_paste = function(x, y, data) {
+const paste = function(x, y, data) {
     const obj = this;
 
     // Controls
-    const dataHash = (0,src_selection/* hash */.tW)(data);
+    const dataHash = (0,selection/* hash */.tW)(data);
     const style = (dataHash == obj.hashString) ? obj.style : null;
 
     // Depending on the behavior
@@ -5852,10 +5854,10 @@ const src_paste = function(x, y, data) {
     }
 
     // Split new line
-    data = (0,src_helpers.parseCSV)(data, "\t");
+    data = (0,helpers.parseCSV)(data, "\t");
 
     // Paste filter
-    const ret = (
+    const ret = dispatch/* default */.A.call(
         obj,
         'onbeforepaste',
         obj,
@@ -5895,14 +5897,14 @@ const src_paste = function(x, y, data) {
 
             while (row[i] != null) {
                 // Update and keep history
-                const record = src_internal/* updateCell */.k9.call(obj, colIndex, rowIndex, row[i]);
+                const record = internal/* updateCell */.k9.call(obj, colIndex, rowIndex, row[i]);
                 // Keep history
                 records.push(record);
                 // Update all formulas in the chain
-                src_internal/* updateFormulaChain */.xF.call(obj, colIndex, rowIndex, records);
+                internal/* updateFormulaChain */.xF.call(obj, colIndex, rowIndex, records);
                 // Style
                 if (style && style[styleIndex]) {
-                    const columnName = (0,src_internalHelpers/* getColumnNameFromId */.t3)([colIndex, rowIndex]);
+                    const columnName = (0,internalHelpers/* getColumnNameFromId */.t3)([colIndex, rowIndex]);
                     newStyle[columnName] = style[styleIndex];
                     oldStyle[columnName] = obj.getStyle(columnName);
                     obj.records[rowIndex][colIndex].element.setAttribute('style', style[styleIndex]);
@@ -5919,7 +5921,7 @@ const src_paste = function(x, y, data) {
                             break;
                         }
                     }
-                    colIndex = src_rightGet.call(obj, colIndex, rowIndex);
+                    colIndex = rightGet.call(obj, colIndex, rowIndex);
                 }
             }
 
@@ -5934,15 +5936,15 @@ const src_paste = function(x, y, data) {
                         break;
                     }
                 }
-                rowIndex = src_downGet.call(obj, x, rowIndex);
+                rowIndex = downGet.call(obj, x, rowIndex);
             }
         }
 
         // Select the new cells
-        src_selection/* updateSelectionFromCoords */.AH.call(obj, x, y, colIndex, rowIndex);
+        selection/* updateSelectionFromCoords */.AH.call(obj, x, y, colIndex, rowIndex);
 
         // Update history
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action:'setValue',
             records:records,
             selection:obj.selectedCell,
@@ -5951,7 +5953,7 @@ const src_paste = function(x, y, data) {
         });
 
         // Update table
-        src_internal/* updateTable */.am.call(obj);
+        internal/* updateTable */.am.call(obj);
 
         // Paste event
         const eventRecords = [];
@@ -5966,7 +5968,7 @@ const src_paste = function(x, y, data) {
             }
         }
 
-        src_dispatch/* default */.A.call(obj, 'onpaste', obj, eventRecords);
+        dispatch/* default */.A.call(obj, 'onpaste', obj, eventRecords);
 
         // On after changes
         const onafterchangesRecords = records.map(function(record) {
@@ -5978,15 +5980,15 @@ const src_paste = function(x, y, data) {
             };
         });
 
-        src_dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
+        dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
     }
 
-    (0,src_selection/* removeCopyingSelection */.kA)();
+    (0,selection/* removeCopyingSelection */.kA)();
 }
 // EXTERNAL MODULE: ./src/utils/filter.js
-var src_filter = __webpack_require__(206);
+var filter = __webpack_require__(206);
 // EXTERNAL MODULE: ./src/utils/footer.js
-var src_footer = __webpack_require__(623);
+var footer = __webpack_require__(623);
 ;// ./src/utils/columns.js
 
 
@@ -5998,7 +6000,7 @@ var src_footer = __webpack_require__(623);
 
 
 
-const src_getNumberOfColumns = function() {
+const getNumberOfColumns = function() {
     const obj = this;
 
     let numberOfColumns = (obj.options.columns && obj.options.columns.length) || 0;
@@ -6019,7 +6021,7 @@ const src_getNumberOfColumns = function() {
     return numberOfColumns;
 }
 
-const src_createCellHeader = function(colNumber) {
+const createCellHeader = function(colNumber) {
     const obj = this;
 
     // Create col global control
@@ -6028,7 +6030,7 @@ const src_createCellHeader = function(colNumber) {
 
     // Create header cell
     obj.headers[colNumber] = document.createElement('td');
-    obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || (0,src_helpers.getColumnName)(colNumber);
+    obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || (0,helpers.getColumnName)(colNumber);
 
     obj.headers[colNumber].setAttribute('data-x', colNumber);
     obj.headers[colNumber].style.textAlign = colAlign;
@@ -6064,7 +6066,7 @@ const src_createCellHeader = function(colNumber) {
  * @param object properties - column properties
  * @return void
  */
-const src_insertColumn = function(mixed, columnNumber, insertBefore, properties) {
+const insertColumn = function(mixed, columnNumber, insertBefore, properties) {
     const obj = this;
 
     // Configuration
@@ -6144,13 +6146,13 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
         }
 
         // Onbeforeinsertcolumn
-        if (src_dispatch/* default */.A.call(obj, 'onbeforeinsertcolumn', obj, columns) === false) {
+        if (dispatch/* default */.A.call(obj, 'onbeforeinsertcolumn', obj, columns) === false) {
             return false;
         }
 
         // Merged cells
         if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
-            if (src_merges/* isColMerged */.Lt.call(obj, columnNumber, insertBefore).length) {
+            if (merges/* isColMerged */.Lt.call(obj, columnNumber, insertBefore).length) {
                 if (! confirm(jSuites.translate('This action will destroy any existing merged cells. Are you sure?'))) {
                     return false;
                 } else {
@@ -6161,7 +6163,7 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
 
         // Insert before
         const columnIndex = (! insertBefore) ? columnNumber + 1 : columnNumber;
-        obj.options.columns = (0,src_internalHelpers/* injectArray */.Hh)(obj.options.columns, columnIndex, properties);
+        obj.options.columns = (0,internalHelpers/* injectArray */.Hh)(obj.options.columns, columnIndex, properties);
 
         // Open space in the containers
         const currentHeaders = obj.headers.splice(columnIndex);
@@ -6176,7 +6178,7 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
 
         // Add new headers
         for (let col = columnIndex; col < (numOfColumns + columnIndex); col++) {
-            src_createCellHeader.call(obj, col);
+            createCellHeader.call(obj, col);
             obj.headerContainer.insertBefore(obj.headers[col], obj.headerContainer.children[col+1]);
             obj.colgroupContainer.insertBefore(obj.cols[col].colElement, obj.colgroupContainer.children[col+1]);
 
@@ -6210,7 +6212,7 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
                 const value = data[row] ? data[row] : '';
                 obj.options.data[row][col] = value;
                 // New cell
-                const td = src_internal/* createCell */.P9.call(obj, col, row, obj.options.data[row][col]);
+                const td = internal/* createCell */.P9.call(obj, col, row, obj.options.data[row][col]);
                 obj.records[row][col] = {
                     element: td,
                     y: row,
@@ -6275,7 +6277,7 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
         }
 
         // Keep history
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action: 'insertColumn',
             columnNumber:columnNumber,
             numOfColumns:numOfColumns,
@@ -6289,10 +6291,10 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
         });
 
         // Remove table references
-        src_internal/* updateTableReferences */.o8.call(obj);
+        internal/* updateTableReferences */.o8.call(obj);
 
         // Events
-        src_dispatch/* default */.A.call(obj, 'oninsertcolumn', obj, columns);
+        dispatch/* default */.A.call(obj, 'oninsertcolumn', obj, columns);
     }
 }
 
@@ -6301,7 +6303,7 @@ const src_insertColumn = function(mixed, columnNumber, insertBefore, properties)
  *
  * @return void
  */
-const src_moveColumn = function(o, d) {
+const moveColumn = function(o, d) {
     const obj = this;
 
     if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
@@ -6312,7 +6314,7 @@ const src_moveColumn = function(o, d) {
             insertBefore = 0;
         }
 
-        if (src_merges/* isColMerged */.Lt.call(obj, o).length || src_merges/* isColMerged */.Lt.call(obj, d, insertBefore).length) {
+        if (merges/* isColMerged */.Lt.call(obj, o).length || merges/* isColMerged */.Lt.call(obj, d, insertBefore).length) {
             if (! confirm(jSuites.translate('This action will destroy any existing merged cells. Are you sure?'))) {
                 return false;
             } else {
@@ -6370,17 +6372,17 @@ const src_moveColumn = function(o, d) {
     }
 
     // Keeping history of changes
-    src_utils_history/* setHistory */.Dh.call(obj, {
+    utils_history/* setHistory */.Dh.call(obj, {
         action:'moveColumn',
         oldValue: o,
         newValue: d,
     });
 
     // Update table references
-    src_internal/* updateTableReferences */.o8.call(obj);
+    internal/* updateTableReferences */.o8.call(obj);
 
     // Events
-    src_dispatch/* default */.A.call(obj, 'onmovecolumn', obj, o, d, 1);
+    dispatch/* default */.A.call(obj, 'onmovecolumn', obj, o, d, 1);
 }
 
 /**
@@ -6390,7 +6392,7 @@ const src_moveColumn = function(o, d) {
  * @param integer numOfColumns - number of columns to be excluded from the reference column
  * @return void
  */
-const src_deleteColumn = function(columnNumber, numOfColumns) {
+const deleteColumn = function(columnNumber, numOfColumns) {
     const obj = this;
 
     // Global Configuration
@@ -6434,7 +6436,7 @@ const src_deleteColumn = function(columnNumber, numOfColumns) {
             }
 
             // onbeforedeletecolumn
-           if (src_dispatch/* default */.A.call(obj, 'onbeforedeletecolumn', obj, removedColumns) === false) {
+           if (dispatch/* default */.A.call(obj, 'onbeforedeletecolumn', obj, removedColumns) === false) {
               return false;
            }
 
@@ -6444,7 +6446,7 @@ const src_deleteColumn = function(columnNumber, numOfColumns) {
                 let mergeExists = false;
                 if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
                     for (let col = columnNumber; col < columnNumber + numOfColumns; col++) {
-                        if (src_merges/* isColMerged */.Lt.call(obj, col, null).length) {
+                        if (merges/* isColMerged */.Lt.call(obj, col, null).length) {
                             mergeExists = true;
                         }
                     }
@@ -6505,7 +6507,7 @@ const src_deleteColumn = function(columnNumber, numOfColumns) {
                 }
 
                 // Remove selection
-                src_selection/* conditionalSelectionUpdate */.at.call(obj, 0, columnNumber, (columnNumber + numOfColumns) - 1);
+                selection/* conditionalSelectionUpdate */.at.call(obj, 0, columnNumber, (columnNumber + numOfColumns) - 1);
 
                 // Adjust nested headers
                 if (
@@ -6522,7 +6524,7 @@ const src_deleteColumn = function(columnNumber, numOfColumns) {
                 }
 
                 // Keeping history of changes
-                src_utils_history/* setHistory */.Dh.call(obj, {
+                utils_history/* setHistory */.Dh.call(obj, {
                     action:'deleteColumn',
                     columnNumber:columnNumber,
                     numOfColumns:numOfColumns,
@@ -6536,10 +6538,10 @@ const src_deleteColumn = function(columnNumber, numOfColumns) {
                 });
 
                 // Update table references
-                src_internal/* updateTableReferences */.o8.call(obj);
+                internal/* updateTableReferences */.o8.call(obj);
 
                 // Delete
-                src_dispatch/* default */.A.call(obj, 'ondeletecolumn', obj, removedColumns);
+                dispatch/* default */.A.call(obj, 'ondeletecolumn', obj, removedColumns);
             }
         } else {
             console.error('Jspreadsheet: It is not possible to delete the last column');
@@ -6553,7 +6555,7 @@ const src_deleteColumn = function(columnNumber, numOfColumns) {
  * @param int column column number (first column is: 0)
  * @return int current width
  */
-const src_getWidth = function(column) {
+const getWidth = function(column) {
     const obj = this;
 
     let data;
@@ -6578,7 +6580,7 @@ const src_getWidth = function(column) {
  * @param int new column width
  * @param int old column width
  */
-const src_setWidth = function (column, width, oldWidth) {
+const setWidth = function (column, width, oldWidth) {
     const obj = this;
 
     if (width) {
@@ -6625,7 +6627,7 @@ const src_setWidth = function (column, width, oldWidth) {
         }
 
         // Keeping history of changes
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action:'setWidth',
             column:column,
             oldValue:oldWidth,
@@ -6633,17 +6635,17 @@ const src_setWidth = function (column, width, oldWidth) {
         });
 
         // On resize column
-        src_dispatch/* default */.A.call(obj, 'onresizecolumn', obj, column, width, oldWidth);
+        dispatch/* default */.A.call(obj, 'onresizecolumn', obj, column, width, oldWidth);
 
         // Update corner position
-        src_selection/* updateCornerPosition */.Aq.call(obj);
+        selection/* updateCornerPosition */.Aq.call(obj);
     }
 }
 
 /**
  * Show column
  */
-const src_showColumn = function(colNumber) {
+const showColumn = function(colNumber) {
     const obj = this;
 
     if (!Array.isArray(colNumber)) {
@@ -6665,7 +6667,7 @@ const src_showColumn = function(colNumber) {
 
     // Update footers
     if (obj.options.footers) {
-        src_footer/* setFooter */.e.call(obj);
+        footer/* setFooter */.e.call(obj);
     }
 
     obj.resetSelection();
@@ -6674,7 +6676,7 @@ const src_showColumn = function(colNumber) {
 /**
  * Hide column
  */
-const src_hideColumn = function(colNumber) {
+const hideColumn = function(colNumber) {
     const obj = this;
 
     if (!Array.isArray(colNumber)) {
@@ -6696,7 +6698,7 @@ const src_hideColumn = function(colNumber) {
 
     // Update footers
     if (obj.options.footers) {
-        src_footer/* setFooter */.e.call(obj);
+        footer/* setFooter */.e.call(obj);
     }
 
     obj.resetSelection();
@@ -6705,7 +6707,7 @@ const src_hideColumn = function(colNumber) {
 /**
  * Get a column data by columnNumber
  */
-const src_getColumnData = function(columnNumber, processed) {
+const getColumnData = function(columnNumber, processed) {
     const obj = this;
 
     const dataset = [];
@@ -6723,12 +6725,12 @@ const src_getColumnData = function(columnNumber, processed) {
 /**
  * Set a column data by colNumber
  */
-const src_setColumnData = function(colNumber, data, force) {
+const setColumnData = function(colNumber, data, force) {
     const obj = this;
 
     for (let j = 0; j < obj.rows.length; j++) {
         // Update cell
-        const columnName = (0,src_internalHelpers/* getColumnNameFromId */.t3)([ colNumber, j ]);
+        const columnName = (0,internalHelpers/* getColumnNameFromId */.t3)([ colNumber, j ]);
         // Set value
         if (data[j] != null) {
             obj.setValue(columnName, data[j], force);
@@ -6748,7 +6750,7 @@ const src_setColumnData = function(colNumber, data, force) {
 /**
  * Create row
  */
-const src_createRow = function(j, data) {
+const createRow = function(j, data) {
     const obj = this;
 
     // Create container
@@ -6795,13 +6797,13 @@ const src_createRow = function(j, data) {
     td.className = 'jss_row';
     row.element.appendChild(td);
 
-    const numberOfColumns = src_getNumberOfColumns.call(obj);
+    const numberOfColumns = getNumberOfColumns.call(obj);
 
     // Data columns
     for (let i = 0; i < numberOfColumns; i++) {
         // New column of data to be append in the line
         obj.records[j][i] = {
-            element: src_internal/* createCell */.P9.call(this, i, j, data[i]),
+            element: internal/* createCell */.P9.call(this, i, j, data[i]),
             x: i,
             y: j,
         };
@@ -6832,7 +6834,7 @@ const src_createRow = function(j, data) {
  * @param insertBefore
  * @return void
  */
-const src_insertRow = function(mixed, rowNumber, insertBefore) {
+const insertRow = function(mixed, rowNumber, insertBefore) {
     const obj = this;
 
     // Configuration
@@ -6882,13 +6884,13 @@ const src_insertRow = function(mixed, rowNumber, insertBefore) {
         }
 
         // Onbeforeinsertrow
-        if (src_dispatch/* default */.A.call(obj, 'onbeforeinsertrow', obj, onbeforeinsertrowRecords) === false) {
+        if (dispatch/* default */.A.call(obj, 'onbeforeinsertrow', obj, onbeforeinsertrowRecords) === false) {
             return false;
         }
 
         // Merged cells
         if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
-            if (src_merges/* isRowMerged */.D0.call(obj, rowNumber, insertBefore).length) {
+            if (merges/* isRowMerged */.D0.call(obj, rowNumber, insertBefore).length) {
                 if (! confirm(jSuites.translate('This action will destroy any existing merged cells. Are you sure?'))) {
                     return false;
                 } else {
@@ -6930,7 +6932,7 @@ const src_insertRow = function(mixed, rowNumber, insertBefore) {
                 obj.options.data[row][col]  = data[col] ? data[col] : '';
             }
             // Create row
-            const newRow = src_createRow.call(obj, row, obj.options.data[row]);
+            const newRow = createRow.call(obj, row, obj.options.data[row]);
             // Append node
             if (currentRows[0]) {
                 if (Array.prototype.indexOf.call(obj.tbody.children, currentRows[0].element) >= 0) {
@@ -6968,7 +6970,7 @@ const src_insertRow = function(mixed, rowNumber, insertBefore) {
         }
 
         // Keep history
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action: 'insertRow',
             rowNumber: rowNumber,
             numOfRows: numOfRows,
@@ -6979,10 +6981,10 @@ const src_insertRow = function(mixed, rowNumber, insertBefore) {
         });
 
         // Remove table references
-        src_internal/* updateTableReferences */.o8.call(obj);
+        internal/* updateTableReferences */.o8.call(obj);
 
         // Events
-        src_dispatch/* default */.A.call(obj, 'oninsertrow', obj, onbeforeinsertrowRecords);
+        dispatch/* default */.A.call(obj, 'oninsertrow', obj, onbeforeinsertrowRecords);
     }
 }
 
@@ -6991,7 +6993,7 @@ const src_insertRow = function(mixed, rowNumber, insertBefore) {
  *
  * @return void
  */
-const src_moveRow = function(o, d, ignoreDom) {
+const moveRow = function(o, d, ignoreDom) {
     const obj = this;
 
     if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
@@ -7003,7 +7005,7 @@ const src_moveRow = function(o, d, ignoreDom) {
             insertBefore = 0;
         }
 
-        if (src_merges/* isRowMerged */.D0.call(obj, o).length || src_merges/* isRowMerged */.D0.call(obj, d, insertBefore).length) {
+        if (merges/* isRowMerged */.D0.call(obj, o).length || merges/* isRowMerged */.D0.call(obj, d, insertBefore).length) {
             if (! confirm(jSuites.translate('This action will destroy any existing merged cells. Are you sure?'))) {
                 return false;
             } else {
@@ -7060,17 +7062,17 @@ const src_moveRow = function(o, d, ignoreDom) {
     }
 
     // Keeping history of changes
-    src_utils_history/* setHistory */.Dh.call(obj, {
+    utils_history/* setHistory */.Dh.call(obj, {
         action:'moveRow',
         oldValue: o,
         newValue: d,
     });
 
     // Update table references
-    src_internal/* updateTableReferences */.o8.call(obj);
+    internal/* updateTableReferences */.o8.call(obj);
 
     // Events
-    src_dispatch/* default */.A.call(obj, 'onmoverow', obj, parseInt(o), parseInt(d), 1);
+    dispatch/* default */.A.call(obj, 'onmoverow', obj, parseInt(o), parseInt(d), 1);
 }
 
 /**
@@ -7080,7 +7082,7 @@ const src_moveRow = function(o, d, ignoreDom) {
  * @param integer numOfRows - number of lines
  * @return void
  */
-const src_deleteRow = function(rowNumber, numOfRows) {
+const deleteRow = function(rowNumber, numOfRows) {
     const obj = this;
 
     // Global Configuration
@@ -7088,7 +7090,7 @@ const src_deleteRow = function(rowNumber, numOfRows) {
         if (obj.options.allowDeletingAllRows == true || obj.options.data.length > 1) {
             // Delete row definitions
             if (rowNumber == undefined) {
-                const number = src_selection/* getSelectedRows */.R5.call(obj);
+                const number = selection/* getSelectedRows */.R5.call(obj);
 
                 if (number.length === 0) {
                     rowNumber = obj.options.data.length - 1;
@@ -7121,7 +7123,7 @@ const src_deleteRow = function(rowNumber, numOfRows) {
                 onbeforedeleterowRecords.push(i + rowNumber);
             }
 
-            if (src_dispatch/* default */.A.call(obj, 'onbeforedeleterow', obj, onbeforedeleterowRecords) === false) {
+            if (dispatch/* default */.A.call(obj, 'onbeforedeleterow', obj, onbeforedeleterowRecords) === false) {
                 return false;
             }
 
@@ -7130,7 +7132,7 @@ const src_deleteRow = function(rowNumber, numOfRows) {
                 let mergeExists = false;
                 if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
                     for (let row = rowNumber; row < rowNumber + numOfRows; row++) {
-                        if (src_merges/* isRowMerged */.D0.call(obj, row, false).length) {
+                        if (merges/* isRowMerged */.D0.call(obj, row, false).length) {
                             mergeExists = true;
                         }
                     }
@@ -7191,10 +7193,10 @@ const src_deleteRow = function(rowNumber, numOfRows) {
                 }
 
                 // Remove selection
-                src_selection/* conditionalSelectionUpdate */.at.call(obj, 1, rowNumber, (rowNumber + numOfRows) - 1);
+                selection/* conditionalSelectionUpdate */.at.call(obj, 1, rowNumber, (rowNumber + numOfRows) - 1);
 
                 // Keep history
-                src_utils_history/* setHistory */.Dh.call(obj, {
+                utils_history/* setHistory */.Dh.call(obj, {
                     action: 'deleteRow',
                     rowNumber: rowNumber,
                     numOfRows: numOfRows,
@@ -7205,10 +7207,10 @@ const src_deleteRow = function(rowNumber, numOfRows) {
                 });
 
                 // Remove table references
-                src_internal/* updateTableReferences */.o8.call(obj);
+                internal/* updateTableReferences */.o8.call(obj);
 
                 // Events
-                src_dispatch/* default */.A.call(obj, 'ondeleterow', obj, onbeforedeleterowRecords);
+                dispatch/* default */.A.call(obj, 'ondeleterow', obj, onbeforedeleterowRecords);
             }
         } else {
             console.error('Jspreadsheet: It is not possible to delete the last row');
@@ -7222,7 +7224,7 @@ const src_deleteRow = function(rowNumber, numOfRows) {
  * @param row - row number (first row is: 0)
  * @return height - current row height
  */
-const src_getHeight = function(row) {
+const getHeight = function(row) {
     const obj = this;
 
     let data;
@@ -7255,7 +7257,7 @@ const src_getHeight = function(row) {
  * @param height - new row height
  * @param oldHeight - old row height
  */
-const src_setHeight = function (row, height, oldHeight) {
+const setHeight = function (row, height, oldHeight) {
     const obj = this;
 
     if (height > 0) {
@@ -7286,7 +7288,7 @@ const src_setHeight = function (row, height, oldHeight) {
         obj.options.rows[row].height = height;
 
         // Keeping history of changes
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action:'setHeight',
             row:row,
             oldValue:oldHeight,
@@ -7294,17 +7296,17 @@ const src_setHeight = function (row, height, oldHeight) {
         });
 
         // On resize column
-        src_dispatch/* default */.A.call(obj, 'onresizerow', obj, row, height, oldHeight);
+        dispatch/* default */.A.call(obj, 'onresizerow', obj, row, height, oldHeight);
 
         // Update corner position
-        src_selection/* updateCornerPosition */.Aq.call(obj);
+        selection/* updateCornerPosition */.Aq.call(obj);
     }
 }
 
 /**
  * Show row
  */
-const src_showRow = function(rowNumber) {
+const showRow = function(rowNumber) {
     const obj = this;
 
     if (!Array.isArray(rowNumber)) {
@@ -7319,7 +7321,7 @@ const src_showRow = function(rowNumber) {
 /**
  * Hide row
  */
-const src_hideRow = function(rowNumber) {
+const hideRow = function(rowNumber) {
     const obj = this;
 
     if (!Array.isArray(rowNumber)) {
@@ -7335,7 +7337,7 @@ const src_hideRow = function(rowNumber) {
 /**
  * Get a row data by rowNumber
  */
-const src_getRowData = function(rowNumber, processed) {
+const getRowData = function(rowNumber, processed) {
     const obj = this;
 
     if (processed) {
@@ -7350,12 +7352,12 @@ const src_getRowData = function(rowNumber, processed) {
 /**
  * Set a row data by rowNumber
  */
-const src_setRowData = function(rowNumber, data, force) {
+const setRowData = function(rowNumber, data, force) {
     const obj = this;
 
     for (let i = 0; i < obj.headers.length; i++) {
         // Update cell
-        const columnName = (0,src_internalHelpers/* getColumnNameFromId */.t3)([ i, rowNumber ]);
+        const columnName = (0,internalHelpers/* getColumnNameFromId */.t3)([ i, rowNumber ]);
         // Set value
         if (data[i] != null) {
             obj.setValue(columnName, data[i], force);
@@ -7364,7 +7366,7 @@ const src_setRowData = function(rowNumber, data, force) {
 }
 ;// ./src/utils/version.js
 // Basic version information
-/* harmony default export */ var src_version = ({
+/* harmony default export */ var version = ({
     version: '5.0.0',
     host: 'https://bossanova.uk/jspreadsheet',
     license: 'MIT',
@@ -7388,7 +7390,7 @@ const src_setRowData = function(rowNumber, data, force) {
 
 
 
-const src_getElement = function(element) {
+const getElement = function(element) {
     let jssSection = 0;
     let jssElement = 0;
 
@@ -7421,114 +7423,114 @@ const src_getElement = function(element) {
     return [ jssElement, jssSection ];
 }
 
-const src_mouseUpControls = function(e) {
-    if (src_libraryBase.jspreadsheet.current) {
+const mouseUpControls = function(e) {
+    if (libraryBase.jspreadsheet.current) {
         // Update cell size
-        if (src_libraryBase.jspreadsheet.current.resizing) {
+        if (libraryBase.jspreadsheet.current.resizing) {
             // Columns to be updated
-            if (src_libraryBase.jspreadsheet.current.resizing.column) {
+            if (libraryBase.jspreadsheet.current.resizing.column) {
                 // New width
-                const newWidth = parseInt(src_libraryBase.jspreadsheet.current.cols[src_libraryBase.jspreadsheet.current.resizing.column].colElement.getAttribute('width'));
+                const newWidth = parseInt(libraryBase.jspreadsheet.current.cols[libraryBase.jspreadsheet.current.resizing.column].colElement.getAttribute('width'));
                 // Columns
-                const columns = src_libraryBase.jspreadsheet.current.getSelectedColumns();
+                const columns = libraryBase.jspreadsheet.current.getSelectedColumns();
                 if (columns.length > 1) {
                     const currentWidth = [];
                     for (let i = 0; i < columns.length; i++) {
-                        currentWidth.push(parseInt(src_libraryBase.jspreadsheet.current.cols[columns[i]].colElement.getAttribute('width')));
+                        currentWidth.push(parseInt(libraryBase.jspreadsheet.current.cols[columns[i]].colElement.getAttribute('width')));
                     }
                     // Previous width
-                    const index = columns.indexOf(parseInt(src_libraryBase.jspreadsheet.current.resizing.column));
-                    currentWidth[index] = src_libraryBase.jspreadsheet.current.resizing.width;
-                    src_setWidth.call(src_libraryBase.jspreadsheet.current, columns, newWidth, currentWidth);
+                    const index = columns.indexOf(parseInt(libraryBase.jspreadsheet.current.resizing.column));
+                    currentWidth[index] = libraryBase.jspreadsheet.current.resizing.width;
+                    setWidth.call(libraryBase.jspreadsheet.current, columns, newWidth, currentWidth);
                 } else {
-                    src_setWidth.call(src_libraryBase.jspreadsheet.current, parseInt(src_libraryBase.jspreadsheet.current.resizing.column), newWidth, src_libraryBase.jspreadsheet.current.resizing.width);
+                    setWidth.call(libraryBase.jspreadsheet.current, parseInt(libraryBase.jspreadsheet.current.resizing.column), newWidth, libraryBase.jspreadsheet.current.resizing.width);
                 }
                 // Remove border
-                src_libraryBase.jspreadsheet.current.headers[src_libraryBase.jspreadsheet.current.resizing.column].classList.remove('resizing');
-                for (let j = 0; j < src_libraryBase.jspreadsheet.current.records.length; j++) {
-                    if (src_libraryBase.jspreadsheet.current.records[j][src_libraryBase.jspreadsheet.current.resizing.column]) {
-                        src_libraryBase.jspreadsheet.current.records[j][src_libraryBase.jspreadsheet.current.resizing.column].element.classList.remove('resizing');
+                libraryBase.jspreadsheet.current.headers[libraryBase.jspreadsheet.current.resizing.column].classList.remove('resizing');
+                for (let j = 0; j < libraryBase.jspreadsheet.current.records.length; j++) {
+                    if (libraryBase.jspreadsheet.current.records[j][libraryBase.jspreadsheet.current.resizing.column]) {
+                        libraryBase.jspreadsheet.current.records[j][libraryBase.jspreadsheet.current.resizing.column].element.classList.remove('resizing');
                     }
                 }
             } else {
                 // Remove Class
-                src_libraryBase.jspreadsheet.current.rows[src_libraryBase.jspreadsheet.current.resizing.row].element.children[0].classList.remove('resizing');
-                let newHeight = src_libraryBase.jspreadsheet.current.rows[src_libraryBase.jspreadsheet.current.resizing.row].element.getAttribute('height');
-                src_setHeight.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.resizing.row, newHeight, src_libraryBase.jspreadsheet.current.resizing.height);
+                libraryBase.jspreadsheet.current.rows[libraryBase.jspreadsheet.current.resizing.row].element.children[0].classList.remove('resizing');
+                let newHeight = libraryBase.jspreadsheet.current.rows[libraryBase.jspreadsheet.current.resizing.row].element.getAttribute('height');
+                setHeight.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.resizing.row, newHeight, libraryBase.jspreadsheet.current.resizing.height);
                 // Remove border
-                src_libraryBase.jspreadsheet.current.resizing.element.classList.remove('resizing');
+                libraryBase.jspreadsheet.current.resizing.element.classList.remove('resizing');
             }
             // Reset resizing helper
-            src_libraryBase.jspreadsheet.current.resizing = null;
-        } else if (src_libraryBase.jspreadsheet.current.dragging) {
+            libraryBase.jspreadsheet.current.resizing = null;
+        } else if (libraryBase.jspreadsheet.current.dragging) {
             // Reset dragging helper
-            if (src_libraryBase.jspreadsheet.current.dragging) {
-                if (src_libraryBase.jspreadsheet.current.dragging.column) {
+            if (libraryBase.jspreadsheet.current.dragging) {
+                if (libraryBase.jspreadsheet.current.dragging.column) {
                     // Target
                     const columnId = e.target.getAttribute('data-x');
                     // Remove move style
-                    src_libraryBase.jspreadsheet.current.headers[src_libraryBase.jspreadsheet.current.dragging.column].classList.remove('dragging');
-                    for (let j = 0; j < src_libraryBase.jspreadsheet.current.rows.length; j++) {
-                        if (src_libraryBase.jspreadsheet.current.records[j][src_libraryBase.jspreadsheet.current.dragging.column]) {
-                            src_libraryBase.jspreadsheet.current.records[j][src_libraryBase.jspreadsheet.current.dragging.column].element.classList.remove('dragging');
+                    libraryBase.jspreadsheet.current.headers[libraryBase.jspreadsheet.current.dragging.column].classList.remove('dragging');
+                    for (let j = 0; j < libraryBase.jspreadsheet.current.rows.length; j++) {
+                        if (libraryBase.jspreadsheet.current.records[j][libraryBase.jspreadsheet.current.dragging.column]) {
+                            libraryBase.jspreadsheet.current.records[j][libraryBase.jspreadsheet.current.dragging.column].element.classList.remove('dragging');
                         }
                     }
-                    for (let i = 0; i < src_libraryBase.jspreadsheet.current.headers.length; i++) {
-                        src_libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-left');
-                        src_libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-right');
+                    for (let i = 0; i < libraryBase.jspreadsheet.current.headers.length; i++) {
+                        libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-left');
+                        libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-right');
                     }
                     // Update position
                     if (columnId) {
-                        if (src_libraryBase.jspreadsheet.current.dragging.column != src_libraryBase.jspreadsheet.current.dragging.destination) {
-                            src_libraryBase.jspreadsheet.current.moveColumn(src_libraryBase.jspreadsheet.current.dragging.column, src_libraryBase.jspreadsheet.current.dragging.destination);
+                        if (libraryBase.jspreadsheet.current.dragging.column != libraryBase.jspreadsheet.current.dragging.destination) {
+                            libraryBase.jspreadsheet.current.moveColumn(libraryBase.jspreadsheet.current.dragging.column, libraryBase.jspreadsheet.current.dragging.destination);
                         }
                     }
                 } else {
                     let position;
 
-                    if (src_libraryBase.jspreadsheet.current.dragging.element.nextSibling) {
-                        position = parseInt(src_libraryBase.jspreadsheet.current.dragging.element.nextSibling.getAttribute('data-y'));
-                        if (src_libraryBase.jspreadsheet.current.dragging.row < position) {
+                    if (libraryBase.jspreadsheet.current.dragging.element.nextSibling) {
+                        position = parseInt(libraryBase.jspreadsheet.current.dragging.element.nextSibling.getAttribute('data-y'));
+                        if (libraryBase.jspreadsheet.current.dragging.row < position) {
                             position -= 1;
                         }
                     } else {
-                        position = parseInt(src_libraryBase.jspreadsheet.current.dragging.element.previousSibling.getAttribute('data-y'));
+                        position = parseInt(libraryBase.jspreadsheet.current.dragging.element.previousSibling.getAttribute('data-y'));
                     }
-                    if (src_libraryBase.jspreadsheet.current.dragging.row != src_libraryBase.jspreadsheet.current.dragging.destination) {
-                        src_moveRow.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.dragging.row, position, true);
+                    if (libraryBase.jspreadsheet.current.dragging.row != libraryBase.jspreadsheet.current.dragging.destination) {
+                        moveRow.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.dragging.row, position, true);
                     }
-                    src_libraryBase.jspreadsheet.current.dragging.element.classList.remove('dragging');
+                    libraryBase.jspreadsheet.current.dragging.element.classList.remove('dragging');
                 }
-                src_libraryBase.jspreadsheet.current.dragging = null;
+                libraryBase.jspreadsheet.current.dragging = null;
             }
         } else {
             // Close any corner selection
-            if (src_libraryBase.jspreadsheet.current.selectedCorner) {
-                src_libraryBase.jspreadsheet.current.selectedCorner = false;
+            if (libraryBase.jspreadsheet.current.selectedCorner) {
+                libraryBase.jspreadsheet.current.selectedCorner = false;
 
                 // Data to be copied
-                if (src_libraryBase.jspreadsheet.current.selection.length > 0) {
+                if (libraryBase.jspreadsheet.current.selection.length > 0) {
                     // Copy data
-                    src_selection/* copyData */.kF.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.selection[0], src_libraryBase.jspreadsheet.current.selection[src_libraryBase.jspreadsheet.current.selection.length - 1]);
+                    selection/* copyData */.kF.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selection[0], libraryBase.jspreadsheet.current.selection[libraryBase.jspreadsheet.current.selection.length - 1]);
 
                     // Remove selection
-                    src_selection/* removeCopySelection */.gG.call(src_libraryBase.jspreadsheet.current);
+                    selection/* removeCopySelection */.gG.call(libraryBase.jspreadsheet.current);
                 }
             }
         }
     }
 
     // Clear any time control
-    if (src_libraryBase.jspreadsheet.timeControl) {
-        clearTimeout(src_libraryBase.jspreadsheet.timeControl);
-        src_libraryBase.jspreadsheet.timeControl = null;
+    if (libraryBase.jspreadsheet.timeControl) {
+        clearTimeout(libraryBase.jspreadsheet.timeControl);
+        libraryBase.jspreadsheet.timeControl = null;
     }
 
     // Mouse up
-    src_libraryBase.jspreadsheet.isMouseAction = false;
+    libraryBase.jspreadsheet.isMouseAction = false;
 }
 
-const src_mouseDownControls = function(e) {
+const mouseDownControls = function(e) {
     e = e || window.event;
 
     let mouseButton;
@@ -7542,39 +7544,39 @@ const src_mouseDownControls = function(e) {
     }
 
     // Get elements
-    const jssTable = src_getElement(e.target);
+    const jssTable = getElement(e.target);
 
     if (jssTable[0]) {
-        if (src_libraryBase.jspreadsheet.current != jssTable[0].jssWorksheet) {
-            if (src_libraryBase.jspreadsheet.current) {
-                if (src_libraryBase.jspreadsheet.current.edition) {
-                    src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], true);
+        if (libraryBase.jspreadsheet.current != jssTable[0].jssWorksheet) {
+            if (libraryBase.jspreadsheet.current) {
+                if (libraryBase.jspreadsheet.current.edition) {
+                    closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
                 }
-                src_libraryBase.jspreadsheet.current.resetSelection();
+                libraryBase.jspreadsheet.current.resetSelection();
             }
-            src_libraryBase.jspreadsheet.current = jssTable[0].jssWorksheet;
+            libraryBase.jspreadsheet.current = jssTable[0].jssWorksheet;
         }
     } else {
-        if (src_libraryBase.jspreadsheet.current) {
-            if (src_libraryBase.jspreadsheet.current.edition) {
-                src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], true);
+        if (libraryBase.jspreadsheet.current) {
+            if (libraryBase.jspreadsheet.current.edition) {
+                closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
             }
 
             if (!e.target.classList.contains('jss_object')) {
-                src_selection/* resetSelection */.gE.call(src_libraryBase.jspreadsheet.current, true);
-                src_libraryBase.jspreadsheet.current = null;
+                selection/* resetSelection */.gE.call(libraryBase.jspreadsheet.current, true);
+                libraryBase.jspreadsheet.current = null;
             }
         }
     }
 
-    if (src_libraryBase.jspreadsheet.current && mouseButton == 1) {
+    if (libraryBase.jspreadsheet.current && mouseButton == 1) {
         if (e.target.classList.contains('jss_selectall')) {
-            if (src_libraryBase.jspreadsheet.current) {
-                src_selection/* selectAll */.Ub.call(src_libraryBase.jspreadsheet.current);
+            if (libraryBase.jspreadsheet.current) {
+                selection/* selectAll */.Ub.call(libraryBase.jspreadsheet.current);
             }
         } else if (e.target.classList.contains('jss_corner')) {
-            if (src_libraryBase.jspreadsheet.current.options.editable != false) {
-                src_libraryBase.jspreadsheet.current.selectedCorner = true;
+            if (libraryBase.jspreadsheet.current.options.editable != false) {
+                libraryBase.jspreadsheet.current.selectedCorner = true;
             }
         } else {
             // Header found
@@ -7583,57 +7585,57 @@ const src_mouseDownControls = function(e) {
                 if (columnId) {
                     // Update cursor
                     const info = e.target.getBoundingClientRect();
-                    if (src_libraryBase.jspreadsheet.current.options.columnResize != false && info.width - e.offsetX < 6) {
+                    if (libraryBase.jspreadsheet.current.options.columnResize != false && info.width - e.offsetX < 6) {
                         // Resize helper
-                        src_libraryBase.jspreadsheet.current.resizing = {
+                        libraryBase.jspreadsheet.current.resizing = {
                             mousePosition: e.pageX,
                             column: columnId,
                             width: info.width,
                         };
 
                         // Border indication
-                        src_libraryBase.jspreadsheet.current.headers[columnId].classList.add('resizing');
-                        for (let j = 0; j < src_libraryBase.jspreadsheet.current.records.length; j++) {
-                            if (src_libraryBase.jspreadsheet.current.records[j][columnId]) {
-                                src_libraryBase.jspreadsheet.current.records[j][columnId].element.classList.add('resizing');
+                        libraryBase.jspreadsheet.current.headers[columnId].classList.add('resizing');
+                        for (let j = 0; j < libraryBase.jspreadsheet.current.records.length; j++) {
+                            if (libraryBase.jspreadsheet.current.records[j][columnId]) {
+                                libraryBase.jspreadsheet.current.records[j][columnId].element.classList.add('resizing');
                             }
                         }
-                    } else if (src_libraryBase.jspreadsheet.current.options.columnDrag != false && info.height - e.offsetY < 6) {
-                        if (src_merges/* isColMerged */.Lt.call(src_libraryBase.jspreadsheet.current, columnId).length) {
+                    } else if (libraryBase.jspreadsheet.current.options.columnDrag != false && info.height - e.offsetY < 6) {
+                        if (merges/* isColMerged */.Lt.call(libraryBase.jspreadsheet.current, columnId).length) {
                             console.error('Jspreadsheet: This column is part of a merged cell.');
                         } else {
                             // Reset selection
-                            src_libraryBase.jspreadsheet.current.resetSelection();
+                            libraryBase.jspreadsheet.current.resetSelection();
                             // Drag helper
-                            src_libraryBase.jspreadsheet.current.dragging = {
+                            libraryBase.jspreadsheet.current.dragging = {
                                 element: e.target,
                                 column: columnId,
                                 destination: columnId,
                             };
                             // Border indication
-                            src_libraryBase.jspreadsheet.current.headers[columnId].classList.add('dragging');
-                            for (let j = 0; j < src_libraryBase.jspreadsheet.current.records.length; j++) {
-                                if (src_libraryBase.jspreadsheet.current.records[j][columnId]) {
-                                    src_libraryBase.jspreadsheet.current.records[j][columnId].element.classList.add('dragging');
+                            libraryBase.jspreadsheet.current.headers[columnId].classList.add('dragging');
+                            for (let j = 0; j < libraryBase.jspreadsheet.current.records.length; j++) {
+                                if (libraryBase.jspreadsheet.current.records[j][columnId]) {
+                                    libraryBase.jspreadsheet.current.records[j][columnId].element.classList.add('dragging');
                                 }
                             }
                         }
                     } else {
                         let o, d;
 
-                        if (src_libraryBase.jspreadsheet.current.selectedHeader && (e.shiftKey || e.ctrlKey)) {
-                            o = src_libraryBase.jspreadsheet.current.selectedHeader;
+                        if (libraryBase.jspreadsheet.current.selectedHeader && (e.shiftKey || e.ctrlKey)) {
+                            o = libraryBase.jspreadsheet.current.selectedHeader;
                             d = columnId;
                         } else {
                             // Press to rename
-                            if (src_libraryBase.jspreadsheet.current.selectedHeader == columnId && src_libraryBase.jspreadsheet.current.options.allowRenameColumn != false) {
-                                src_libraryBase.jspreadsheet.timeControl = setTimeout(function() {
-                                    src_libraryBase.jspreadsheet.current.setHeader(columnId);
+                            if (libraryBase.jspreadsheet.current.selectedHeader == columnId && libraryBase.jspreadsheet.current.options.allowRenameColumn != false) {
+                                libraryBase.jspreadsheet.timeControl = setTimeout(function() {
+                                    libraryBase.jspreadsheet.current.setHeader(columnId);
                                 }, 800);
                             }
 
                             // Keep track of which header was selected first
-                            src_libraryBase.jspreadsheet.current.selectedHeader = columnId;
+                            libraryBase.jspreadsheet.current.selectedHeader = columnId;
 
                             // Update selection single column
                             o = columnId;
@@ -7641,7 +7643,7 @@ const src_mouseDownControls = function(e) {
                         }
 
                         // Update selection
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, o, 0, d, src_libraryBase.jspreadsheet.current.options.data.length - 1, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data.length - 1, e);
                     }
                 } else {
                     if (e.target.parentNode.classList.contains('jss_nested')) {
@@ -7653,13 +7655,13 @@ const src_mouseDownControls = function(e) {
                             c2 = parseInt(column[column.length-1]);
                         } else {
                             c1 = 0;
-                            c2 = src_libraryBase.jspreadsheet.current.options.columns.length - 1;
+                            c2 = libraryBase.jspreadsheet.current.options.columns.length - 1;
                         }
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, c1, 0, c2, src_libraryBase.jspreadsheet.current.options.data.length - 1, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, c1, 0, c2, libraryBase.jspreadsheet.current.options.data.length - 1, e);
                     }
                 }
             } else {
-                src_libraryBase.jspreadsheet.current.selectedHeader = false;
+                libraryBase.jspreadsheet.current.selectedHeader = false;
             }
 
             // Body found
@@ -7668,9 +7670,9 @@ const src_mouseDownControls = function(e) {
 
                 if (e.target.classList.contains('jss_row')) {
                     const info = e.target.getBoundingClientRect();
-                    if (src_libraryBase.jspreadsheet.current.options.rowResize != false && info.height - e.offsetY < 6) {
+                    if (libraryBase.jspreadsheet.current.options.rowResize != false && info.height - e.offsetY < 6) {
                         // Resize helper
-                        src_libraryBase.jspreadsheet.current.resizing = {
+                        libraryBase.jspreadsheet.current.resizing = {
                             element: e.target.parentNode,
                             mousePosition: e.pageY,
                             row: rowId,
@@ -7678,16 +7680,16 @@ const src_mouseDownControls = function(e) {
                         };
                         // Border indication
                         e.target.parentNode.classList.add('resizing');
-                    } else if (src_libraryBase.jspreadsheet.current.options.rowDrag != false && info.width - e.offsetX < 6) {
-                        if (src_merges/* isRowMerged */.D0.call(src_libraryBase.jspreadsheet.current, rowId).length) {
+                    } else if (libraryBase.jspreadsheet.current.options.rowDrag != false && info.width - e.offsetX < 6) {
+                        if (merges/* isRowMerged */.D0.call(libraryBase.jspreadsheet.current, rowId).length) {
                             console.error('Jspreadsheet: This row is part of a merged cell');
-                        } else if (src_libraryBase.jspreadsheet.current.options.search == true && src_libraryBase.jspreadsheet.current.results) {
+                        } else if (libraryBase.jspreadsheet.current.options.search == true && libraryBase.jspreadsheet.current.results) {
                             console.error('Jspreadsheet: Please clear your search before perform this action');
                         } else {
                             // Reset selection
-                            src_libraryBase.jspreadsheet.current.resetSelection();
+                            libraryBase.jspreadsheet.current.resetSelection();
                             // Drag helper
-                            src_libraryBase.jspreadsheet.current.dragging = {
+                            libraryBase.jspreadsheet.current.dragging = {
                                 element: e.target.parentNode,
                                 row:rowId,
                                 destination:rowId,
@@ -7698,12 +7700,12 @@ const src_mouseDownControls = function(e) {
                     } else {
                         let o, d;
 
-                        if (src_libraryBase.jspreadsheet.current.selectedRow && (e.shiftKey || e.ctrlKey)) {
-                            o = src_libraryBase.jspreadsheet.current.selectedRow;
+                        if (libraryBase.jspreadsheet.current.selectedRow && (e.shiftKey || e.ctrlKey)) {
+                            o = libraryBase.jspreadsheet.current.selectedRow;
                             d = rowId;
                         } else {
                             // Keep track of which header was selected first
-                            src_libraryBase.jspreadsheet.current.selectedRow = rowId;
+                            libraryBase.jspreadsheet.current.selectedRow = rowId;
 
                             // Update selection single column
                             o = rowId;
@@ -7711,12 +7713,12 @@ const src_mouseDownControls = function(e) {
                         }
 
                         // Update selection
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, null, o, null, d, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, null, o, null, d, e);
                     }
                 } else {
                     // Jclose
                     if (e.target.classList.contains('jclose') && e.target.clientWidth - e.offsetX < 50 && e.offsetY < 50) {
-                        src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], true);
+                        closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
                     } else {
                         const getCellCoords = function(element) {
                             const x = element.getAttribute('data-x');
@@ -7736,55 +7738,55 @@ const src_mouseDownControls = function(e) {
                             const columnId = position[0];
                             const rowId = position[1];
                             // Close edition
-                            if (src_libraryBase.jspreadsheet.current.edition) {
-                                if (src_libraryBase.jspreadsheet.current.edition[2] != columnId || src_libraryBase.jspreadsheet.current.edition[3] != rowId) {
-                                    src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], true);
+                            if (libraryBase.jspreadsheet.current.edition) {
+                                if (libraryBase.jspreadsheet.current.edition[2] != columnId || libraryBase.jspreadsheet.current.edition[3] != rowId) {
+                                    closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
                                 }
                             }
 
-                            if (! src_libraryBase.jspreadsheet.current.edition) {
+                            if (! libraryBase.jspreadsheet.current.edition) {
                                 // Update cell selection
                                 if (e.shiftKey) {
-                                    src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.selectedCell[0], src_libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                    selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                 } else {
-                                    src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, columnId, rowId, undefined, undefined, e);
+                                    selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, undefined, undefined, e);
                                 }
                             }
 
                             // No full row selected
-                            src_libraryBase.jspreadsheet.current.selectedHeader = null;
-                            src_libraryBase.jspreadsheet.current.selectedRow = null;
+                            libraryBase.jspreadsheet.current.selectedHeader = null;
+                            libraryBase.jspreadsheet.current.selectedRow = null;
                         }
                     }
                 }
             } else {
-                src_libraryBase.jspreadsheet.current.selectedRow = false;
+                libraryBase.jspreadsheet.current.selectedRow = false;
             }
 
             // Pagination
             if (e.target.classList.contains('jss_page')) {
                 if (e.target.textContent == '<') {
-                    src_libraryBase.jspreadsheet.current.page(0);
+                    libraryBase.jspreadsheet.current.page(0);
                 } else if (e.target.textContent == '>') {
-                    src_libraryBase.jspreadsheet.current.page(e.target.getAttribute('title') - 1);
+                    libraryBase.jspreadsheet.current.page(e.target.getAttribute('title') - 1);
                 } else {
-                    src_libraryBase.jspreadsheet.current.page(e.target.textContent - 1);
+                    libraryBase.jspreadsheet.current.page(e.target.textContent - 1);
                 }
             }
         }
 
-        if (src_libraryBase.jspreadsheet.current.edition) {
-            src_libraryBase.jspreadsheet.isMouseAction = false;
+        if (libraryBase.jspreadsheet.current.edition) {
+            libraryBase.jspreadsheet.isMouseAction = false;
         } else {
-            src_libraryBase.jspreadsheet.isMouseAction = true;
+            libraryBase.jspreadsheet.isMouseAction = true;
         }
     } else {
-        src_libraryBase.jspreadsheet.isMouseAction = false;
+        libraryBase.jspreadsheet.isMouseAction = false;
     }
 }
 
 // Mouse move controls
-const src_mouseMoveControls = function(e) {
+const mouseMoveControls = function(e) {
     e = e || window.event;
 
     let mouseButton;
@@ -7798,62 +7800,62 @@ const src_mouseMoveControls = function(e) {
     }
 
     if (! mouseButton) {
-        src_libraryBase.jspreadsheet.isMouseAction = false;
+        libraryBase.jspreadsheet.isMouseAction = false;
     }
 
-    if (src_libraryBase.jspreadsheet.current) {
-        if (src_libraryBase.jspreadsheet.isMouseAction == true) {
+    if (libraryBase.jspreadsheet.current) {
+        if (libraryBase.jspreadsheet.isMouseAction == true) {
             // Resizing is ongoing
-            if (src_libraryBase.jspreadsheet.current.resizing) {
-                if (src_libraryBase.jspreadsheet.current.resizing.column) {
-                    const width = e.pageX - src_libraryBase.jspreadsheet.current.resizing.mousePosition;
+            if (libraryBase.jspreadsheet.current.resizing) {
+                if (libraryBase.jspreadsheet.current.resizing.column) {
+                    const width = e.pageX - libraryBase.jspreadsheet.current.resizing.mousePosition;
 
-                    if (src_libraryBase.jspreadsheet.current.resizing.width + width > 0) {
-                        const tempWidth = src_libraryBase.jspreadsheet.current.resizing.width + width;
-                        src_libraryBase.jspreadsheet.current.cols[src_libraryBase.jspreadsheet.current.resizing.column].colElement.setAttribute('width', tempWidth);
+                    if (libraryBase.jspreadsheet.current.resizing.width + width > 0) {
+                        const tempWidth = libraryBase.jspreadsheet.current.resizing.width + width;
+                        libraryBase.jspreadsheet.current.cols[libraryBase.jspreadsheet.current.resizing.column].colElement.setAttribute('width', tempWidth);
 
-                        src_selection/* updateCornerPosition */.Aq.call(src_libraryBase.jspreadsheet.current);
+                        selection/* updateCornerPosition */.Aq.call(libraryBase.jspreadsheet.current);
                     }
                 } else {
-                    const height = e.pageY - src_libraryBase.jspreadsheet.current.resizing.mousePosition;
+                    const height = e.pageY - libraryBase.jspreadsheet.current.resizing.mousePosition;
 
-                    if (src_libraryBase.jspreadsheet.current.resizing.height + height > 0) {
-                        const tempHeight = src_libraryBase.jspreadsheet.current.resizing.height + height;
-                        src_libraryBase.jspreadsheet.current.rows[src_libraryBase.jspreadsheet.current.resizing.row].element.setAttribute('height', tempHeight);
+                    if (libraryBase.jspreadsheet.current.resizing.height + height > 0) {
+                        const tempHeight = libraryBase.jspreadsheet.current.resizing.height + height;
+                        libraryBase.jspreadsheet.current.rows[libraryBase.jspreadsheet.current.resizing.row].element.setAttribute('height', tempHeight);
 
-                        src_selection/* updateCornerPosition */.Aq.call(src_libraryBase.jspreadsheet.current);
+                        selection/* updateCornerPosition */.Aq.call(libraryBase.jspreadsheet.current);
                     }
                 }
-            } else if (src_libraryBase.jspreadsheet.current.dragging) {
-                if (src_libraryBase.jspreadsheet.current.dragging.column) {
+            } else if (libraryBase.jspreadsheet.current.dragging) {
+                if (libraryBase.jspreadsheet.current.dragging.column) {
                     const columnId = e.target.getAttribute('data-x');
                     if (columnId) {
 
-                        if (src_merges/* isColMerged */.Lt.call(src_libraryBase.jspreadsheet.current, columnId).length) {
+                        if (merges/* isColMerged */.Lt.call(libraryBase.jspreadsheet.current, columnId).length) {
                             console.error('Jspreadsheet: This column is part of a merged cell.');
                         } else {
-                            for (let i = 0; i < src_libraryBase.jspreadsheet.current.headers.length; i++) {
-                                src_libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-left');
-                                src_libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-right');
+                            for (let i = 0; i < libraryBase.jspreadsheet.current.headers.length; i++) {
+                                libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-left');
+                                libraryBase.jspreadsheet.current.headers[i].classList.remove('dragging-right');
                             }
 
-                            if (src_libraryBase.jspreadsheet.current.dragging.column == columnId) {
-                                src_libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId);
+                            if (libraryBase.jspreadsheet.current.dragging.column == columnId) {
+                                libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId);
                             } else {
                                 if (e.target.clientWidth / 2 > e.offsetX) {
-                                    if (src_libraryBase.jspreadsheet.current.dragging.column < columnId) {
-                                        src_libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId) - 1;
+                                    if (libraryBase.jspreadsheet.current.dragging.column < columnId) {
+                                        libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId) - 1;
                                     } else {
-                                        src_libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId);
+                                        libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId);
                                     }
-                                    src_libraryBase.jspreadsheet.current.headers[columnId].classList.add('dragging-left');
+                                    libraryBase.jspreadsheet.current.headers[columnId].classList.add('dragging-left');
                                 } else {
-                                    if (src_libraryBase.jspreadsheet.current.dragging.column < columnId) {
-                                        src_libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId);
+                                    if (libraryBase.jspreadsheet.current.dragging.column < columnId) {
+                                        libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId);
                                     } else {
-                                        src_libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId) + 1;
+                                        libraryBase.jspreadsheet.current.dragging.destination = parseInt(columnId) + 1;
                                     }
-                                    src_libraryBase.jspreadsheet.current.headers[columnId].classList.add('dragging-right');
+                                    libraryBase.jspreadsheet.current.headers[columnId].classList.add('dragging-right');
                                 }
                             }
                         }
@@ -7861,13 +7863,13 @@ const src_mouseMoveControls = function(e) {
                 } else {
                     const rowId = e.target.getAttribute('data-y');
                     if (rowId) {
-                        if (src_merges/* isRowMerged */.D0.call(src_libraryBase.jspreadsheet.current, rowId).length) {
+                        if (merges/* isRowMerged */.D0.call(libraryBase.jspreadsheet.current, rowId).length) {
                             console.error('Jspreadsheet: This row is part of a merged cell.');
                         } else {
                             const target = (e.target.clientHeight / 2 > e.offsetY) ? e.target.parentNode.nextSibling : e.target.parentNode;
-                            if (src_libraryBase.jspreadsheet.current.dragging.element != target) {
-                                e.target.parentNode.parentNode.insertBefore(src_libraryBase.jspreadsheet.current.dragging.element, target);
-                                src_libraryBase.jspreadsheet.current.dragging.destination = Array.prototype.indexOf.call(src_libraryBase.jspreadsheet.current.dragging.element.parentNode.children, src_libraryBase.jspreadsheet.current.dragging.element);
+                            if (libraryBase.jspreadsheet.current.dragging.element != target) {
+                                e.target.parentNode.parentNode.insertBefore(libraryBase.jspreadsheet.current.dragging.element, target);
+                                libraryBase.jspreadsheet.current.dragging.destination = Array.prototype.indexOf.call(libraryBase.jspreadsheet.current.dragging.element.parentNode.children, libraryBase.jspreadsheet.current.dragging.element);
                             }
                         }
                     }
@@ -7878,29 +7880,29 @@ const src_mouseMoveControls = function(e) {
             const y = e.target.getAttribute('data-y');
             const rect = e.target.getBoundingClientRect();
 
-            if (src_libraryBase.jspreadsheet.current.cursor) {
-                src_libraryBase.jspreadsheet.current.cursor.style.cursor = '';
-                src_libraryBase.jspreadsheet.current.cursor = null;
+            if (libraryBase.jspreadsheet.current.cursor) {
+                libraryBase.jspreadsheet.current.cursor.style.cursor = '';
+                libraryBase.jspreadsheet.current.cursor = null;
             }
 
             if (e.target.parentNode.parentNode && e.target.parentNode.parentNode.className) {
                 if (e.target.parentNode.parentNode.classList.contains('resizable')) {
                     if (e.target && x && ! y && (rect.width - (e.clientX - rect.left) < 6)) {
-                        src_libraryBase.jspreadsheet.current.cursor = e.target;
-                        src_libraryBase.jspreadsheet.current.cursor.style.cursor = 'col-resize';
+                        libraryBase.jspreadsheet.current.cursor = e.target;
+                        libraryBase.jspreadsheet.current.cursor.style.cursor = 'col-resize';
                     } else if (e.target && ! x && y && (rect.height - (e.clientY - rect.top) < 6)) {
-                        src_libraryBase.jspreadsheet.current.cursor = e.target;
-                        src_libraryBase.jspreadsheet.current.cursor.style.cursor = 'row-resize';
+                        libraryBase.jspreadsheet.current.cursor = e.target;
+                        libraryBase.jspreadsheet.current.cursor.style.cursor = 'row-resize';
                     }
                 }
 
                 if (e.target.parentNode.parentNode.classList.contains('draggable')) {
                     if (e.target && ! x && y && (rect.width - (e.clientX - rect.left) < 6)) {
-                        src_libraryBase.jspreadsheet.current.cursor = e.target;
-                        src_libraryBase.jspreadsheet.current.cursor.style.cursor = 'move';
+                        libraryBase.jspreadsheet.current.cursor = e.target;
+                        libraryBase.jspreadsheet.current.cursor.style.cursor = 'move';
                     } else if (e.target && x && ! y && (rect.height - (e.clientY - rect.top) < 6)) {
-                        src_libraryBase.jspreadsheet.current.cursor = e.target;
-                        src_libraryBase.jspreadsheet.current.cursor.style.cursor = 'move';
+                        libraryBase.jspreadsheet.current.cursor = e.target;
+                        libraryBase.jspreadsheet.current.cursor.style.cursor = 'move';
                     }
                 }
             }
@@ -7914,11 +7916,11 @@ const src_mouseMoveControls = function(e) {
  * @param int x, y
  * @return void
  */
-const src_updateCopySelection = function(x3, y3) {
+const updateCopySelection = function(x3, y3) {
     const obj = this;
 
     // Remove selection
-    src_selection/* removeCopySelection */.gG.call(obj);
+    selection/* removeCopySelection */.gG.call(obj);
 
     // Get elements first and last
     const x1 = obj.selectedContainer[0];
@@ -7972,7 +7974,7 @@ const src_updateCopySelection = function(x3, y3) {
     }
 }
 
-const src_mouseOverControls = function(e) {
+const mouseOverControls = function(e) {
     e = e || window.event;
 
     let mouseButton;
@@ -7986,54 +7988,54 @@ const src_mouseOverControls = function(e) {
     }
 
     if (! mouseButton) {
-        src_libraryBase.jspreadsheet.isMouseAction = false;
+        libraryBase.jspreadsheet.isMouseAction = false;
     }
 
-    if (src_libraryBase.jspreadsheet.current && src_libraryBase.jspreadsheet.isMouseAction == true) {
+    if (libraryBase.jspreadsheet.current && libraryBase.jspreadsheet.isMouseAction == true) {
         // Get elements
-        const jssTable = src_getElement(e.target);
+        const jssTable = getElement(e.target);
 
         if (jssTable[0]) {
             // Avoid cross reference
-            if (src_libraryBase.jspreadsheet.current != jssTable[0].jssWorksheet) {
-                if (src_libraryBase.jspreadsheet.current) {
+            if (libraryBase.jspreadsheet.current != jssTable[0].jssWorksheet) {
+                if (libraryBase.jspreadsheet.current) {
                     return false;
                 }
             }
 
             let columnId = e.target.getAttribute('data-x');
             const rowId = e.target.getAttribute('data-y');
-            if (src_libraryBase.jspreadsheet.current.resizing || src_libraryBase.jspreadsheet.current.dragging) {
+            if (libraryBase.jspreadsheet.current.resizing || libraryBase.jspreadsheet.current.dragging) {
             } else {
                 // Header found
                 if (jssTable[1] == 1) {
-                    if (src_libraryBase.jspreadsheet.current.selectedHeader) {
+                    if (libraryBase.jspreadsheet.current.selectedHeader) {
                         columnId = e.target.getAttribute('data-x');
-                        const o = src_libraryBase.jspreadsheet.current.selectedHeader;
+                        const o = libraryBase.jspreadsheet.current.selectedHeader;
                         const d = columnId;
                         // Update selection
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, o, 0, d, src_libraryBase.jspreadsheet.current.options.data.length - 1, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data.length - 1, e);
                     }
                 }
 
                 // Body found
                 if (jssTable[1] == 2) {
                     if (e.target.classList.contains('jss_row')) {
-                        if (src_libraryBase.jspreadsheet.current.selectedRow) {
-                            const o = src_libraryBase.jspreadsheet.current.selectedRow;
+                        if (libraryBase.jspreadsheet.current.selectedRow) {
+                            const o = libraryBase.jspreadsheet.current.selectedRow;
                             const d = rowId;
                             // Update selection
-                            src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, 0, o, src_libraryBase.jspreadsheet.current.options.data[0].length - 1, d, e);
+                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, 0, o, libraryBase.jspreadsheet.current.options.data[0].length - 1, d, e);
                         }
                     } else {
                         // Do not select edtion is in progress
-                        if (! src_libraryBase.jspreadsheet.current.edition) {
+                        if (! libraryBase.jspreadsheet.current.edition) {
                             if (columnId && rowId) {
-                                if (src_libraryBase.jspreadsheet.current.selectedCorner) {
-                                    src_updateCopySelection.call(src_libraryBase.jspreadsheet.current, columnId, rowId);
+                                if (libraryBase.jspreadsheet.current.selectedCorner) {
+                                    updateCopySelection.call(libraryBase.jspreadsheet.current, columnId, rowId);
                                 } else {
-                                    if (src_libraryBase.jspreadsheet.current.selectedCell) {
-                                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.selectedCell[0], src_libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                    if (libraryBase.jspreadsheet.current.selectedCell) {
+                                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                     }
                                 }
                             }
@@ -8045,50 +8047,50 @@ const src_mouseOverControls = function(e) {
     }
 
     // Clear any time control
-    if (src_libraryBase.jspreadsheet.timeControl) {
-        clearTimeout(src_libraryBase.jspreadsheet.timeControl);
-        src_libraryBase.jspreadsheet.timeControl = null;
+    if (libraryBase.jspreadsheet.timeControl) {
+        clearTimeout(libraryBase.jspreadsheet.timeControl);
+        libraryBase.jspreadsheet.timeControl = null;
     }
 }
 
-const src_doubleClickControls = function(e) {
+const doubleClickControls = function(e) {
     // Jss is selected
-    if (src_libraryBase.jspreadsheet.current) {
+    if (libraryBase.jspreadsheet.current) {
         // Corner action
         if (e.target.classList.contains('jss_corner')) {
             // Any selected cells
-            if (src_libraryBase.jspreadsheet.current.highlighted.length > 0) {
+            if (libraryBase.jspreadsheet.current.highlighted.length > 0) {
                 // Copy from this
-                const x1 = src_libraryBase.jspreadsheet.current.highlighted[0].element.getAttribute('data-x');
-                const y1 = parseInt(src_libraryBase.jspreadsheet.current.highlighted[src_libraryBase.jspreadsheet.current.highlighted.length - 1].element.getAttribute('data-y')) + 1;
+                const x1 = libraryBase.jspreadsheet.current.highlighted[0].element.getAttribute('data-x');
+                const y1 = parseInt(libraryBase.jspreadsheet.current.highlighted[libraryBase.jspreadsheet.current.highlighted.length - 1].element.getAttribute('data-y')) + 1;
                 // Until this
-                const x2 = src_libraryBase.jspreadsheet.current.highlighted[src_libraryBase.jspreadsheet.current.highlighted.length - 1].element.getAttribute('data-x');
-                const y2 = src_libraryBase.jspreadsheet.current.records.length - 1
+                const x2 = libraryBase.jspreadsheet.current.highlighted[libraryBase.jspreadsheet.current.highlighted.length - 1].element.getAttribute('data-x');
+                const y2 = libraryBase.jspreadsheet.current.records.length - 1
                 // Execute copy
-                src_selection/* copyData */.kF.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.records[y1][x1].element, src_libraryBase.jspreadsheet.current.records[y2][x2].element);
+                selection/* copyData */.kF.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.records[y1][x1].element, libraryBase.jspreadsheet.current.records[y2][x2].element);
             }
         } else if (e.target.classList.contains('jss_column_filter')) {
             // Column
             const columnId = e.target.getAttribute('data-x');
             // Open filter
-            src_filter/* openFilter */.N$.call(src_libraryBase.jspreadsheet.current, columnId);
+            filter/* openFilter */.N$.call(libraryBase.jspreadsheet.current, columnId);
 
         } else {
             // Get table
-            const jssTable = src_getElement(e.target);
+            const jssTable = getElement(e.target);
 
             // Double click over header
-            if (jssTable[1] == 1 && src_libraryBase.jspreadsheet.current.options.columnSorting != false) {
+            if (jssTable[1] == 1 && libraryBase.jspreadsheet.current.options.columnSorting != false) {
                 // Check valid column header coords
                 const columnId = e.target.getAttribute('data-x');
                 if (columnId) {
-                    src_libraryBase.jspreadsheet.current.orderBy(parseInt(columnId));
+                    libraryBase.jspreadsheet.current.orderBy(parseInt(columnId));
                 }
             }
 
             // Double click over body
-            if (jssTable[1] == 2 && src_libraryBase.jspreadsheet.current.options.editable != false) {
-                if (! src_libraryBase.jspreadsheet.current.edition) {
+            if (jssTable[1] == 2 && libraryBase.jspreadsheet.current.options.editable != false) {
+                if (! libraryBase.jspreadsheet.current.edition) {
                     const getCellCoords = function(element) {
                         if (element.parentNode) {
                             const x = element.getAttribute('data-x');
@@ -8102,7 +8104,7 @@ const src_doubleClickControls = function(e) {
                     }
                     const cell = getCellCoords(e.target);
                     if (cell && cell.classList.contains('highlight')) {
-                        src_openEditor.call(src_libraryBase.jspreadsheet.current, cell, undefined, e);
+                        openEditor.call(libraryBase.jspreadsheet.current, cell, undefined, e);
                     }
                 }
             }
@@ -8110,22 +8112,22 @@ const src_doubleClickControls = function(e) {
     }
 }
 
-const src_pasteControls = function(e) {
-    if (src_libraryBase.jspreadsheet.current && src_libraryBase.jspreadsheet.current.selectedCell) {
-        if (! src_libraryBase.jspreadsheet.current.edition) {
-            if (src_libraryBase.jspreadsheet.current.options.editable != false) {
+const pasteControls = function(e) {
+    if (libraryBase.jspreadsheet.current && libraryBase.jspreadsheet.current.selectedCell) {
+        if (! libraryBase.jspreadsheet.current.edition) {
+            if (libraryBase.jspreadsheet.current.options.editable != false) {
                 if (e && e.clipboardData) {
-                    src_paste.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.selectedCell[0], src_libraryBase.jspreadsheet.current.selectedCell[1], e.clipboardData.getData('text'));
+                    paste.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e.clipboardData.getData('text'));
                     e.preventDefault();
                 } else if (window.clipboardData) {
-                    src_paste.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.selectedCell[0], src_libraryBase.jspreadsheet.current.selectedCell[1], window.clipboardData.getData('text'));
+                    paste.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], window.clipboardData.getData('text'));
                 }
             }
         }
     }
 }
 
-const src_getRole = function(element) {
+const getRole = function(element) {
     if (element.classList.contains('jss_selectall')) {
         return 'select-all';
     }
@@ -8162,7 +8164,7 @@ const src_getRole = function(element) {
         }
 
         if (tempElement.tagName === 'TFOOT') {
-            return src_getElementIndex(element) === 0 ? 'grid' : 'footer';
+            return getElementIndex(element) === 0 ? 'grid' : 'footer';
         }
 
         if (tempElement.tagName === 'THEAD') {
@@ -8175,7 +8177,7 @@ const src_getRole = function(element) {
     return 'applications';
 }
 
-const src_defaultContextMenu = function(worksheet, x, y, role) {
+const defaultContextMenu = function(worksheet, x, y, role) {
     const items = [];
 
     if (role === 'header') {
@@ -8281,7 +8283,7 @@ const src_defaultContextMenu = function(worksheet, x, y, role) {
                 onclick:function() {
                     const comment = prompt(jSuites.translate('Comments'), title);
                     if (comment) {
-                        worksheet.setComments((0,src_helpers.getCellNameFromCoords)(x, y), comment);
+                        worksheet.setComments((0,helpers.getCellNameFromCoords)(x, y), comment);
                     }
                 }
             });
@@ -8290,7 +8292,7 @@ const src_defaultContextMenu = function(worksheet, x, y, role) {
                 items.push({
                     title: jSuites.translate('Clear comments'),
                     onclick:function() {
-                        worksheet.setComments((0,src_helpers.getCellNameFromCoords)(x, y), '');
+                        worksheet.setComments((0,helpers.getCellNameFromCoords)(x, y), '');
                     }
                 });
             }
@@ -8308,7 +8310,7 @@ const src_defaultContextMenu = function(worksheet, x, y, role) {
             title: jSuites.translate('Copy') + '...',
             shortcut:'Ctrl + C',
             onclick:function() {
-                src_copy.call(worksheet, true);
+                copy.call(worksheet, true);
             }
         });
 
@@ -8321,7 +8323,7 @@ const src_defaultContextMenu = function(worksheet, x, y, role) {
                     if (worksheet.selectedCell) {
                         navigator.clipboard.readText().then(function(text) {
                             if (text) {
-                                src_paste.call(worksheet, worksheet.selectedCell[0], worksheet.selectedCell[1], text);
+                                paste.call(worksheet, worksheet.selectedCell[0], worksheet.selectedCell[1], text);
                             }
                         });
                     }
@@ -8347,7 +8349,7 @@ const src_defaultContextMenu = function(worksheet, x, y, role) {
             title: jSuites.translate('About'),
             onclick:function() {
                 if (typeof worksheet.parent.config.about === 'undefined' || worksheet.parent.config.about === true) {
-                    alert(src_version.print());
+                    alert(version.print());
                 } else {
                     alert(worksheet.parent.config.about);
                 }
@@ -8358,7 +8360,7 @@ const src_defaultContextMenu = function(worksheet, x, y, role) {
     return items;
 }
 
-const src_getElementIndex = function(element) {
+const getElementIndex = function(element) {
     const parentChildren = element.parentElement.children;
 
     for (let i = 0; i < parentChildren.length; i++) {
@@ -8372,7 +8374,7 @@ const src_getElementIndex = function(element) {
     return -1;
 }
 
-const src_contextMenuControls = function(e) {
+const contextMenuControls = function(e) {
     e = e || window.event;
     if ("buttons" in e) {
         var mouseButton = e.buttons;
@@ -8380,16 +8382,16 @@ const src_contextMenuControls = function(e) {
         var mouseButton = e.which || e.button;
     }
 
-    if (src_libraryBase.jspreadsheet.current) {
-        const spreadsheet = src_libraryBase.jspreadsheet.current.parent;
+    if (libraryBase.jspreadsheet.current) {
+        const spreadsheet = libraryBase.jspreadsheet.current.parent;
 
-        if (src_libraryBase.jspreadsheet.current.edition) {
+        if (libraryBase.jspreadsheet.current.edition) {
             e.preventDefault();
         } else {
             spreadsheet.contextMenu.contextmenu.close();
 
-            if (src_libraryBase.jspreadsheet.current) {
-                const role = src_getRole(e.target);
+            if (libraryBase.jspreadsheet.current) {
+                const role = getRole(e.target);
 
                 let x = null, y = null;
 
@@ -8403,11 +8405,11 @@ const src_contextMenuControls = function(e) {
                     x = cellElement.getAttribute('data-x');
 
                     if (
-                        !src_libraryBase.jspreadsheet.current.selectedCell ||
-                        (x < parseInt(src_libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(src_libraryBase.jspreadsheet.current.selectedCell[2])) ||
-                        (y < parseInt(src_libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(src_libraryBase.jspreadsheet.current.selectedCell[3]))
+                        !libraryBase.jspreadsheet.current.selectedCell ||
+                        (x < parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
+                        (y < parseInt(libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(libraryBase.jspreadsheet.current.selectedCell[3]))
                     ) {
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, x, y, x, y, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, x, y, x, y, e);
                     }
                 } else if (role === 'row' || role === 'header') {
                     if (role === 'row') {
@@ -8417,39 +8419,39 @@ const src_contextMenuControls = function(e) {
                     }
 
                     if (
-                        !src_libraryBase.jspreadsheet.current.selectedCell ||
-                        (x < parseInt(src_libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(src_libraryBase.jspreadsheet.current.selectedCell[2])) ||
-                        (y < parseInt(src_libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(src_libraryBase.jspreadsheet.current.selectedCell[3]))
+                        !libraryBase.jspreadsheet.current.selectedCell ||
+                        (x < parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
+                        (y < parseInt(libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(libraryBase.jspreadsheet.current.selectedCell[3]))
                     ) {
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, x, y, x, y, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, x, y, x, y, e);
                     }
                 } else if (role === 'nested') {
                     const columns = e.target.getAttribute('data-column').split(',');
 
-                    x = src_getElementIndex(e.target) - 1;
-                    y = src_getElementIndex(e.target.parentElement);
+                    x = getElementIndex(e.target) - 1;
+                    y = getElementIndex(e.target.parentElement);
 
                     if (
-                        !src_libraryBase.jspreadsheet.current.selectedCell ||
-                        (columns[0] != parseInt(src_libraryBase.jspreadsheet.current.selectedCell[0])) || (columns[columns.length - 1] != parseInt(src_libraryBase.jspreadsheet.current.selectedCell[2])) ||
-                        (src_libraryBase.jspreadsheet.current.selectedCell[1] != null || src_libraryBase.jspreadsheet.current.selectedCell[3] != null)
+                        !libraryBase.jspreadsheet.current.selectedCell ||
+                        (columns[0] != parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (columns[columns.length - 1] != parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
+                        (libraryBase.jspreadsheet.current.selectedCell[1] != null || libraryBase.jspreadsheet.current.selectedCell[3] != null)
                     ) {
-                        src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, columns[0], null, columns[columns.length - 1], null, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columns[0], null, columns[columns.length - 1], null, e);
                     }
                 } else if (role === 'select-all') {
-                    src_selection/* selectAll */.Ub.call(src_libraryBase.jspreadsheet.current);
+                    selection/* selectAll */.Ub.call(libraryBase.jspreadsheet.current);
                 } else if (role === 'tabs') {
-                    x = src_getElementIndex(e.target);
+                    x = getElementIndex(e.target);
                 } else if (role === 'footer') {
-                    x = src_getElementIndex(e.target) - 1;
-                    y = src_getElementIndex(e.target.parentElement);
+                    x = getElementIndex(e.target) - 1;
+                    y = getElementIndex(e.target.parentElement);
                 }
 
                 // Table found
-                let items = src_defaultContextMenu(src_libraryBase.jspreadsheet.current,parseInt(x),parseInt(y), role);
+                let items = defaultContextMenu(libraryBase.jspreadsheet.current,parseInt(x),parseInt(y), role);
 
                 if (typeof spreadsheet.config.contextMenu === 'function') {
-                    const result = spreadsheet.config.contextMenu(src_libraryBase.jspreadsheet.current, x, y, e, items, role, x, y);
+                    const result = spreadsheet.config.contextMenu(libraryBase.jspreadsheet.current, x, y, e, items, role, x, y);
 
                     if (result) {
                         items = result;
@@ -8462,7 +8464,7 @@ const src_contextMenuControls = function(e) {
                     Object.entries(spreadsheet.plugins).forEach(function([, plugin]) {
                         if (typeof plugin.contextMenu === 'function') {
                             const result = plugin.contextMenu(
-                                src_libraryBase.jspreadsheet.current,
+                                libraryBase.jspreadsheet.current,
                                 x !== null ? parseInt(x) : null,
                                 y !== null ? parseInt(y) : null,
                                 e,
@@ -8488,65 +8490,65 @@ const src_contextMenuControls = function(e) {
     }
 }
 
-const src_touchStartControls = function(e) {
-    const jssTable = src_getElement(e.target);
+const touchStartControls = function(e) {
+    const jssTable = getElement(e.target);
 
     if (jssTable[0]) {
-        if (src_libraryBase.jspreadsheet.current != jssTable[0].jssWorksheet) {
-            if (src_libraryBase.jspreadsheet.current) {
-                src_libraryBase.jspreadsheet.current.resetSelection();
+        if (libraryBase.jspreadsheet.current != jssTable[0].jssWorksheet) {
+            if (libraryBase.jspreadsheet.current) {
+                libraryBase.jspreadsheet.current.resetSelection();
             }
-            src_libraryBase.jspreadsheet.current = jssTable[0].jssWorksheet;
+            libraryBase.jspreadsheet.current = jssTable[0].jssWorksheet;
         }
     } else {
-        if (src_libraryBase.jspreadsheet.current) {
-            src_libraryBase.jspreadsheet.current.resetSelection();
-            src_libraryBase.jspreadsheet.current = null;
+        if (libraryBase.jspreadsheet.current) {
+            libraryBase.jspreadsheet.current.resetSelection();
+            libraryBase.jspreadsheet.current = null;
         }
     }
 
-    if (src_libraryBase.jspreadsheet.current) {
-        if (! src_libraryBase.jspreadsheet.current.edition) {
+    if (libraryBase.jspreadsheet.current) {
+        if (! libraryBase.jspreadsheet.current.edition) {
             const columnId = e.target.getAttribute('data-x');
             const rowId = e.target.getAttribute('data-y');
 
             if (columnId && rowId) {
-                src_selection/* updateSelectionFromCoords */.AH.call(src_libraryBase.jspreadsheet.current, columnId, rowId, undefined, undefined, e);
+                selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, undefined, undefined, e);
 
-                src_libraryBase.jspreadsheet.timeControl = setTimeout(function() {
+                libraryBase.jspreadsheet.timeControl = setTimeout(function() {
                     // Keep temporary reference to the element
-                    if (src_libraryBase.jspreadsheet.current.options.columns[columnId].type == 'color') {
-                        src_libraryBase.jspreadsheet.tmpElement = null;
+                    if (libraryBase.jspreadsheet.current.options.columns[columnId].type == 'color') {
+                        libraryBase.jspreadsheet.tmpElement = null;
                     } else {
-                        src_libraryBase.jspreadsheet.tmpElement = e.target;
+                        libraryBase.jspreadsheet.tmpElement = e.target;
                     }
-                    src_openEditor.call(src_libraryBase.jspreadsheet.current, e.target, false, e);
+                    openEditor.call(libraryBase.jspreadsheet.current, e.target, false, e);
                 }, 500);
             }
         }
     }
 }
 
-const src_touchEndControls = function(e) {
+const touchEndControls = function(e) {
     // Clear any time control
-    if (src_libraryBase.jspreadsheet.timeControl) {
-        clearTimeout(src_libraryBase.jspreadsheet.timeControl);
-        src_libraryBase.jspreadsheet.timeControl = null;
+    if (libraryBase.jspreadsheet.timeControl) {
+        clearTimeout(libraryBase.jspreadsheet.timeControl);
+        libraryBase.jspreadsheet.timeControl = null;
         // Element
-        if (src_libraryBase.jspreadsheet.tmpElement && src_libraryBase.jspreadsheet.tmpElement.children[0].tagName == 'INPUT') {
-            src_libraryBase.jspreadsheet.tmpElement.children[0].focus();
+        if (libraryBase.jspreadsheet.tmpElement && libraryBase.jspreadsheet.tmpElement.children[0].tagName == 'INPUT') {
+            libraryBase.jspreadsheet.tmpElement.children[0].focus();
         }
-        src_libraryBase.jspreadsheet.tmpElement = null;
+        libraryBase.jspreadsheet.tmpElement = null;
     }
 }
 
-const src_cutControls = function(e) {
-    if (src_libraryBase.jspreadsheet.current) {
-        if (! src_libraryBase.jspreadsheet.current.edition) {
-            src_copy.call(src_libraryBase.jspreadsheet.current, true, undefined, undefined, undefined, undefined, true);
-            if (src_libraryBase.jspreadsheet.current.options.editable != false) {
-                src_libraryBase.jspreadsheet.current.setValue(
-                    src_libraryBase.jspreadsheet.current.highlighted.map(function(record) {
+const cutControls = function(e) {
+    if (libraryBase.jspreadsheet.current) {
+        if (! libraryBase.jspreadsheet.current.edition) {
+            copy.call(libraryBase.jspreadsheet.current, true, undefined, undefined, undefined, undefined, true);
+            if (libraryBase.jspreadsheet.current.options.editable != false) {
+                libraryBase.jspreadsheet.current.setValue(
+                    libraryBase.jspreadsheet.current.highlighted.map(function(record) {
                         return record.element;
                     }),
                     ''
@@ -8556,10 +8558,10 @@ const src_cutControls = function(e) {
     }
 }
 
-const src_copyControls = function(e) {
-    if (src_libraryBase.jspreadsheet.current && src_copyControls.enabled) {
-        if (! src_libraryBase.jspreadsheet.current.edition) {
-            src_copy.call(src_libraryBase.jspreadsheet.current, true);
+const copyControls = function(e) {
+    if (libraryBase.jspreadsheet.current && copyControls.enabled) {
+        if (! libraryBase.jspreadsheet.current.edition) {
+            copy.call(libraryBase.jspreadsheet.current, true);
         }
     }
 }
@@ -8567,51 +8569,51 @@ const src_copyControls = function(e) {
 /**
  * Valid international letter
  */
-const src_validLetter = function (text) {
+const validLetter = function (text) {
     const regex = /([\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC-\u0400-\u04FF']+)/g;
     return text.match(regex) ? 1 : 0;
 }
 
-const src_keyDownControls = function(e) {
-    if (src_libraryBase.jspreadsheet.current) {
-        if (src_libraryBase.jspreadsheet.current.edition) {
+const keyDownControls = function(e) {
+    if (libraryBase.jspreadsheet.current) {
+        if (libraryBase.jspreadsheet.current.edition) {
             if (e.which == 27) {
                 // Escape
-                if (src_libraryBase.jspreadsheet.current.edition) {
+                if (libraryBase.jspreadsheet.current.edition) {
                     // Exit without saving
-                    src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], false);
+                    closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], false);
                 }
                 e.preventDefault();
             } else if (e.which == 13) {
                 // Enter
-                if (src_libraryBase.jspreadsheet.current.options.columns && src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]] && src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]].type == 'calendar') {
-                    src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], true);
+                if (libraryBase.jspreadsheet.current.options.columns && libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]] && libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]].type == 'calendar') {
+                    closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
                 } else if (
-                    src_libraryBase.jspreadsheet.current.options.columns &&
-                    src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]] &&
-                    src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]].type == 'dropdown'
+                    libraryBase.jspreadsheet.current.options.columns &&
+                    libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]] &&
+                    libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]].type == 'dropdown'
                 ) {
                     // Do nothing
                 } else {
                     // Alt enter -> do not close editor
                     if (
                         (
-                            src_libraryBase.jspreadsheet.current.options.wordWrap == true ||
+                            libraryBase.jspreadsheet.current.options.wordWrap == true ||
                             (
-                                src_libraryBase.jspreadsheet.current.options.columns &&
-                                src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]] &&
-                                src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]].wordWrap == true
+                                libraryBase.jspreadsheet.current.options.columns &&
+                                libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]] &&
+                                libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]].wordWrap == true
                             ) ||
                             (
-                                src_libraryBase.jspreadsheet.current.options.data[src_libraryBase.jspreadsheet.current.edition[3]][src_libraryBase.jspreadsheet.current.edition[2]] &&
-                                src_libraryBase.jspreadsheet.current.options.data[src_libraryBase.jspreadsheet.current.edition[3]][src_libraryBase.jspreadsheet.current.edition[2]].length > 200
+                                libraryBase.jspreadsheet.current.options.data[libraryBase.jspreadsheet.current.edition[3]][libraryBase.jspreadsheet.current.edition[2]] &&
+                                libraryBase.jspreadsheet.current.options.data[libraryBase.jspreadsheet.current.edition[3]][libraryBase.jspreadsheet.current.edition[2]].length > 200
                             )
                         ) &&
                         e.altKey
                     ) {
                         // Add new line to the editor
-                        const editorTextarea = src_libraryBase.jspreadsheet.current.edition[0].children[0];
-                        let editorValue = src_libraryBase.jspreadsheet.current.edition[0].children[0].value;
+                        const editorTextarea = libraryBase.jspreadsheet.current.edition[0].children[0];
+                        let editorValue = libraryBase.jspreadsheet.current.edition[0].children[0].value;
                         const editorIndexOf = editorTextarea.selectionStart;
                         editorValue = editorValue.slice(0, editorIndexOf) + "\n" + editorValue.slice(editorIndexOf);
                         editorTextarea.value = editorValue;
@@ -8619,62 +8621,62 @@ const src_keyDownControls = function(e) {
                         editorTextarea.selectionStart = editorIndexOf + 1;
                         editorTextarea.selectionEnd = editorIndexOf + 1;
                     } else {
-                        src_libraryBase.jspreadsheet.current.edition[0].children[0].blur();
+                        libraryBase.jspreadsheet.current.edition[0].children[0].blur();
                     }
                 }
             } else if (e.which == 9) {
                 // Tab
                 if (
-                    src_libraryBase.jspreadsheet.current.options.columns &&
-                    src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]] &&
-                    ['calendar', 'html'].includes(src_libraryBase.jspreadsheet.current.options.columns[src_libraryBase.jspreadsheet.current.edition[2]].type)
+                    libraryBase.jspreadsheet.current.options.columns &&
+                    libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]] &&
+                    ['calendar', 'html'].includes(libraryBase.jspreadsheet.current.options.columns[libraryBase.jspreadsheet.current.edition[2]].type)
                 ) {
-                    src_closeEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.edition[0], true);
+                    closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
                 } else {
-                    src_libraryBase.jspreadsheet.current.edition[0].children[0].blur();
+                    libraryBase.jspreadsheet.current.edition[0].children[0].blur();
                 }
             }
         }
 
-        if (! src_libraryBase.jspreadsheet.current.edition && src_libraryBase.jspreadsheet.current.selectedCell) {
+        if (! libraryBase.jspreadsheet.current.edition && libraryBase.jspreadsheet.current.selectedCell) {
             // Which key
             if (e.which == 37) {
-                src_left.call(src_libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                left.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                 e.preventDefault();
             } else if (e.which == 39) {
-                src_right.call(src_libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                right.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                 e.preventDefault();
             } else if (e.which == 38) {
-                src_up.call(src_libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                 e.preventDefault();
             } else if (e.which == 40) {
-                src_down.call(src_libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                 e.preventDefault();
             } else if (e.which == 36) {
-                src_first.call(src_libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                first.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                 e.preventDefault();
             } else if (e.which == 35) {
-                src_last.call(src_libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                last.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                 e.preventDefault();
             } else if (e.which == 46) {
                 // Delete
-                if (src_libraryBase.jspreadsheet.current.options.editable != false) {
-                    if (src_libraryBase.jspreadsheet.current.selectedRow) {
-                        if (src_libraryBase.jspreadsheet.current.options.allowDeleteRow != false) {
+                if (libraryBase.jspreadsheet.current.options.editable != false) {
+                    if (libraryBase.jspreadsheet.current.selectedRow) {
+                        if (libraryBase.jspreadsheet.current.options.allowDeleteRow != false) {
                             if (confirm(jSuites.translate('Are you sure to delete the selected rows?'))) {
-                                src_libraryBase.jspreadsheet.current.deleteRow();
+                                libraryBase.jspreadsheet.current.deleteRow();
                             }
                         }
-                    } else if (src_libraryBase.jspreadsheet.current.selectedHeader) {
-                        if (src_libraryBase.jspreadsheet.current.options.allowDeleteColumn != false) {
+                    } else if (libraryBase.jspreadsheet.current.selectedHeader) {
+                        if (libraryBase.jspreadsheet.current.options.allowDeleteColumn != false) {
                             if (confirm(jSuites.translate('Are you sure to delete the selected columns?'))) {
-                                src_libraryBase.jspreadsheet.current.deleteColumn();
+                                libraryBase.jspreadsheet.current.deleteColumn();
                             }
                         }
                     } else {
                         // Change value
-                        src_libraryBase.jspreadsheet.current.setValue(
-                            src_libraryBase.jspreadsheet.current.highlighted.map(function(record) {
+                        libraryBase.jspreadsheet.current.setValue(
+                            libraryBase.jspreadsheet.current.highlighted.map(function(record) {
                                 return record.element;
                             }),
                             ''
@@ -8684,104 +8686,104 @@ const src_keyDownControls = function(e) {
             } else if (e.which == 13) {
                 // Move cursor
                 if (e.shiftKey) {
-                    src_up.call(src_libraryBase.jspreadsheet.current);
+                    up.call(libraryBase.jspreadsheet.current);
                 } else {
-                    if (src_libraryBase.jspreadsheet.current.options.allowInsertRow != false) {
-                        if (src_libraryBase.jspreadsheet.current.options.allowManualInsertRow != false) {
-                            if (src_libraryBase.jspreadsheet.current.selectedCell[1] == src_libraryBase.jspreadsheet.current.options.data.length - 1) {
+                    if (libraryBase.jspreadsheet.current.options.allowInsertRow != false) {
+                        if (libraryBase.jspreadsheet.current.options.allowManualInsertRow != false) {
+                            if (libraryBase.jspreadsheet.current.selectedCell[1] == libraryBase.jspreadsheet.current.options.data.length - 1) {
                                 // New record in case selectedCell in the last row
-                                src_libraryBase.jspreadsheet.current.insertRow();
+                                libraryBase.jspreadsheet.current.insertRow();
                             }
                         }
                     }
 
-                    src_down.call(src_libraryBase.jspreadsheet.current);
+                    down.call(libraryBase.jspreadsheet.current);
                 }
                 e.preventDefault();
             } else if (e.which == 9) {
                 // Tab
                 if (e.shiftKey) {
-                    src_left.call(src_libraryBase.jspreadsheet.current);
+                    left.call(libraryBase.jspreadsheet.current);
                 } else {
-                    if (src_libraryBase.jspreadsheet.current.options.allowInsertColumn != false) {
-                        if (src_libraryBase.jspreadsheet.current.options.allowManualInsertColumn != false) {
-                            if (src_libraryBase.jspreadsheet.current.selectedCell[0] == src_libraryBase.jspreadsheet.current.options.data[0].length - 1) {
+                    if (libraryBase.jspreadsheet.current.options.allowInsertColumn != false) {
+                        if (libraryBase.jspreadsheet.current.options.allowManualInsertColumn != false) {
+                            if (libraryBase.jspreadsheet.current.selectedCell[0] == libraryBase.jspreadsheet.current.options.data[0].length - 1) {
                                 // New record in case selectedCell in the last column
-                                src_libraryBase.jspreadsheet.current.insertColumn();
+                                libraryBase.jspreadsheet.current.insertColumn();
                             }
                         }
                     }
 
-                    src_right.call(src_libraryBase.jspreadsheet.current);
+                    right.call(libraryBase.jspreadsheet.current);
                 }
                 e.preventDefault();
             } else {
                 if ((e.ctrlKey || e.metaKey) && ! e.shiftKey) {
                     if (e.which == 65) {
                         // Ctrl + A
-                        src_selection/* selectAll */.Ub.call(src_libraryBase.jspreadsheet.current);
+                        selection/* selectAll */.Ub.call(libraryBase.jspreadsheet.current);
                         e.preventDefault();
                     } else if (e.which == 83) {
                         // Ctrl + S
-                        src_libraryBase.jspreadsheet.current.download();
+                        libraryBase.jspreadsheet.current.download();
                         e.preventDefault();
                     } else if (e.which == 89) {
                         // Ctrl + Y
-                        src_libraryBase.jspreadsheet.current.redo();
+                        libraryBase.jspreadsheet.current.redo();
                         e.preventDefault();
                     } else if (e.which == 90) {
                         // Ctrl + Z
-                        src_libraryBase.jspreadsheet.current.undo();
+                        libraryBase.jspreadsheet.current.undo();
                         e.preventDefault();
                     } else if (e.which == 67) {
                         // Ctrl + C
-                        src_copy.call(src_libraryBase.jspreadsheet.current, true);
+                        copy.call(libraryBase.jspreadsheet.current, true);
                         e.preventDefault();
                     } else if (e.which == 88) {
                         // Ctrl + X
-                        if (src_libraryBase.jspreadsheet.current.options.editable != false) {
-                            src_cutControls();
+                        if (libraryBase.jspreadsheet.current.options.editable != false) {
+                            cutControls();
                         } else {
-                            src_copyControls();
+                            copyControls();
                         }
                         e.preventDefault();
                     } else if (e.which == 86) {
                         // Ctrl + V
-                        src_pasteControls();
+                        pasteControls();
                     }
                 } else {
-                    if (src_libraryBase.jspreadsheet.current.selectedCell) {
-                        if (src_libraryBase.jspreadsheet.current.options.editable != false) {
-                            const rowId = src_libraryBase.jspreadsheet.current.selectedCell[1];
-                            const columnId = src_libraryBase.jspreadsheet.current.selectedCell[0];
+                    if (libraryBase.jspreadsheet.current.selectedCell) {
+                        if (libraryBase.jspreadsheet.current.options.editable != false) {
+                            const rowId = libraryBase.jspreadsheet.current.selectedCell[1];
+                            const columnId = libraryBase.jspreadsheet.current.selectedCell[0];
 
                             // Characters able to start a edition
                             if (e.keyCode == 32) {
                                 // Space
                                 e.preventDefault()
                                 if (
-                                    src_libraryBase.jspreadsheet.current.options.columns[columnId].type == 'checkbox' ||
-                                    src_libraryBase.jspreadsheet.current.options.columns[columnId].type == 'radio'
+                                    libraryBase.jspreadsheet.current.options.columns[columnId].type == 'checkbox' ||
+                                    libraryBase.jspreadsheet.current.options.columns[columnId].type == 'radio'
                                 ) {
-                                    src_setCheckRadioValue.call(src_libraryBase.jspreadsheet.current);
+                                    setCheckRadioValue.call(libraryBase.jspreadsheet.current);
                                 } else {
                                     // Start edition
-                                    src_openEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.records[rowId][columnId].element, true, e);
+                                    openEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.records[rowId][columnId].element, true, e);
                                 }
                             } else if (e.keyCode == 113) {
                                 // Start edition with current content F2
-                                src_openEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.records[rowId][columnId].element, false, e);
+                                openEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.records[rowId][columnId].element, false, e);
                             } else if (
                                 (e.keyCode == 8) ||
                                 (e.keyCode >= 48 && e.keyCode <= 57) ||
                                 (e.keyCode >= 96 && e.keyCode <= 111) ||
                                 (e.keyCode >= 187 && e.keyCode <= 190) ||
-                                ((String.fromCharCode(e.keyCode) == e.key || String.fromCharCode(e.keyCode).toLowerCase() == e.key.toLowerCase()) && src_validLetter(String.fromCharCode(e.keyCode)))
+                                ((String.fromCharCode(e.keyCode) == e.key || String.fromCharCode(e.keyCode).toLowerCase() == e.key.toLowerCase()) && validLetter(String.fromCharCode(e.keyCode)))
                             ) {
                                 // Start edition
-                                src_openEditor.call(src_libraryBase.jspreadsheet.current, src_libraryBase.jspreadsheet.current.records[rowId][columnId].element, true, e);
+                                openEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.records[rowId][columnId].element, true, e);
                                 // Prevent entries in the calendar
-                                if (src_libraryBase.jspreadsheet.current.options.columns && src_libraryBase.jspreadsheet.current.options.columns[columnId] && src_libraryBase.jspreadsheet.current.options.columns[columnId].type == 'calendar') {
+                                if (libraryBase.jspreadsheet.current.options.columns && libraryBase.jspreadsheet.current.options.columns[columnId] && libraryBase.jspreadsheet.current.options.columns[columnId].type == 'calendar') {
                                     e.preventDefault();
                                 }
                             }
@@ -8791,54 +8793,54 @@ const src_keyDownControls = function(e) {
             }
         } else {
             if (e.target.classList.contains('jss_search')) {
-                if (src_libraryBase.jspreadsheet.timeControl) {
-                    clearTimeout(src_libraryBase.jspreadsheet.timeControl);
+                if (libraryBase.jspreadsheet.timeControl) {
+                    clearTimeout(libraryBase.jspreadsheet.timeControl);
                 }
 
-                src_libraryBase.jspreadsheet.timeControl = setTimeout(function() {
-                    src_libraryBase.jspreadsheet.current.search(e.target.value);
+                libraryBase.jspreadsheet.timeControl = setTimeout(function() {
+                    libraryBase.jspreadsheet.current.search(e.target.value);
                 }, 200);
             }
         }
     }
 }
 
-const src_wheelControls = function(e) {
+const wheelControls = function(e) {
     const obj = this;
 
     if (obj.options.lazyLoading == true) {
-        if (src_libraryBase.jspreadsheet.timeControlLoading == null) {
-            src_libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
+        if (libraryBase.jspreadsheet.timeControlLoading == null) {
+            libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
                 if (obj.content.scrollTop + obj.content.clientHeight >= obj.content.scrollHeight - 10) {
-                    if (src_lazyLoading/* loadDown */.p6.call(obj)) {
+                    if (lazyLoading/* loadDown */.p6.call(obj)) {
                         if (obj.content.scrollTop + obj.content.clientHeight > obj.content.scrollHeight - 10) {
                             obj.content.scrollTop = obj.content.scrollTop - obj.content.clientHeight;
                         }
-                        src_selection/* updateCornerPosition */.Aq.call(obj);
+                        selection/* updateCornerPosition */.Aq.call(obj);
                     }
                 } else if (obj.content.scrollTop <= obj.content.clientHeight) {
-                    if (src_lazyLoading/* loadUp */.G_.call(obj)) {
+                    if (lazyLoading/* loadUp */.G_.call(obj)) {
                         if (obj.content.scrollTop < 10) {
                             obj.content.scrollTop = obj.content.scrollTop + obj.content.clientHeight;
                         }
-                        src_selection/* updateCornerPosition */.Aq.call(obj);
+                        selection/* updateCornerPosition */.Aq.call(obj);
                     }
                 }
 
-                src_libraryBase.jspreadsheet.timeControlLoading = null;
+                libraryBase.jspreadsheet.timeControlLoading = null;
             }, 100);
         }
     }
 }
 
-let src_scrollLeft = 0;
+let scrollLeft = 0;
 
-const src_updateFreezePosition = function() {
+const updateFreezePosition = function() {
     const obj = this;
 
-    src_scrollLeft = obj.content.scrollLeft;
+    scrollLeft = obj.content.scrollLeft;
     let width = 0;
-    if (src_scrollLeft > 50) {
+    if (scrollLeft > 50) {
         for (let i = 0; i < obj.options.freezeColumns; i++) {
             if (i > 0) {
                 // Must check if the previous column is hidden or not to determin whether the width shoule be added or not!
@@ -8857,7 +8859,7 @@ const src_updateFreezePosition = function() {
             obj.headers[i].style.left = width + 'px';
             for (let j = 0; j < obj.rows.length; j++) {
                 if (obj.rows[j] && obj.records[j][i]) {
-                    const shifted = (src_scrollLeft + (i > 0 ? obj.records[j][i-1].element.style.width : 0)) - 51 + 'px';
+                    const shifted = (scrollLeft + (i > 0 ? obj.records[j][i-1].element.style.width : 0)) - 51 + 'px';
                     obj.records[j][i].element.classList.add('jss_freezed');
                     obj.records[j][i].element.style.left = shifted;
                 }
@@ -8877,59 +8879,59 @@ const src_updateFreezePosition = function() {
     }
 
     // Place the corner in the correct place
-    src_selection/* updateCornerPosition */.Aq.call(obj);
+    selection/* updateCornerPosition */.Aq.call(obj);
 }
 
-const src_scrollControls = function(e) {
+const scrollControls = function(e) {
     const obj = this;
 
-    src_wheelControls.call(obj);
+    wheelControls.call(obj);
 
-    if (obj.options.freezeColumns > 0 && obj.content.scrollLeft != src_scrollLeft) {
-        src_updateFreezePosition.call(obj);
+    if (obj.options.freezeColumns > 0 && obj.content.scrollLeft != scrollLeft) {
+        updateFreezePosition.call(obj);
     }
 
     // Close editor
     if (obj.options.lazyLoading == true || obj.options.tableOverflow == true) {
         if (obj.edition && e.target.className.substr(0,9) != 'jdropdown') {
-            src_closeEditor.call(obj, obj.edition[0], true);
+            closeEditor.call(obj, obj.edition[0], true);
         }
     }
 }
 
-const src_setEvents = function(root) {
-    src_destroyEvents(root);
-    root.addEventListener("mouseup", src_mouseUpControls);
-    root.addEventListener("mousedown", src_mouseDownControls);
-    root.addEventListener("mousemove", src_mouseMoveControls);
-    root.addEventListener("mouseover", src_mouseOverControls);
-    root.addEventListener("dblclick", src_doubleClickControls);
-    root.addEventListener("paste", src_pasteControls);
-    root.addEventListener("contextmenu", src_contextMenuControls);
-    root.addEventListener("touchstart", src_touchStartControls);
-    root.addEventListener("touchend", src_touchEndControls);
-    root.addEventListener("touchcancel", src_touchEndControls);
-    root.addEventListener("touchmove", src_touchEndControls);
-    document.addEventListener("keydown", src_keyDownControls);
+const setEvents = function(root) {
+    destroyEvents(root);
+    root.addEventListener("mouseup", mouseUpControls);
+    root.addEventListener("mousedown", mouseDownControls);
+    root.addEventListener("mousemove", mouseMoveControls);
+    root.addEventListener("mouseover", mouseOverControls);
+    root.addEventListener("dblclick", doubleClickControls);
+    root.addEventListener("paste", pasteControls);
+    root.addEventListener("contextmenu", contextMenuControls);
+    root.addEventListener("touchstart", touchStartControls);
+    root.addEventListener("touchend", touchEndControls);
+    root.addEventListener("touchcancel", touchEndControls);
+    root.addEventListener("touchmove", touchEndControls);
+    document.addEventListener("keydown", keyDownControls);
 }
 
-const src_destroyEvents = function(root) {
-    root.removeEventListener("mouseup", src_mouseUpControls);
-    root.removeEventListener("mousedown", src_mouseDownControls);
-    root.removeEventListener("mousemove", src_mouseMoveControls);
-    root.removeEventListener("mouseover", src_mouseOverControls);
-    root.removeEventListener("dblclick", src_doubleClickControls);
-    root.removeEventListener("paste", src_pasteControls);
-    root.removeEventListener("contextmenu", src_contextMenuControls);
-    root.removeEventListener("touchstart", src_touchStartControls);
-    root.removeEventListener("touchend", src_touchEndControls);
-    root.removeEventListener("touchcancel", src_touchEndControls);
-    document.removeEventListener("keydown", src_keyDownControls);
+const destroyEvents = function(root) {
+    root.removeEventListener("mouseup", mouseUpControls);
+    root.removeEventListener("mousedown", mouseDownControls);
+    root.removeEventListener("mousemove", mouseMoveControls);
+    root.removeEventListener("mouseover", mouseOverControls);
+    root.removeEventListener("dblclick", doubleClickControls);
+    root.removeEventListener("paste", pasteControls);
+    root.removeEventListener("contextmenu", contextMenuControls);
+    root.removeEventListener("touchstart", touchStartControls);
+    root.removeEventListener("touchend", touchEndControls);
+    root.removeEventListener("touchcancel", touchEndControls);
+    document.removeEventListener("keydown", keyDownControls);
 }
 // EXTERNAL MODULE: ./src/utils/toolbar.js
-var src_toolbar = __webpack_require__(845);
+var toolbar = __webpack_require__(845);
 // EXTERNAL MODULE: ./src/utils/pagination.js
-var src_pagination = __webpack_require__(292);
+var pagination = __webpack_require__(292);
 ;// ./src/utils/data.js
 
 
@@ -8940,7 +8942,7 @@ var src_pagination = __webpack_require__(292);
 
 
 
-const src_setData = function(data) {
+const setData = function(data) {
     const obj = this;
 
     // Update data
@@ -9036,7 +9038,7 @@ const src_setData = function(data) {
     // Append nodes to the HTML
     for (j = 0; j < obj.options.data.length; j++) {
         // Create row
-        const row = src_createRow.call(obj, j, obj.options.data[j]);
+        const row = createRow.call(obj, j, obj.options.data[j]);
         // Append line to the table
         if (j >= startNumber && j < finalNumber) {
             obj.tbody.appendChild(row.element);
@@ -9046,7 +9048,7 @@ const src_setData = function(data) {
     if (obj.options.lazyLoading == true) {
         // Do not create pagination with lazyloading activated
     } else if (obj.options.pagination) {
-        src_pagination/* updatePagination */.IV.call(obj);
+        pagination/* updatePagination */.IV.call(obj);
     }
 
     // Merge cells
@@ -9054,12 +9056,12 @@ const src_setData = function(data) {
         const keys = Object.keys(obj.options.mergeCells);
         for (let i = 0; i < keys.length; i++) {
             const num = obj.options.mergeCells[keys[i]];
-            src_merges/* setMerge */.FU.call(obj, keys[i], num[0], num[1], 1);
+            merges/* setMerge */.FU.call(obj, keys[i], num[0], num[1], 1);
         }
     }
 
     // Updata table with custom configurations if applicable
-    src_internal/* updateTable */.am.call(obj);
+    internal/* updateTable */.am.call(obj);
 }
 
 /**
@@ -9068,7 +9070,7 @@ const src_setData = function(data) {
  * @param object cell
  * @return string value
  */
-const src_getValue = function(cell, processedValue) {
+const getValue = function(cell, processedValue) {
     const obj = this;
 
     let x;
@@ -9078,7 +9080,7 @@ const src_getValue = function(cell, processedValue) {
         return null;
     }
 
-    cell = (0,src_internalHelpers/* getIdFromColumnName */.vu)(cell, true);
+    cell = (0,internalHelpers/* getIdFromColumnName */.vu)(cell, true);
     x = cell[0];
     y = cell[1];
 
@@ -9104,7 +9106,7 @@ const src_getValue = function(cell, processedValue) {
  * @param int y
  * @return string value
  */
-const src_getValueFromCoords = function(x, y, processedValue) {
+const getValueFromCoords = function(x, y, processedValue) {
     const obj = this;
 
     let value = null;
@@ -9129,21 +9131,21 @@ const src_getValueFromCoords = function(x, y, processedValue) {
  * @param string value value
  * @return void
  */
-const src_setValue = function(cell, value, force) {
+const setValue = function(cell, value, force) {
     const obj = this;
 
     const records = [];
 
     if (typeof(cell) == 'string') {
-        const columnId = (0,src_internalHelpers/* getIdFromColumnName */.vu)(cell, true);
+        const columnId = (0,internalHelpers/* getIdFromColumnName */.vu)(cell, true);
         const x = columnId[0];
         const y = columnId[1];
 
         // Update cell
-        records.push(src_internal/* updateCell */.k9.call(obj, x, y, value, force));
+        records.push(internal/* updateCell */.k9.call(obj, x, y, value, force));
 
         // Update all formulas in the chain
-        src_internal/* updateFormulaChain */.xF.call(obj, x, y, records);
+        internal/* updateFormulaChain */.xF.call(obj, x, y, records);
     } else {
         let x = null;
         let y = null;
@@ -9154,10 +9156,10 @@ const src_setValue = function(cell, value, force) {
 
         // Update cell
         if (x != null && y != null) {
-            records.push(src_internal/* updateCell */.k9.call(obj, x, y, value, force));
+            records.push(internal/* updateCell */.k9.call(obj, x, y, value, force));
 
             // Update all formulas in the chain
-            src_internal/* updateFormulaChain */.xF.call(obj, x, y, records);
+            internal/* updateFormulaChain */.xF.call(obj, x, y, records);
         } else {
             const keys = Object.keys(cell);
             if (keys.length > 0) {
@@ -9165,7 +9167,7 @@ const src_setValue = function(cell, value, force) {
                     let x, y;
 
                     if (typeof(cell[i]) == 'string') {
-                        const columnId = (0,src_internalHelpers/* getIdFromColumnName */.vu)(cell[i], true);
+                        const columnId = (0,internalHelpers/* getIdFromColumnName */.vu)(cell[i], true);
                         x = columnId[0];
                         y = columnId[1];
                     } else {
@@ -9184,10 +9186,10 @@ const src_setValue = function(cell, value, force) {
 
                      // Update cell
                     if (x != null && y != null) {
-                        records.push(src_internal/* updateCell */.k9.call(obj, x, y, value, force));
+                        records.push(internal/* updateCell */.k9.call(obj, x, y, value, force));
 
                         // Update all formulas in the chain
-                        src_internal/* updateFormulaChain */.xF.call(obj, x, y, records);
+                        internal/* updateFormulaChain */.xF.call(obj, x, y, records);
                     }
                 }
             }
@@ -9195,14 +9197,14 @@ const src_setValue = function(cell, value, force) {
     }
 
     // Update history
-    src_utils_history/* setHistory */.Dh.call(obj, {
+    utils_history/* setHistory */.Dh.call(obj, {
         action:'setValue',
         records:records,
         selection:obj.selectedCell,
     });
 
     // Update table with custom configurations if applicable
-    src_internal/* updateTable */.am.call(obj);
+    internal/* updateTable */.am.call(obj);
 
     // On after changes
     const onafterchangesRecords = records.map(function(record) {
@@ -9214,7 +9216,7 @@ const src_setValue = function(cell, value, force) {
         };
     });
 
-    src_dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
+    dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
 }
 
 /**
@@ -9225,24 +9227,24 @@ const src_setValue = function(cell, value, force) {
  * @param string value
  * @return void
  */
-const src_setValueFromCoords = function(x, y, value, force) {
+const setValueFromCoords = function(x, y, value, force) {
     const obj = this;
 
     const records = [];
-    records.push(src_internal/* updateCell */.k9.call(obj, x, y, value, force));
+    records.push(internal/* updateCell */.k9.call(obj, x, y, value, force));
 
     // Update all formulas in the chain
-    src_internal/* updateFormulaChain */.xF.call(obj, x, y, records);
+    internal/* updateFormulaChain */.xF.call(obj, x, y, records);
 
     // Update history
-    src_utils_history/* setHistory */.Dh.call(obj, {
+    utils_history/* setHistory */.Dh.call(obj, {
         action:'setValue',
         records:records,
         selection:obj.selectedCell,
     });
 
     // Update table with custom configurations if applicable
-    src_internal/* updateTable */.am.call(obj);
+    internal/* updateTable */.am.call(obj);
 
     // On after changes
     const onafterchangesRecords = records.map(function(record) {
@@ -9254,7 +9256,7 @@ const src_setValueFromCoords = function(x, y, value, force) {
         };
     });
 
-    src_dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
+    dispatch/* default */.A.call(obj, 'onafterchanges', obj, onafterchangesRecords);
 }
 
 /**
@@ -9263,7 +9265,7 @@ const src_setValueFromCoords = function(x, y, value, force) {
  * @param bool get highlighted cells only
  * @return array data
  */
-const src_getData = function(highlighted, processed, delimiter, asJson) {
+const getData = function(highlighted, processed, delimiter, asJson) {
     const obj = this;
 
     // Control vars
@@ -9321,10 +9323,10 @@ const src_getData = function(highlighted, processed, delimiter, asJson) {
    return dataset;
 }
 
-const src_getDataFromRange = function(range, processed) {
+const getDataFromRange = function(range, processed) {
     const obj = this;
 
-    const coords = (0,src_helpers.getCoordsFromRange)(range);
+    const coords = (0,helpers.getCoordsFromRange)(range);
 
     const dataset = [];
 
@@ -9351,12 +9353,12 @@ const src_getDataFromRange = function(range, processed) {
 /**
  * Search
  */
-const src_search = function(query) {
+const search = function(query) {
     const obj = this;
 
     // Reset any filter
     if (obj.options.filters) {
-        src_filter/* resetFilters */.dr.call(obj);
+        filter/* resetFilters */.dr.call(obj);
     }
 
     // Reset selection
@@ -9396,10 +9398,10 @@ const src_search = function(query) {
         obj.options.data.forEach(function(v, k) {
             if (search(v, parsedQuery, k)) {
                 // Merged rows found
-                const rows = src_merges/* isRowMerged */.D0.call(obj, k);
+                const rows = merges/* isRowMerged */.D0.call(obj, k);
                 if (rows.length) {
                     for (let i = 0; i < rows.length; i++) {
-                        const row = (0,src_internalHelpers/* getIdFromColumnName */.vu)(rows[i], true);
+                        const row = (0,internalHelpers/* getIdFromColumnName */.vu)(rows[i], true);
                         for (let j = 0; j < obj.options.mergeCells[rows[i]][1]; j++) {
                             addToResult(row[1]+j);
                         }
@@ -9414,13 +9416,13 @@ const src_search = function(query) {
         obj.results = null;
     }
 
-    src_internal/* updateResult */.hG.call(obj);
+    internal/* updateResult */.hG.call(obj);
 }
 
 /**
  * Reset search
  */
-const src_resetSearch = function() {
+const resetSearch = function() {
     const obj = this;
 
     obj.searchInput.value = '';
@@ -9438,7 +9440,7 @@ const src_resetSearch = function() {
  * @param column - column number (first column is: 0)
  * @param title - new column title
  */
-const src_getHeader = function(column) {
+const getHeader = function(column) {
     const obj = this;
 
     return obj.headers[column].textContent;
@@ -9450,7 +9452,7 @@ const src_getHeader = function(column) {
  * @param asArray
  * @return mixed
  */
-const src_getHeaders = function (asArray) {
+const getHeaders = function (asArray) {
     const obj = this;
 
     const title = [];
@@ -9468,7 +9470,7 @@ const src_getHeaders = function (asArray) {
  * @param column - column number (first column is: 0)
  * @param title - new column title
  */
-const src_setHeader = function(column, newValue) {
+const setHeader = function(column, newValue) {
     const obj = this;
 
     if (obj.headers[column]) {
@@ -9476,7 +9478,7 @@ const src_setHeader = function(column, newValue) {
         const onchangeheaderOldValue = (obj.options.columns && obj.options.columns[column] && obj.options.columns[column].title) || '';
 
         if (! newValue) {
-            newValue = (0,src_helpers.getColumnName)(column);
+            newValue = (0,helpers.getColumnName)(column);
         }
 
         obj.headers[column].textContent = newValue;
@@ -9491,7 +9493,7 @@ const src_setHeader = function(column, newValue) {
         }
         obj.options.columns[column].title = newValue;
 
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action: 'setHeader',
             column: column,
             oldValue: oldValue,
@@ -9499,7 +9501,7 @@ const src_setHeader = function(column, newValue) {
         });
 
         // On onchange header
-        src_dispatch/* default */.A.call(obj, 'onchangeheader', obj, parseInt(column), newValue, onchangeheaderOldValue);
+        dispatch/* default */.A.call(obj, 'onchangeheader', obj, parseInt(column), newValue, onchangeheaderOldValue);
     }
 }
 ;// ./src/utils/style.js
@@ -9512,7 +9514,7 @@ const src_setHeader = function(column, newValue) {
  *
  * @return integer
  */
-const src_getStyle = function(cell, key) {
+const getStyle = function(cell, key) {
     const obj = this;
 
     // Cell
@@ -9533,7 +9535,7 @@ const src_getStyle = function(cell, key) {
                 // Any meta data for this column?
                 if (v) {
                     // Column name
-                    const k = (0,src_internalHelpers/* getColumnNameFromId */.t3)([i, j]);
+                    const k = (0,internalHelpers/* getColumnNameFromId */.t3)([i, j]);
                     // Value
                     data[k] = v;
                 }
@@ -9542,7 +9544,7 @@ const src_getStyle = function(cell, key) {
 
        return data;
     } else {
-        cell = (0,src_internalHelpers/* getIdFromColumnName */.vu)(cell, true);
+        cell = (0,internalHelpers/* getIdFromColumnName */.vu)(cell, true);
 
         return key ? obj.records[cell[1]][cell[0]].element.style[key] : obj.records[cell[1]][cell[0]].element.getAttribute('style');
     }
@@ -9553,7 +9555,7 @@ const src_getStyle = function(cell, key) {
  *
  * @return integer
  */
-const src_setStyle = function(o, k, v, force, ignoreHistoryAndEvents) {
+const setStyle = function(o, k, v, force, ignoreHistoryAndEvents) {
     const obj = this;
 
     const newValue = {};
@@ -9562,7 +9564,7 @@ const src_setStyle = function(o, k, v, force, ignoreHistoryAndEvents) {
     // Apply style
     const applyStyle = function(cellId, key, value) {
         // Position
-        const cell = (0,src_internalHelpers/* getIdFromColumnName */.vu)(cellId, true);
+        const cell = (0,internalHelpers/* getIdFromColumnName */.vu)(cellId, true);
 
         if (obj.records[cell[1]] && obj.records[cell[1]][cell[0]] && (obj.records[cell[1]][cell[0]].element.classList.contains('readonly')==false || force)) {
             // Current value
@@ -9624,23 +9626,23 @@ const src_setStyle = function(o, k, v, force, ignoreHistoryAndEvents) {
 
     if (! ignoreHistoryAndEvents) {
         // Keeping history of changes
-        src_utils_history/* setHistory */.Dh.call(obj, {
+        utils_history/* setHistory */.Dh.call(obj, {
             action: 'setStyle',
             oldValue: oldValue,
             newValue: newValue,
         });
     }
 
-    src_dispatch/* default */.A.call(obj, 'onchangestyle', obj, newValue);
+    dispatch/* default */.A.call(obj, 'onchangestyle', obj, newValue);
 }
 
-const src_resetStyle = function(o, ignoreHistoryAndEvents) {
+const resetStyle = function(o, ignoreHistoryAndEvents) {
     const obj = this;
 
     const keys = Object.keys(o);
     for (let i = 0; i < keys.length; i++) {
         // Position
-        const cell = (0,src_internalHelpers/* getIdFromColumnName */.vu)(keys[i], true);
+        const cell = (0,internalHelpers/* getIdFromColumnName */.vu)(keys[i], true);
         if (obj.records[cell[1]] && obj.records[cell[1]][cell[0]]) {
             obj.records[cell[1]][cell[0]].element.setAttribute('style', '');
         }
@@ -9655,7 +9657,7 @@ const src_resetStyle = function(o, ignoreHistoryAndEvents) {
  *
  * @return null
  */
-const src_download = function(includeHeaders, processed) {
+const download = function(includeHeaders, processed) {
     const obj = this;
 
     if (obj.parent.config.allowExport == false) {
@@ -9665,7 +9667,7 @@ const src_download = function(includeHeaders, processed) {
         let data = '';
 
         // Get data
-        data += src_copy.call(obj, false, obj.options.csvDelimiter, true, includeHeaders, true, undefined, processed);
+        data += copy.call(obj, false, obj.options.csvDelimiter, true, includeHeaders, true, undefined, processed);
 
         // Download element
         const blob = new Blob(["\uFEFF"+data], {type: 'text/csv;charset=utf-8;'});
@@ -9694,15 +9696,15 @@ const src_download = function(includeHeaders, processed) {
 /**
  * Get cell comments, null cell for all
  */
-const src_getComments = function(cell) {
+const getComments = function(cell) {
     const obj = this;
 
     if (cell) {
         if (typeof(cell) !== 'string') {
-            return src_getComments.call(obj);
+            return getComments.call(obj);
         }
 
-        cell = (0,src_internalHelpers/* getIdFromColumnName */.vu)(cell, true);
+        cell = (0,internalHelpers/* getIdFromColumnName */.vu)(cell, true);
 
         return obj.records[cell[1]][cell[0]].element.getAttribute('title') || '';
     } else {
@@ -9711,7 +9713,7 @@ const src_getComments = function(cell) {
             for (let i = 0; i < obj.options.columns.length; i++) {
                 const comments = obj.records[j][i].element.getAttribute('title');
                 if (comments) {
-                    const cell = (0,src_internalHelpers/* getColumnNameFromId */.t3)([i, j]);
+                    const cell = (0,internalHelpers/* getColumnNameFromId */.t3)([i, j]);
                     data[cell] = comments;
                 }
             }
@@ -9723,7 +9725,7 @@ const src_getComments = function(cell) {
 /**
  * Set cell comments
  */
-const src_setComments = function(cellId, comments) {
+const setComments = function(cellId, comments) {
     const obj = this;
 
     let commentsObj;
@@ -9737,7 +9739,7 @@ const src_setComments = function(cellId, comments) {
     const oldValue = {};
 
     Object.entries(commentsObj).forEach(function([cellName, comment]) {
-        const cellCoords = (0,src_helpers.getCoordsFromCellName)(cellName);
+        const cellCoords = (0,helpers.getCoordsFromCellName)(cellName);
 
         // Keep old value
         oldValue[cellName] = obj.records[cellCoords[1]][cellCoords[0]].element.getAttribute('title');
@@ -9764,34 +9766,34 @@ const src_setComments = function(cellId, comments) {
     });
 
     // Save history
-    src_utils_history/* setHistory */.Dh.call(obj, {
+    utils_history/* setHistory */.Dh.call(obj, {
         action:'setComments',
         newValue: commentsObj,
         oldValue: oldValue,
     });
 
     // Set comments
-    src_dispatch/* default */.A.call(obj, 'oncomments', obj, commentsObj, oldValue);
+    dispatch/* default */.A.call(obj, 'oncomments', obj, commentsObj, oldValue);
 }
 // EXTERNAL MODULE: ./src/utils/orderBy.js
-var src_orderBy = __webpack_require__(451);
+var orderBy = __webpack_require__(451);
 ;// ./src/utils/config.js
 /**
  * Get table config information
  */
-const src_getWorksheetConfig = function() {
+const getWorksheetConfig = function() {
     const obj = this;
 
     return obj.options;
 }
 
-const src_getSpreadsheetConfig = function() {
+const getSpreadsheetConfig = function() {
     const spreadsheet = this;
 
     return spreadsheet.config;
 }
 
-const src_setConfig = function(config, spreadsheetLevel) {
+const setConfig = function(config, spreadsheetLevel) {
     const obj = this;
 
     const keys = Object.keys(config);
@@ -9823,17 +9825,17 @@ const src_setConfig = function(config, spreadsheetLevel) {
     });
 }
 // EXTERNAL MODULE: ./src/utils/meta.js
-var src_meta = __webpack_require__(617);
+var meta = __webpack_require__(617);
 ;// ./src/utils/cells.js
 
 
-const src_setReadOnly = function(cell, state) {
+const setReadOnly = function(cell, state) {
     const obj = this;
 
     let record;
 
     if (typeof cell === 'string') {
-        const coords = (0,src_helpers.getCoordsFromCellName)(cell);
+        const coords = (0,helpers.getCoordsFromCellName)(cell);
 
         record = obj.records[coords[1]][coords[0]];
     } else {
@@ -9850,11 +9852,11 @@ const src_setReadOnly = function(cell, state) {
     }
 }
 
-const src_isReadOnly = function(x, y) {
+const isReadOnly = function(x, y) {
     const obj = this;
 
     if (typeof x === 'string' && typeof y === 'undefined') {
-        const coords = (0,src_helpers.getCoordsFromCellName)(x);
+        const coords = (0,helpers.getCoordsFromCellName)(x);
 
         [x, y] = coords;
     }
@@ -9892,18 +9894,18 @@ const src_isReadOnly = function(x, y) {
 
 
 
-const src_setWorksheetFunctions = function(worksheet) {
-    for (let i = 0; i < src_worksheetPublicMethodsLength; i++) {
-        const [methodName, method] = src_worksheetPublicMethods[i];
+const setWorksheetFunctions = function(worksheet) {
+    for (let i = 0; i < worksheetPublicMethodsLength; i++) {
+        const [methodName, method] = worksheetPublicMethods[i];
 
         worksheet[methodName] = method.bind(worksheet);
     }
 }
 
-const src_createTable = function() {
+const createTable = function() {
     let obj = this;
 
-    src_setWorksheetFunctions(obj);
+    setWorksheetFunctions(obj);
 
     // Elements
     obj.table = document.createElement('table');
@@ -9918,10 +9920,10 @@ const src_createTable = function() {
     obj.content = document.createElement('div');
     obj.content.classList.add('jss_content');
     obj.content.onscroll = function(e) {
-        src_scrollControls.call(obj, e);
+        scrollControls.call(obj, e);
     }
     obj.content.onwheel = function(e) {
-        src_wheelControls.call(obj, e);
+        wheelControls.call(obj, e);
     }
 
     // Search
@@ -9981,7 +9983,7 @@ const src_createTable = function() {
         obj.options.nestedHeaders[0][0]
     ) {
         for (let j = 0; j < obj.options.nestedHeaders.length; j++) {
-            obj.thead.appendChild(src_internal/* createNestedHeader */.ju.call(obj, obj.options.nestedHeaders[j]));
+            obj.thead.appendChild(internal/* createNestedHeader */.ju.call(obj, obj.options.nestedHeaders[j]));
         }
     }
 
@@ -9991,11 +9993,11 @@ const src_createTable = function() {
     tempCol.classList.add('jss_selectall');
     obj.headerContainer.appendChild(tempCol);
 
-    const numberOfColumns = src_getNumberOfColumns.call(obj);
+    const numberOfColumns = getNumberOfColumns.call(obj);
 
     for (let i = 0; i < numberOfColumns; i++) {
         // Create header
-        src_createCellHeader.call(obj, i);
+        createCellHeader.call(obj, i);
         // Append cell to the container
         obj.headerContainer.appendChild(obj.headers[i]);
         obj.colgroupContainer.appendChild(obj.cols[i].colElement);
@@ -10158,7 +10160,7 @@ const src_createTable = function() {
     if (obj.options.classes) {
         const k = Object.keys(obj.options.classes);
         for (let i = 0; i < k.length; i++) {
-            const cell = (0,src_internalHelpers/* getIdFromColumnName */.vu)(k[i], true);
+            const cell = (0,internalHelpers/* getIdFromColumnName */.vu)(k[i], true);
             obj.records[cell[1]][cell[0]].element.classList.add(obj.options.classes[k[i]]);
         }
     }
@@ -10169,7 +10171,7 @@ const src_createTable = function() {
  *
  * @Param config
  */
-const src_prepareTable = function() {
+const prepareTable = function() {
     const obj = this;
 
     // Lazy loading
@@ -10250,15 +10252,15 @@ const src_prepareTable = function() {
 
     // Create the table when is ready
     if (! multiple.length) {
-        src_createTable.call(obj);
+        createTable.call(obj);
     } else {
         jSuites.ajax(multiple, function() {
-            src_createTable.call(obj);
+            createTable.call(obj);
         });
     }
 }
 
-const src_getNextDefaultWorksheetName = function(spreadsheet) {
+const getNextDefaultWorksheetName = function(spreadsheet) {
     const defaultWorksheetNameRegex = /^Sheet(\d+)$/;
 
     let largestWorksheetNumber = 0;
@@ -10273,7 +10275,7 @@ const src_getNextDefaultWorksheetName = function(spreadsheet) {
     return 'Sheet' + (largestWorksheetNumber + 1);
 }
 
-const src_buildWorksheet = async function() {
+const buildWorksheet = async function() {
     const obj = this;
     const el = obj.element;
 
@@ -10287,12 +10289,12 @@ const src_buildWorksheet = async function() {
         });
     }
 
-    src_libraryBase.jspreadsheet.current = obj;
+    libraryBase.jspreadsheet.current = obj;
 
     // Event
     el.setAttribute('tabindex', 1);
     el.addEventListener('focus', function(e) {
-        if (src_libraryBase.jspreadsheet.current && ! obj.selectedCell) {
+        if (libraryBase.jspreadsheet.current && ! obj.selectedCell) {
             obj.updateSelectionFromCoords(0,0,0,0);
         }
     });
@@ -10309,7 +10311,7 @@ const src_buildWorksheet = async function() {
                 dataType: 'text',
                 success: function(result) {
                     // Convert data
-                    const newData = (0,src_helpers.parseCSV)(result, obj.options.csvDelimiter)
+                    const newData = (0,helpers.parseCSV)(result, obj.options.csvDelimiter)
 
                     // Headers
                     if (obj.options.csvHeaders == true && newData.length > 0) {
@@ -10334,7 +10336,7 @@ const src_buildWorksheet = async function() {
                     // Data
                     obj.options.data = newData;
                     // Prepare table
-                    src_prepareTable.call(obj);
+                    prepareTable.call(obj);
 
                     resolve();
                 }
@@ -10352,7 +10354,7 @@ const src_buildWorksheet = async function() {
                     // Data
                     obj.options.data = (result.data) ? result.data : result;
                     // Prepare table
-                    src_prepareTable.call(obj);
+                    prepareTable.call(obj);
 
                     resolve();
                 }
@@ -10362,7 +10364,7 @@ const src_buildWorksheet = async function() {
         promises.push(promise);
     } else {
         // Prepare table
-        src_prepareTable.call(obj);
+        prepareTable.call(obj);
     }
 
     await Promise.all(promises);
@@ -10376,13 +10378,13 @@ const src_buildWorksheet = async function() {
     }
 }
 
-const src_createWorksheetObj = function(options) {
+const createWorksheetObj = function(options) {
     const obj = this;
 
     const spreadsheet = obj.parent;
 
     if (!options.worksheetName) {
-        options.worksheetName = src_getNextDefaultWorksheetName(obj.parent);
+        options.worksheetName = getNextDefaultWorksheetName(obj.parent);
     }
 
     const newWorksheet = {
@@ -10401,149 +10403,149 @@ const src_createWorksheetObj = function(options) {
     return newWorksheet;
 }
 
-const src_createWorksheet = function(options) {
+const createWorksheet = function(options) {
     const obj = this;
     const spreadsheet = obj.parent;
 
     spreadsheet.creationThroughJss = true;
 
-    src_createWorksheetObj.call(obj, options);
+    createWorksheetObj.call(obj, options);
 
     spreadsheet.element.tabs.create(options.worksheetName);
 }
 
-const src_openWorksheet = function(position) {
+const openWorksheet = function(position) {
     const obj = this;
     const spreadsheet = obj.parent;
 
     spreadsheet.element.tabs.open(position);
 }
 
-const src_deleteWorksheet = function(position) {
+const deleteWorksheet = function(position) {
     const obj = this;
 
     obj.parent.element.tabs.remove(position);
 
     const removedWorksheet = obj.parent.worksheets.splice(position, 1)[0];
 
-    src_dispatch/* default */.A.call(obj.parent, 'ondeleteworksheet', removedWorksheet, position);
+    dispatch/* default */.A.call(obj.parent, 'ondeleteworksheet', removedWorksheet, position);
 }
 
-const src_worksheetPublicMethods = [
-    ['selectAll', src_selection/* selectAll */.Ub],
+const worksheetPublicMethods = [
+    ['selectAll', selection/* selectAll */.Ub],
     ['updateSelectionFromCoords', function(x1, y1, x2, y2) {
-        return src_selection/* updateSelectionFromCoords */.AH.call(this, x1, y1, x2, y2);
+        return selection/* updateSelectionFromCoords */.AH.call(this, x1, y1, x2, y2);
     }],
     ['resetSelection', function() {
-        return src_selection/* resetSelection */.gE.call(this);
+        return selection/* resetSelection */.gE.call(this);
     }],
-    ['getSelection', src_selection/* getSelection */.Lo],
-    ['getSelected', src_selection/* getSelected */.ef],
-    ['getSelectedColumns', src_selection/* getSelectedColumns */.Jg],
-    ['getSelectedRows', src_selection/* getSelectedRows */.R5],
-    ['getData', src_getData],
-    ['setData', src_setData],
-    ['getValue', src_getValue],
-    ['getValueFromCoords', src_getValueFromCoords],
-    ['setValue', src_setValue],
-    ['setValueFromCoords', src_setValueFromCoords],
-    ['getWidth', src_getWidth],
+    ['getSelection', selection/* getSelection */.Lo],
+    ['getSelected', selection/* getSelected */.ef],
+    ['getSelectedColumns', selection/* getSelectedColumns */.Jg],
+    ['getSelectedRows', selection/* getSelectedRows */.R5],
+    ['getData', getData],
+    ['setData', setData],
+    ['getValue', getValue],
+    ['getValueFromCoords', getValueFromCoords],
+    ['setValue', setValue],
+    ['setValueFromCoords', setValueFromCoords],
+    ['getWidth', getWidth],
     ['setWidth', function(column, width) {
-        return src_setWidth.call(this, column, width);
+        return setWidth.call(this, column, width);
     }],
-    ['insertRow', src_insertRow],
+    ['insertRow', insertRow],
     ['moveRow', function(rowNumber, newPositionNumber) {
-        return src_moveRow.call(this, rowNumber, newPositionNumber);
+        return moveRow.call(this, rowNumber, newPositionNumber);
     }],
-    ['deleteRow', src_deleteRow],
-    ['hideRow', src_hideRow],
-    ['showRow', src_showRow],
-    ['getRowData', src_getRowData],
-    ['setRowData', src_setRowData],
-    ['getHeight', src_getHeight],
+    ['deleteRow', deleteRow],
+    ['hideRow', hideRow],
+    ['showRow', showRow],
+    ['getRowData', getRowData],
+    ['setRowData', setRowData],
+    ['getHeight', getHeight],
     ['setHeight', function(row, height) {
-        return src_setHeight.call(this, row, height);
+        return setHeight.call(this, row, height);
     }],
-    ['getMerge', src_merges/* getMerge */.fd],
+    ['getMerge', merges/* getMerge */.fd],
     ['setMerge', function(cellName, colspan, rowspan) {
-        return src_merges/* setMerge */.FU.call(this, cellName, colspan, rowspan);
+        return merges/* setMerge */.FU.call(this, cellName, colspan, rowspan);
     }],
     ['destroyMerge', function() {
-        return src_merges/* destroyMerge */.VP.call(this);
+        return merges/* destroyMerge */.VP.call(this);
     }],
     ['removeMerge', function(cellName, data) {
-        return src_merges/* removeMerge */.Zp.call(this, cellName, data);
+        return merges/* removeMerge */.Zp.call(this, cellName, data);
     }],
-    ['search', src_search],
-    ['resetSearch', src_resetSearch],
-    ['getHeader', src_getHeader],
-    ['getHeaders', src_getHeaders],
-    ['setHeader', src_setHeader],
-    ['getStyle', src_getStyle],
+    ['search', search],
+    ['resetSearch', resetSearch],
+    ['getHeader', getHeader],
+    ['getHeaders', getHeaders],
+    ['setHeader', setHeader],
+    ['getStyle', getStyle],
     ['setStyle', function(cell, property, value, forceOverwrite) {
-        return src_setStyle.call(this, cell, property, value, forceOverwrite);
+        return setStyle.call(this, cell, property, value, forceOverwrite);
     }],
-    ['resetStyle', src_resetStyle],
-    ['insertColumn', src_insertColumn],
-    ['moveColumn', src_moveColumn],
-    ['deleteColumn', src_deleteColumn],
-    ['getColumnData', src_getColumnData],
-    ['setColumnData', src_setColumnData],
-    ['whichPage', src_pagination/* whichPage */.ho],
-    ['page', src_pagination/* page */.MY],
-    ['download', src_download],
-    ['getComments', src_getComments],
-    ['setComments', src_setComments],
-    ['orderBy', src_orderBy/* orderBy */.My],
-    ['undo', src_utils_history/* undo */.tN],
-    ['redo', src_utils_history/* redo */.ZS],
-    ['getCell', src_internal/* getCell */.tT],
-    ['getCellFromCoords', src_internal/* getCellFromCoords */.Xr],
-    ['getLabel', src_internal/* getLabel */.p9],
-    ['getConfig', src_getWorksheetConfig],
-    ['setConfig', src_setConfig],
+    ['resetStyle', resetStyle],
+    ['insertColumn', insertColumn],
+    ['moveColumn', moveColumn],
+    ['deleteColumn', deleteColumn],
+    ['getColumnData', getColumnData],
+    ['setColumnData', setColumnData],
+    ['whichPage', pagination/* whichPage */.ho],
+    ['page', pagination/* page */.MY],
+    ['download', download],
+    ['getComments', getComments],
+    ['setComments', setComments],
+    ['orderBy', orderBy/* orderBy */.My],
+    ['undo', utils_history/* undo */.tN],
+    ['redo', utils_history/* redo */.ZS],
+    ['getCell', internal/* getCell */.tT],
+    ['getCellFromCoords', internal/* getCellFromCoords */.Xr],
+    ['getLabel', internal/* getLabel */.p9],
+    ['getConfig', getWorksheetConfig],
+    ['setConfig', setConfig],
     ['getMeta', function(cell) {
-        return src_meta/* getMeta */.IQ.call(this, cell);
+        return meta/* getMeta */.IQ.call(this, cell);
     }],
-    ['setMeta', src_meta/* setMeta */.iZ],
-    ['showColumn', src_showColumn],
-    ['hideColumn', src_hideColumn],
-    ['showIndex', src_internal/* showIndex */.C6],
-    ['hideIndex', src_internal/* hideIndex */.TI],
-    ['getWorksheetActive', src_internal/* getWorksheetActive */.$O],
-    ['openEditor', src_openEditor],
-    ['closeEditor', src_closeEditor],
-    ['createWorksheet', src_createWorksheet],
-    ['openWorksheet', src_openWorksheet],
-    ['deleteWorksheet', src_deleteWorksheet],
+    ['setMeta', meta/* setMeta */.iZ],
+    ['showColumn', showColumn],
+    ['hideColumn', hideColumn],
+    ['showIndex', internal/* showIndex */.C6],
+    ['hideIndex', internal/* hideIndex */.TI],
+    ['getWorksheetActive', internal/* getWorksheetActive */.$O],
+    ['openEditor', openEditor],
+    ['closeEditor', closeEditor],
+    ['createWorksheet', createWorksheet],
+    ['openWorksheet', openWorksheet],
+    ['deleteWorksheet', deleteWorksheet],
     ['copy', function(cut) {
         if (cut) {
-            src_cutControls();
+            cutControls();
         } else {
-            src_copy.call(this, true);
+            copy.call(this, true);
         }
     }],
-    ['paste', src_paste],
-    ['executeFormula', src_internal/* executeFormula */.Em],
-    ['getDataFromRange', src_getDataFromRange],
-    ['quantiyOfPages', src_pagination/* quantiyOfPages */.$f],
-    ['getRange', src_selection/* getRange */.eO],
-    ['isSelected', src_selection/* isSelected */.sp],
-    ['setReadOnly', src_setReadOnly],
-    ['isReadOnly', src_isReadOnly],
-    ['getHighlighted', src_selection/* getHighlighted */.kV],
-    ['dispatch', src_dispatch/* default */.A],
-    ['down', src_down],
-    ['first', src_first],
-    ['last', src_last],
-    ['left', src_left],
-    ['right', src_right],
-    ['up', src_up],
-    ['openFilter', src_filter/* openFilter */.N$],
-    ['resetFilters', src_filter/* resetFilters */.dr],
+    ['paste', paste],
+    ['executeFormula', internal/* executeFormula */.Em],
+    ['getDataFromRange', getDataFromRange],
+    ['quantiyOfPages', pagination/* quantiyOfPages */.$f],
+    ['getRange', selection/* getRange */.eO],
+    ['isSelected', selection/* isSelected */.sp],
+    ['setReadOnly', setReadOnly],
+    ['isReadOnly', isReadOnly],
+    ['getHighlighted', selection/* getHighlighted */.kV],
+    ['dispatch', dispatch/* default */.A],
+    ['down', down],
+    ['first', first],
+    ['last', last],
+    ['left', left],
+    ['right', right],
+    ['up', up],
+    ['openFilter', filter/* openFilter */.N$],
+    ['resetFilters', filter/* resetFilters */.dr],
 ];
 
-const src_worksheetPublicMethodsLength = src_worksheetPublicMethods.length;
+const worksheetPublicMethodsLength = worksheetPublicMethods.length;
 ;// ./src/utils/factory.js
 
 
@@ -10556,9 +10558,9 @@ const src_worksheetPublicMethodsLength = src_worksheetPublicMethods.length;
 
 
 
-const src_factory = function() {};
+const factory = function() {};
 
-const src_createWorksheets = async function(spreadsheet, options, el) {
+const createWorksheets = async function(spreadsheet, options, el) {
     // Create worksheets
     let o = options.worksheets;
     if (o) {
@@ -10568,14 +10570,14 @@ const src_createWorksheets = async function(spreadsheet, options, el) {
                 if (title) {
                     return title;
                 } else {
-                    return src_getNextDefaultWorksheetName(spreadsheet);
+                    return getNextDefaultWorksheetName(spreadsheet);
                 }
             },
             oncreate: function(element, newTabContent) {
                 if (!spreadsheet.creationThroughJss) {
                     const worksheetName = element.tabs.headers.children[element.tabs.headers.children.length - 2].innerHTML;
 
-                    src_createWorksheetObj.call(
+                    createWorksheetObj.call(
                         spreadsheet.worksheets[0],
                         {
                             minDimensions: [10, 15],
@@ -10590,16 +10592,16 @@ const src_createWorksheets = async function(spreadsheet, options, el) {
 
                 newWorksheet.element = newTabContent;
 
-                src_buildWorksheet.call(newWorksheet)
+                buildWorksheet.call(newWorksheet)
                     .then(function() {
-                        (0,src_toolbar/* updateToolbar */.nK)(newWorksheet);
+                        (0,toolbar/* updateToolbar */.nK)(newWorksheet);
 
-                        src_dispatch/* default */.A.call(newWorksheet, 'oncreateworksheet', newWorksheet, options, spreadsheet.worksheets.length - 1);
+                        dispatch/* default */.A.call(newWorksheet, 'oncreateworksheet', newWorksheet, options, spreadsheet.worksheets.length - 1);
                     });
             },
             onchange: function(element, instance, tabIndex) {
                 if (spreadsheet.worksheets.length != 0 && spreadsheet.worksheets[tabIndex]) {
-                    (0,src_toolbar/* updateToolbar */.nK)(spreadsheet.worksheets[tabIndex]);
+                    (0,toolbar/* updateToolbar */.nK)(spreadsheet.worksheets[tabIndex]);
                 }
             }
         }
@@ -10641,14 +10643,14 @@ const src_createWorksheets = async function(spreadsheet, options, el) {
                 historyIndex: -1,
             });
 
-            await src_buildWorksheet.call(spreadsheet.worksheets[i]);
+            await buildWorksheet.call(spreadsheet.worksheets[i]);
         }
     } else {
         throw new Error('JSS: worksheets are not defined');
     }
 }
 
-src_factory.spreadsheet = async function(el, options, worksheets) {
+factory.spreadsheet = async function(el, options, worksheets) {
     if (el.tagName == 'TABLE') {
         if (!options) {
             options = {};
@@ -10658,7 +10660,7 @@ src_factory.spreadsheet = async function(el, options, worksheets) {
             options.worksheets = [];
         }
 
-        const tableOptions = (0,src_helpers.createFromTable)(el, options.worksheets[0]);
+        const tableOptions = (0,helpers.createFromTable)(el, options.worksheets[0]);
 
         options.worksheets[0] = tableOptions;
 
@@ -10679,12 +10681,12 @@ src_factory.spreadsheet = async function(el, options, worksheets) {
     spreadsheet.contextMenu = document.createElement('div');
     spreadsheet.contextMenu.className = 'jss_contextmenu';
 
-    spreadsheet.getWorksheetActive = src_internal/* getWorksheetActive */.$O.bind(spreadsheet);
-    spreadsheet.fullscreen = src_internal/* fullscreen */.Y5.bind(spreadsheet);
-    spreadsheet.showToolbar = src_toolbar/* showToolbar */.ll.bind(spreadsheet);
-    spreadsheet.hideToolbar = src_toolbar/* hideToolbar */.Ar.bind(spreadsheet);
-    spreadsheet.getConfig = src_getSpreadsheetConfig.bind(spreadsheet);
-    spreadsheet.setConfig = src_setConfig.bind(spreadsheet);
+    spreadsheet.getWorksheetActive = internal/* getWorksheetActive */.$O.bind(spreadsheet);
+    spreadsheet.fullscreen = internal/* fullscreen */.Y5.bind(spreadsheet);
+    spreadsheet.showToolbar = toolbar/* showToolbar */.ll.bind(spreadsheet);
+    spreadsheet.hideToolbar = toolbar/* hideToolbar */.Ar.bind(spreadsheet);
+    spreadsheet.getConfig = getSpreadsheetConfig.bind(spreadsheet);
+    spreadsheet.setConfig = setConfig.bind(spreadsheet);
 
     spreadsheet.setPlugins = function(newPlugins) {
         if (!spreadsheet.plugins) {
@@ -10694,7 +10696,7 @@ src_factory.spreadsheet = async function(el, options, worksheets) {
         if (typeof newPlugins == 'object') {
             Object.entries(newPlugins).forEach(function([pluginName, plugin]) {
                 spreadsheet.plugins[pluginName] = plugin.call(
-                    src_libraryBase.jspreadsheet,
+                    libraryBase.jspreadsheet,
                     spreadsheet,
                     {},
                     spreadsheet.config,
@@ -10706,7 +10708,7 @@ src_factory.spreadsheet = async function(el, options, worksheets) {
     spreadsheet.setPlugins(options.plugins);
 
     // Create as worksheets
-    await src_createWorksheets(spreadsheet, options, el);
+    await createWorksheets(spreadsheet, options, el);
 
     spreadsheet.element.appendChild(spreadsheet.contextMenu);
 
@@ -10722,13 +10724,13 @@ src_factory.spreadsheet = async function(el, options, worksheets) {
         spreadsheet.element.classList.add('fullscreen');
     }
 
-    src_toolbar/* showToolbar */.ll.call(spreadsheet);
+    toolbar/* showToolbar */.ll.call(spreadsheet);
 
     // Build handlers
     if (options.root) {
-        src_setEvents(options.root);
+        setEvents(options.root);
     } else {
-        src_setEvents(document);
+        setEvents(document);
     }
 
     el.spreadsheet = spreadsheet;
@@ -10736,7 +10738,7 @@ src_factory.spreadsheet = async function(el, options, worksheets) {
     return spreadsheet;
 }
 
-src_factory.worksheet = function(spreadsheet, options, position) {
+factory.worksheet = function(spreadsheet, options, position) {
     // Worksheet object
     let w = {
         // Parent of a worksheet is always the spreadsheet
@@ -10757,7 +10759,7 @@ src_factory.worksheet = function(spreadsheet, options, position) {
     return w;
 }
 
-/* harmony default export */ var src_utils_factory = (src_factory);
+/* harmony default export */ var utils_factory = (factory);
 ;// ./src/index.js
 
 
@@ -10770,17 +10772,17 @@ src_factory.worksheet = function(spreadsheet, options, position) {
 
 
 
-src_libraryBase.jspreadsheet = function(el, options) {
+libraryBase.jspreadsheet = function(el, options) {
     try {
         let worksheets = [];
 
         // Create spreadsheet
-        src_utils_factory.spreadsheet(el, options, worksheets)
+        utils_factory.spreadsheet(el, options, worksheets)
             .then((spreadsheet) => {
-                src_libraryBase.jspreadsheet.spreadsheet.push(spreadsheet);
+                libraryBase.jspreadsheet.spreadsheet.push(spreadsheet);
 
                 // Global onload event
-                src_dispatch/* default */.A.call(spreadsheet, 'onload', spreadsheet);
+                dispatch/* default */.A.call(spreadsheet, 'onload', spreadsheet);
             });
 
         return worksheets;
@@ -10789,8 +10791,8 @@ src_libraryBase.jspreadsheet = function(el, options) {
     }
 }
 
-src_libraryBase.jspreadsheet.getWorksheetInstanceByName = function(worksheetName, namespace) {
-    const targetSpreadsheet = src_libraryBase.jspreadsheet.spreadsheet.find((spreadsheet) => {
+libraryBase.jspreadsheet.getWorksheetInstanceByName = function(worksheetName, namespace) {
+    const targetSpreadsheet = libraryBase.jspreadsheet.spreadsheet.find((spreadsheet) => {
         return spreadsheet.config.namespace === namespace;
     });
 
@@ -10812,14 +10814,14 @@ src_libraryBase.jspreadsheet.getWorksheetInstanceByName = function(worksheetName
 }
 
 // Define dictionary
-src_libraryBase.jspreadsheet.setDictionary = function(o) {
+libraryBase.jspreadsheet.setDictionary = function(o) {
     jSuites.setDictionary(o);
 }
 
-src_libraryBase.jspreadsheet.destroy = function(element, destroyEventHandlers) {
+libraryBase.jspreadsheet.destroy = function(element, destroyEventHandlers) {
     if (element.spreadsheet) {
-        const spreadsheetIndex = src_libraryBase.jspreadsheet.spreadsheet.indexOf(element.spreadsheet);
-        src_libraryBase.jspreadsheet.spreadsheet.splice(spreadsheetIndex, 1);
+        const spreadsheetIndex = libraryBase.jspreadsheet.spreadsheet.indexOf(element.spreadsheet);
+        libraryBase.jspreadsheet.spreadsheet.splice(spreadsheetIndex, 1);
 
         const root = element.spreadsheet.config.root || document;
 
@@ -10827,34 +10829,34 @@ src_libraryBase.jspreadsheet.destroy = function(element, destroyEventHandlers) {
         element.innerHTML = '';
 
         if (destroyEventHandlers) {
-            src_destroyEvents(root);
+            destroyEvents(root);
         }
     }
 }
 
-src_libraryBase.jspreadsheet.destroyAll = function() {
-    for (let spreadsheetIndex = 0; spreadsheetIndex < src_libraryBase.jspreadsheet.spreadsheet.length; spreadsheetIndex++) {
-        const spreadsheet = src_libraryBase.jspreadsheet.spreadsheet[spreadsheetIndex];
+libraryBase.jspreadsheet.destroyAll = function() {
+    for (let spreadsheetIndex = 0; spreadsheetIndex < libraryBase.jspreadsheet.spreadsheet.length; spreadsheetIndex++) {
+        const spreadsheet = libraryBase.jspreadsheet.spreadsheet[spreadsheetIndex];
 
-        src_libraryBase.jspreadsheet.destroy(spreadsheet.element);
+        libraryBase.jspreadsheet.destroy(spreadsheet.element);
     }
 }
 
-src_libraryBase.jspreadsheet.current = null;
+libraryBase.jspreadsheet.current = null;
 
-src_libraryBase.jspreadsheet.spreadsheet = [];
+libraryBase.jspreadsheet.spreadsheet = [];
 
-src_libraryBase.jspreadsheet.helpers = {};
+libraryBase.jspreadsheet.helpers = {};
 
-src_libraryBase.jspreadsheet.version = function() {
-    return src_version;
+libraryBase.jspreadsheet.version = function() {
+    return version;
 };
 
-Object.entries(src_helpers).forEach(([key, value]) => {
-    src_libraryBase.jspreadsheet.helpers[key] = value;
+Object.entries(helpers).forEach(([key, value]) => {
+    libraryBase.jspreadsheet.helpers[key] = value;
 })
 
-/* harmony default export */ var src_src = (src_libraryBase.jspreadsheet);
+/* harmony default export */ var src = (libraryBase.jspreadsheet);
 jspreadsheet = __webpack_exports__["default"];
 /******/ })()
 ;
