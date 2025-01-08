@@ -1434,6 +1434,7 @@ export const wheelControls = function(e) {
     if (obj.options.lazyLoading == true) {
         if (libraryBase.jspreadsheet.timeControlLoading == null) {
             libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
+                console.log('wheelcontrols',obj.content.scrollTop, obj.content.clientHeight, obj.content.scrollHeight)
                 if (obj.content.scrollTop + obj.content.clientHeight >= obj.content.scrollHeight - 10) {
                     if (loadDown.call(obj)) {
                         if (obj.content.scrollTop + obj.content.clientHeight > obj.content.scrollHeight - 10) {
