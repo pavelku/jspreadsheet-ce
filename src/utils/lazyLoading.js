@@ -49,7 +49,7 @@ export const loadPage = function(pageNumber) {
 
 export const loadValidation = function() {
     const obj = this;
-    console.log('loadValidation');
+    
     if (obj.selectedCell) {
         const currentPage = parseInt(obj.tbody.firstChild.getAttribute('data-y')) / 100;
         const selectedPage = parseInt(obj.selectedCell[3] / 100);
@@ -68,7 +68,7 @@ export const loadValidation = function() {
 
 export const loadUp = function() {
     const obj = this;
-    console.log('loadUp');
+    dispatch.call(obj, 'onlazyloadup', obj);
     // Search
     let results;
 
@@ -106,7 +106,6 @@ export const loadUp = function() {
 
 export const loadDown = function() {
     const obj = this;
-    console.log('loadDown');
     dispatch.call(obj, 'onlazyloaddown', obj);
     // Search
     let results;

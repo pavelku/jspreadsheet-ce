@@ -1434,20 +1434,15 @@ export const wheelControls = function(e) {
     if (obj.options.lazyLoading == true) {
         if (libraryBase.jspreadsheet.timeControlLoading == null) {
             libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
-                console.log('wheelcontrols',obj.content.scrollTop, obj.content.clientHeight, obj.content.scrollHeight)
                 if (obj.content.scrollTop + obj.content.clientHeight >= obj.content.scrollHeight - 10) {
-                    console.log('wheelcontrol 1')
                     if (loadDown.call(obj)) {
-                        console.log('wheelcontrol 1-1')
                         if (obj.content.scrollTop + obj.content.clientHeight > obj.content.scrollHeight - 10) {
                             obj.content.scrollTop = obj.content.scrollTop - obj.content.clientHeight;
                         }
                         updateCornerPosition.call(obj);
                     }
                 } else if (obj.content.scrollTop <= obj.content.clientHeight) {
-                    console.log('wheelcontrol 2')
                     if (loadUp.call(obj)) {
-                        console.log('wheelcontrol 2-1')
                         if (obj.content.scrollTop < 10) {
                             obj.content.scrollTop = obj.content.scrollTop + obj.content.clientHeight;
                         }
