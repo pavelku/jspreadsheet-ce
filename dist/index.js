@@ -8812,14 +8812,18 @@ const wheelControls = function(e) {
             libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
                 console.log('wheelcontrols',obj.content.scrollTop, obj.content.clientHeight, obj.content.scrollHeight)
                 if (obj.content.scrollTop + obj.content.clientHeight >= obj.content.scrollHeight - 10) {
+                    console.log('wheelcontrol 1')
                     if (lazyLoading/* loadDown */.p6.call(obj)) {
+                        console.log('wheelcontrol 1-1')
                         if (obj.content.scrollTop + obj.content.clientHeight > obj.content.scrollHeight - 10) {
                             obj.content.scrollTop = obj.content.scrollTop - obj.content.clientHeight;
                         }
                         selection/* updateCornerPosition */.Aq.call(obj);
                     }
                 } else if (obj.content.scrollTop <= obj.content.clientHeight) {
+                    console.log('wheelcontrol 2')
                     if (lazyLoading/* loadUp */.G_.call(obj)) {
+                        console.log('wheelcontrol 2-1')
                         if (obj.content.scrollTop < 10) {
                             obj.content.scrollTop = obj.content.scrollTop + obj.content.clientHeight;
                         }
