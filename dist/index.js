@@ -2544,7 +2544,7 @@ const loadPage = function(pageNumber) {
 
 const loadValidation = function() {
     const obj = this;
-    console.log('loadValidation');
+    
     if (obj.selectedCell) {
         const currentPage = parseInt(obj.tbody.firstChild.getAttribute('data-y')) / 100;
         const selectedPage = parseInt(obj.selectedCell[3] / 100);
@@ -2563,7 +2563,7 @@ const loadValidation = function() {
 
 const loadUp = function() {
     const obj = this;
-    console.log('loadUp');
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloadup', obj);
     // Search
     let results;
 
@@ -2601,7 +2601,6 @@ const loadUp = function() {
 
 const loadDown = function() {
     const obj = this;
-    console.log('loadDown');
     _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloaddown', obj);
     // Search
     let results;
@@ -8811,6 +8810,7 @@ const wheelControls = function(e) {
     if (obj.options.lazyLoading == true) {
         if (libraryBase.jspreadsheet.timeControlLoading == null) {
             libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
+                console.log('wheelcontrols',obj.content.scrollTop, obj.content.clientHeight, obj.content.scrollHeight)
                 if (obj.content.scrollTop + obj.content.clientHeight >= obj.content.scrollHeight - 10) {
                     if (lazyLoading/* loadDown */.p6.call(obj)) {
                         if (obj.content.scrollTop + obj.content.clientHeight > obj.content.scrollHeight - 10) {
