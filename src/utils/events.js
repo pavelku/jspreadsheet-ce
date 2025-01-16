@@ -1431,6 +1431,8 @@ const keyDownControls = function(e) {
 export const wheelControls = function(e) {
     const obj = this;
 
+    console.log('wheelControls', e);
+
     if (obj.options.lazyLoading == true) {
         if (libraryBase.jspreadsheet.timeControlLoading == null) {
             libraryBase.jspreadsheet.timeControlLoading = setTimeout(function() {
