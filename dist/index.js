@@ -8885,7 +8885,8 @@ const updateFreezePosition = function() {
 
 const scrollControls = function(e) {
     const obj = this;
-
+    console.log('scrollControls', e);
+    return;
     wheelControls.call(obj);
 
     if (obj.options.freezeColumns > 0 && obj.content.scrollLeft != scrollLeft) {
