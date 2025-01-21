@@ -5632,6 +5632,8 @@ var internalHelpers = __webpack_require__(887);
 const copy = function(highlighted, delimiter, returnData, includeHeaders, download, isCut, processed) {
     const obj = this;
 
+    console.log('copyCalled', highlighted, delimiter, returnData, includeHeaders, download, isCut, processed);
+
     if (! delimiter) {
         delimiter = "\t";
     }
