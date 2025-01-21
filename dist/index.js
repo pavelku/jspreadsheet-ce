@@ -5678,8 +5678,8 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
     }
 
     if (
-        download &&
-        (obj.parent.config.includeHeadersOnDownload == true || includeHeaders)
+        (download &&
+        obj.parent.config.includeHeadersOnDownload == true) || includeHeaders
     ) {
         // Nested headers
         if (obj.options.nestedHeaders && obj.options.nestedHeaders.length > 0) {
@@ -5787,7 +5787,7 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
             Math.max(obj.selectedCell[1], obj.selectedCell[3]),
         ];
 
-        const result = dispatch/* default */.A.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut);
+        const result = dispatch/* default */.A.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut, includeHeaders);
 
         if (result) {
             strLabel = result;
@@ -10522,11 +10522,11 @@ const worksheetPublicMethods = [
     ['createWorksheet', createWorksheet],
     ['openWorksheet', openWorksheet],
     ['deleteWorksheet', deleteWorksheet],
-    ['copy', function(cut) {
+    ['copy', function(cut, includeHeaders) {
         if (cut) {
             cutControls();
         } else {
-            copy.call(this, true);
+            copy.call(this, true, undefined,undefined,includeHeaders);
         }
     }],
     ['paste', paste],

@@ -62,8 +62,8 @@ export const copy = function(highlighted, delimiter, returnData, includeHeaders,
     }
 
     if (
-        download &&
-        (obj.parent.config.includeHeadersOnDownload == true || includeHeaders)
+        (download &&
+        obj.parent.config.includeHeadersOnDownload == true) || includeHeaders
     ) {
         // Nested headers
         if (obj.options.nestedHeaders && obj.options.nestedHeaders.length > 0) {
@@ -171,7 +171,7 @@ export const copy = function(highlighted, delimiter, returnData, includeHeaders,
             Math.max(obj.selectedCell[1], obj.selectedCell[3]),
         ];
 
-        const result = dispatch.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut);
+        const result = dispatch.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut, includeHeaders);
 
         if (result) {
             strLabel = result;
