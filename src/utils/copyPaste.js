@@ -16,6 +16,8 @@ import { getColumnNameFromId } from "./internalHelpers.js";
 export const copy = function(highlighted, delimiter, returnData, includeHeaders, download, isCut, processed) {
     const obj = this;
 
+    console.log('copyCalled', highlighted, delimiter, returnData, includeHeaders, download, isCut, processed);
+
     if (! delimiter) {
         delimiter = "\t";
     }
