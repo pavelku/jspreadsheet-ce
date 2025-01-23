@@ -8738,8 +8738,9 @@ const keyDownControls = function(e) {
                         e.preventDefault();
                     } else if (e.which == 67) {
                         // Ctrl + C
-                        // copy.call(libraryBase.jspreadsheet.current, true);
-                        // e.preventDefault();
+                        copy.call(libraryBase.jspreadsheet.current, true, '\t', undefined, false, undefined, false, undefined);                        
+                        e.preventDefault();
+                        // copy.call(libraryBase.jspreadsheet.current, true);                        
                     } else if (e.which == 88) {
                         // Ctrl + X
                         if (libraryBase.jspreadsheet.current.options.editable != false) {
