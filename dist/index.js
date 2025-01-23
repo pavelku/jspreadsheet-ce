@@ -8757,7 +8757,8 @@ const keyDownControls = function(e) {
                     console.log('copy all called')
                     if (e.which == 67) {
                         // Ctrl + Shift + C
-                        copy.call(libraryBase.jspreadsheet.current, true, true);
+                        // highlighted, delimiter, returnData, includeHeaders, download, isCut, processed
+                        copy.call(libraryBase.jspreadsheet.current, true, '\t', undefined, true, undefined, false, undefined);
                         e.preventDefault();
                     }
                 }
