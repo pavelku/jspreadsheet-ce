@@ -87,11 +87,7 @@ export const updateOrder = function(rows) {
  */
 export const orderBy = function(column, order) {
     const obj = this;
-
-    // On sort event
-    dispatch.call(obj, 'onsort', obj, column, order, []);
-    return true;
-
+        
     if (column >= 0) {
         // Merged cells
         if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
@@ -178,10 +174,10 @@ export const orderBy = function(column, order) {
 
         // Update order
         updateOrderArrow.call(obj, column, order);
-        updateOrder.call(obj, newValue);
+        // updateOrder.call(obj, newValue);
 
         // On sort event
-        dispatch.call(obj, 'onsort', obj, column, order, newValue.map((row) => row));
+        dispatch.call(obj, 'onsort', obj, column, order, []);
 
         return true;
     }
