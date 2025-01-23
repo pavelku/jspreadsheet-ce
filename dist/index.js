@@ -8752,7 +8752,16 @@ const keyDownControls = function(e) {
                         // Ctrl + V
                         pasteControls();
                     }
-                } else {
+                } 
+                else if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+                    console.log('copy all called')
+                    if (e.which == 67) {
+                        // Ctrl + Shift + C
+                        copy.call(libraryBase.jspreadsheet.current, true, true);
+                        e.preventDefault();
+                    }
+                }
+                else {
                     if (libraryBase.jspreadsheet.current.selectedCell) {
                         if (libraryBase.jspreadsheet.current.options.editable != false) {
                             const rowId = libraryBase.jspreadsheet.current.selectedCell[1];
