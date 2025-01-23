@@ -88,6 +88,10 @@ export const updateOrder = function(rows) {
 export const orderBy = function(column, order) {
     const obj = this;
 
+    // On sort event
+    dispatch.call(obj, 'onsort', obj, column, order, []);
+    return true;
+
     if (column >= 0) {
         // Merged cells
         if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
