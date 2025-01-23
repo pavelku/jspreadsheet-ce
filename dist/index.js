@@ -3032,8 +3032,8 @@ const setMeta = function(o, k, v) {
 /* harmony export */   Th: function() { return /* binding */ updateOrderArrow; },
 /* harmony export */   iY: function() { return /* binding */ updateOrder; }
 /* harmony export */ });
-/* harmony import */ var _history_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
-/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(946);
+/* harmony import */ var _history_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(126);
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(946);
 /* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
 /* harmony import */ var _lazyLoading_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(992);
 /* harmony import */ var _filter_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(206);
@@ -3127,6 +3127,10 @@ const updateOrder = function(rows) {
 const orderBy = function(column, order) {
     const obj = this;
 
+    // On sort event
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.call(obj, 'onsort', obj, column, order, []);
+    return true;
+
     if (column >= 0) {
         // Merged cells
         if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
@@ -3204,7 +3208,7 @@ const orderBy = function(column, order) {
         }
 
         // Save history
-        _history_js__WEBPACK_IMPORTED_MODULE_3__/* .setHistory */ .Dh.call(obj, {
+        _history_js__WEBPACK_IMPORTED_MODULE_4__/* .setHistory */ .Dh.call(obj, {
             action: 'orderBy',
             rows: newValue,
             column: column,
@@ -3216,7 +3220,7 @@ const orderBy = function(column, order) {
         updateOrder.call(obj, newValue);
 
         // On sort event
-        _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onsort', obj, column, order, newValue.map((row) => row));
+        _dispatch_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.call(obj, 'onsort', obj, column, order, newValue.map((row) => row));
 
         return true;
     }
