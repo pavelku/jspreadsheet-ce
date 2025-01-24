@@ -414,6 +414,8 @@ const mouseMoveControls = function(e) {
 
     let mouseButton;
 
+    console.log('mouseMoveControls', e.buttons, e.which, libraryBase.jspreadsheet, libraryBase.jspreadsheet.isMouseAction); 
+
     if (e.buttons) {
         mouseButton = e.buttons;
     } else if (e.button) {
