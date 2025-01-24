@@ -3141,7 +3141,7 @@ const orderBy = function(column, order) {
 
         // Direction
         if (order == null) {
-            order = obj.headers[column].classList.contains('arrow-down') ? 0 : 1;
+            order = obj.headers[column].classList.contains('arrow-up') ? 0 : 1;
         } else {
             order = order ? 1 : 0;
         }
@@ -4093,7 +4093,7 @@ const selectAll = function() {
         obj.selectedCell = [];
     }
 
-    obj.selectedCell[0] = 0;
+    obj.selectedCell[0] = 1;
     obj.selectedCell[1] = 0;
     obj.selectedCell[2] = obj.headers.length - 1;
     obj.selectedCell[3] = obj.records.length - 1;
