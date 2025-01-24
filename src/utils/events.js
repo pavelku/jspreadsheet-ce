@@ -428,8 +428,11 @@ const mouseMoveControls = function(e) {
 
     if (libraryBase.jspreadsheet.current) {
         if (libraryBase.jspreadsheet.isMouseAction == true) {
+            console.log('libraryBase.jspreadsheet.isMouseAction', libraryBase.jspreadsheet.isMouseAction); 
+
             // Resizing is ongoing
             if (libraryBase.jspreadsheet.current.resizing) {
+                console.log('libraryBase.jspreadsheet.current.resizing', libraryBase.jspreadsheet.current.resizing); 
                 if (libraryBase.jspreadsheet.current.resizing.column) {
                     const width = e.pageX - libraryBase.jspreadsheet.current.resizing.mousePosition;
 
@@ -450,6 +453,8 @@ const mouseMoveControls = function(e) {
                     }
                 }
             } else if (libraryBase.jspreadsheet.current.dragging) {
+                console.log('libraryBase.jspreadsheet.current.dragging', libraryBase.jspreadsheet.current.dragging); 
+
                 if (libraryBase.jspreadsheet.current.dragging.column) {
                     const columnId = e.target.getAttribute('data-x');
                     if (columnId) {
@@ -484,6 +489,7 @@ const mouseMoveControls = function(e) {
                         }
                     }
                 } else {
+                    console.log('Jspreadsheet: This row is part of a merged cell.'); 
                     const rowId = e.target.getAttribute('data-y');
                     if (rowId) {
                         if (isRowMerged.call(libraryBase.jspreadsheet.current, rowId).length) {
