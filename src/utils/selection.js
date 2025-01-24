@@ -158,6 +158,7 @@ export const removeCopyingSelection = function() {
 export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
+    console.log('updateSelectionFromCoords', x1, y1, x2, y2, origin);
     // select column
     if (y1 == null) {
         y1 = 0;
