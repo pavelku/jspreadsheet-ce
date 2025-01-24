@@ -3126,6 +3126,7 @@ const updateOrder = function(rows) {
  */
 const orderBy = function(column, order) {
     const obj = this;
+    console.log('orderBy at the start, 0 = asc, 1 = desc', column, order);
         
     if (column >= 0) {
         // Merged cells
@@ -3144,6 +3145,8 @@ const orderBy = function(column, order) {
         } else {
             order = order ? 1 : 0;
         }
+
+        console.log('orderBy after change, 0 = asc, 1 = desc', column, order);
 
         // Test order
         let temp = [];
