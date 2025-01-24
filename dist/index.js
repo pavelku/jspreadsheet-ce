@@ -3621,7 +3621,6 @@ const removeCopyingSelection = function() {
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
-    console.log('updateSelectionFromCoords', x1, y1, x2, y2, origin);
     // select column
     if (y1 == null) {
         y1 = 0;
@@ -7802,8 +7801,6 @@ const mouseMoveControls = function(e) {
 
     let mouseButton;
 
-    console.log('mouseMoveControls', e.buttons, e.which, libraryBase.jspreadsheet, libraryBase.jspreadsheet.isMouseAction); 
-
     if (e.buttons) {
         mouseButton = e.buttons;
     } else if (e.button) {
@@ -7817,12 +7814,10 @@ const mouseMoveControls = function(e) {
     }
 
     if (libraryBase.jspreadsheet.current) {
-        if (libraryBase.jspreadsheet.isMouseAction == true) {
-            console.log('libraryBase.jspreadsheet.isMouseAction', libraryBase.jspreadsheet.isMouseAction); 
+        if (libraryBase.jspreadsheet.isMouseAction == true) {            
 
             // Resizing is ongoing
-            if (libraryBase.jspreadsheet.current.resizing) {
-                console.log('libraryBase.jspreadsheet.current.resizing', libraryBase.jspreadsheet.current.resizing); 
+            if (libraryBase.jspreadsheet.current.resizing) {                
                 if (libraryBase.jspreadsheet.current.resizing.column) {
                     const width = e.pageX - libraryBase.jspreadsheet.current.resizing.mousePosition;
 
@@ -7878,8 +7873,7 @@ const mouseMoveControls = function(e) {
                             }
                         }
                     }
-                } else {
-                    console.log('Jspreadsheet: This row is part of a merged cell.'); 
+                } else {                    
                     const rowId = e.target.getAttribute('data-y');
                     if (rowId) {
                         if (merges/* isRowMerged */.D0.call(libraryBase.jspreadsheet.current, rowId).length) {
