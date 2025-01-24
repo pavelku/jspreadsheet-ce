@@ -3058,9 +3058,9 @@ const updateOrderArrow = function(column, order) {
 
     // No order specified then toggle order
     if (order) {
-        obj.headers[column].classList.add('arrow-up');
-    } else {
         obj.headers[column].classList.add('arrow-down');
+    } else {
+        obj.headers[column].classList.add('arrow-up');
     }
 }
 
