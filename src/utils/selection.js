@@ -636,7 +636,7 @@ export const selectAll = function() {
         obj.selectedCell = [];
     }
 
-    obj.selectedCell[0] = 0;
+    obj.selectedCell[0] = 1;
     obj.selectedCell[1] = 0;
     obj.selectedCell[2] = obj.headers.length - 1;
     obj.selectedCell[3] = obj.records.length - 1;
