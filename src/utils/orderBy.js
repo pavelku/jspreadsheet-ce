@@ -102,7 +102,7 @@ export const orderBy = function(column, order) {
 
         // Direction
         if (order == null) {
-            order = obj.headers[column].classList.contains('arrow-down') ? 1 : 0;
+            order = obj.headers[column].classList.contains('arrow-down') ? 0 : 1;
         } else {
             order = order ? 1 : 0;
         }
