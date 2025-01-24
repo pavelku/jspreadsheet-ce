@@ -1382,6 +1382,8 @@ const keyDownControls = function(e) {
                         // highlighted, delimiter, returnData, includeHeaders, download, isCut, processed
                         copy.call(libraryBase.jspreadsheet.current, true, '\t', undefined, true, undefined, false, undefined);
                         e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
                     }
                 }
                 else {
