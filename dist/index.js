@@ -8742,6 +8742,8 @@ const keyDownControls = function(e) {
                         // Ctrl + A
                         selection/* selectAll */.Ub.call(libraryBase.jspreadsheet.current);
                         e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
                     } else if (e.which == 83) {
                         // Ctrl + S
                         libraryBase.jspreadsheet.current.download();

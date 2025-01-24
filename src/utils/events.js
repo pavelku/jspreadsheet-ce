@@ -1354,6 +1354,8 @@ const keyDownControls = function(e) {
                         // Ctrl + A
                         selectAll.call(libraryBase.jspreadsheet.current);
                         e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
                     } else if (e.which == 83) {
                         // Ctrl + S
                         libraryBase.jspreadsheet.current.download();
