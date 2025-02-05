@@ -5726,7 +5726,10 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
                 }
                 // Values
                 let value = obj.options.data[j][i];
-                if (value.match && (value.match(div) || value.match(/,/g) || value.match(/\n/) || value.match(/\"/))) {
+                if (obj.records[j][i].element.classList.contains('missing-value')) {
+                    value = '';
+                }
+                else if (value.match && (value.match(div) || value.match(/,/g) || value.match(/\n/) || value.match(/\"/))) {
                     value = value.replace(new RegExp('"', 'g'), '""');
                     value = '"' + value + '"';
                 }
