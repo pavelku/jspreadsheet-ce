@@ -5726,16 +5726,10 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
                 }
                 // Values
                 let value = obj.options.data[j][i];
-                console.log('oncopy, value = ' + value);
-                if (value == 'NULL') {
-                    console.log('NULL value replaced ');
-                    value = '';
-                }
-                else if (value.match && (value.match(div) || value.match(/,/g) || value.match(/\n/) || value.match(/\"/))) {
+                if (value.match && (value.match(div) || value.match(/,/g) || value.match(/\n/) || value.match(/\"/))) {
                     value = value.replace(new RegExp('"', 'g'), '""');
                     value = '"' + value + '"';                    
                 }
-                console.log('oncopy, value after replace = ' + value);
                 col.push(value);
 
                 // Labels
