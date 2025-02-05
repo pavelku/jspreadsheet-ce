@@ -101,7 +101,11 @@ export const copy = function(highlighted, delimiter, returnData, includeHeaders,
                 }
                 // Values
                 let value = obj.options.data[j][i];
-                if (value.match && (value.match(div) || value.match(/,/g) || value.match(/\n/) || value.match(/\"/))) {
+                console.log('oncopy, value = ' + value);
+                if (value == 'NULL') {
+                    value = '';
+                }
+                else if (value.match && (value.match(div) || value.match(/,/g) || value.match(/\n/) || value.match(/\"/))) {
                     value = value.replace(new RegExp('"', 'g'), '""');
                     value = '"' + value + '"';
                 }

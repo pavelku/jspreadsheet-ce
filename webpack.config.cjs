@@ -53,7 +53,7 @@ const webpack = {
         libraryExport: 'default'
     },
     optimization: {
-        minimize: true
+        minimize: false
     },
     devServer: {
         static : {
