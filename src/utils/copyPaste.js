@@ -127,6 +127,10 @@ export const copy = function(highlighted, delimiter, returnData, includeHeaders,
                     label = value;
                 } else {
                     label = obj.records[j][i].element.innerHTML;
+                    if (label == 'NULL')    {
+                        label = '';
+                    }
+
                     if (label.match && (label.match(div) || label.match(/,/g) || label.match(/\n/) || label.match(/\"/))) {
                         // Scape double quotes
                         label = label.replace(new RegExp('"', 'g'), '""');
