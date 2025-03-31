@@ -1009,10 +1009,13 @@ export const updateScroll = function(direction) {
         y = (y2 - y1) + obj.content.scrollTop + h2;
     }
 
+    console.log('cell height = ', h2, ', container top = ', y1, ', cell top =', y2, ', new y = ', y, ', direction = ', direction);
     // Top position check
     if (y > (obj.content.scrollTop + 30) && y < (obj.content.scrollTop + h1)) {
+        console.log('in of the viewport');
         // In the viewport
     } else {
+        console.log('out of the viewport');
         // Out of viewport
         if (y < obj.content.scrollTop + 30) {
             obj.content.scrollTop = y - h2;
