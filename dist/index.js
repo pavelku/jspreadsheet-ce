@@ -2154,10 +2154,12 @@ const updateScroll = function(direction) {
         y = (y2 - y1) + obj.content.scrollTop + h2;
     }
 
-    console.log('cell height = ', h2, ', container top = ', y1, ', cell top =', y2, ', new y = ', y, ', direction = ', direction);
+    console.log('cell height = ', h2, ', container top = ', y1, ', cell top =', y2, ', new y = ', y, ', direction = ', direction, 'obj.content.scrollTop =', obj.content.scrollTop,
+        ' y = ', y, ', h1 = ', h1);
+
     // Top position check
     if (y > (obj.content.scrollTop + 30) && y < (obj.content.scrollTop + h1)) {
-        console.log('in of the viewport');
+        console.log('in of the viewport firstSum  =', obj.content.scrollTop + 30, ', second Sum = ', obj.content.scrollTop + h1, 'y = ', y);
         // In the viewport
     } else {
         console.log('out of the viewport, obj.content.scrollTop', obj.content.scrollTop);
