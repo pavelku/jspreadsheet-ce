@@ -1013,7 +1013,7 @@ export const updateScroll = function(direction) {
         ' y = ', y, ', h1 = ', h1);
 
     // Top position check
-    if (y > (obj.content.scrollTop + 30) && y < (obj.content.scrollTop + h1)) {
+    if (y > (obj.content.scrollTop + 30) && (y + 5) < (obj.content.scrollTop + h1)) {
         console.log('in of the viewport firstSum  =', obj.content.scrollTop + 30, ', second Sum = ', obj.content.scrollTop + h1, 'y = ', y);
         // In the viewport
     } else {
