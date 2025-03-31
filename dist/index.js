@@ -2160,13 +2160,17 @@ const updateScroll = function(direction) {
         console.log('in of the viewport');
         // In the viewport
     } else {
-        console.log('out of the viewport');
+        console.log('out of the viewport, obj.content.scrollTop', obj.content.scrollTop);
         // Out of viewport
         if (y < obj.content.scrollTop + 30) {
+            console.log('condition 1, y = ', y , ' h2 = ', h2);
             obj.content.scrollTop = y - h2;
+            console.log('condition 1, y = ', y , ' h1 = ', h1);
         } else {
-            obj.content.scrollTop = y - (h1 - 2);
+            obj.content.scrollTop = y - (h1 - 2);            
         }
+
+        console.log('out of the viewport, new obj.content.scrollTop', obj.content.scrollTop);
     }
 
     // Freeze columns?
