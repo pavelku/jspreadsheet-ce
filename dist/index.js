@@ -2145,12 +2145,22 @@ const updateScroll = function(direction) {
 
     let x, y;
 
-    // Direction
-    if (direction == 0 || direction == 1) {
+    // Direction - nahoru
+    if (direction == 1) {
         x = (x2 - x1) + obj.content.scrollLeft;
         y = (y2 - y1) + obj.content.scrollTop - h2;
-    } else {
+    // doleva    
+    } else if (direction == 0) {
+        x = (x2 - x1) + obj.content.scrollLeft;
+        y = (y2 - y1) + obj.content.scrollTop;
+    // doprava
+    } else if (direction == 2) {
         x = (x2 - x1) + obj.content.scrollLeft + w2;
+        y = (y2 - y1) + obj.content.scrollTop;        
+    }
+    // dolu
+    else {
+        x = (x2 - x1) + obj.content.scrollLeft;
         y = (y2 - y1) + obj.content.scrollTop + h2;
     }
 
