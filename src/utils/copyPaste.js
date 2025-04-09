@@ -185,8 +185,9 @@ export const copy = function(highlighted, delimiter, returnData, includeHeaders,
 
         if (strLabel.startsWith('"') && strLabel.endsWith('"')) {
             console.log('strLabel startswith and endsWith "');
-            strLabel = strLabel.replace('""', '"');            
-            strLabel = strLabel.substring(1, strLabel.length-2);
+            var regex = new RegExp('""', 'g');
+            strLabel = strLabel.replace(regex, '\"');                        
+            strLabel = strLabel.substring(1, strLabel.length-1);
             console.log('strLabel startswith and endsWith ", strLabel = ', strLabel);
         }
 
