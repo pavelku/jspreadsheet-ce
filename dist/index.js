@@ -5833,7 +5833,7 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
             strLabel = strLabel.replace(regex, '\"');                        
             
             var regex2 = new RegExp('"\r\n"', 'g');
-            strLabel = strLabel.replace(regex2, '\\r\\n');      
+            strLabel = strLabel.replace(regex2, "\r\n");      
 
             strLabel = strLabel.substring(1, strLabel.length-1);
             console.log('strLabel startswith and endsWith ", strLabel = ', strLabel);
