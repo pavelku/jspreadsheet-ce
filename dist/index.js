@@ -5827,6 +5827,13 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
             return false;
         }
 
+        if (strLabel.startsWith('"') && strLabel.endsWith('"')) {
+            console.log('strLabel startswith and endsWith "');
+            strLabel = strLabel.replace('""', '"');            
+            strLabel = strLabel.substring(1, strLabel.length-2);
+            console.log('strLabel startswith and endsWith ", strLabel = ', strLabel);
+        }
+
         obj.textarea.value = strLabel;
         obj.textarea.select();
         document.execCommand("copy");
