@@ -5828,7 +5828,6 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
         }
 
         if (strLabel.startsWith('"') && strLabel.endsWith('"')) {
-            console.log('strLabel startswith and endsWith "');
             var regex = new RegExp('""', 'g');
             strLabel = strLabel.replace(regex, '\"');                        
             
@@ -5836,17 +5835,13 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
             strLabel = strLabel.replace(regex2, "\r\n");      
 
             strLabel = strLabel.substring(1, strLabel.length-1);
-            console.log('strLabel startswith and endsWith ", strLabel = ', strLabel);
         }
 
         obj.textarea.value = strLabel;
         obj.textarea.select();
         document.execCommand("copy");
     }
-
-    console.log('keepData strLabel = ', strLabel);
-    console.log('keepData str = ', str);
-
+    
     // Keep data
     if (processed == true) {
         obj.data = strLabel;
