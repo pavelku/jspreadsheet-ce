@@ -5839,6 +5839,9 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
         document.execCommand("copy");
     }
 
+    console.log('keepData strLabel = ', strLabel);
+    console.log('keepData str = ', str);
+
     // Keep data
     if (processed == true) {
         obj.data = strLabel;
