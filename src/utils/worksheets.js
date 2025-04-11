@@ -652,11 +652,11 @@ const worksheetPublicMethods = [
     ['createWorksheet', createWorksheet],
     ['openWorksheet', openWorksheet],
     ['deleteWorksheet', deleteWorksheet],
-    ['copy', function(cut, includeHeaders) {
+    ['copy', function(cut, includeHeaders, includeData) {
         if (cut) {
             cutControls();
         } else {
-            copy.call(this, true, undefined,undefined,includeHeaders);
+            copy.call(this, includeData, undefined,undefined,includeHeaders);
         }
     }],
     ['paste', paste],
