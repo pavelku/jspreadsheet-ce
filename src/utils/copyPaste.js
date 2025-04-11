@@ -418,9 +418,9 @@ export const copyHeaders = function(highlighted, delimiter) {
     // Go through the columns to get the data
     for (let j = 0; j < headerCount; j++) {        
         // If cell is highlighted
-        console.log('obj.headers[j]', obj.headers[j]);
+        console.log('obj.headers[j]', obj.headers[j], 'class list = ', obj.headers[j].classList);
 
-        if (! highlighted || obj.headers[j].element.classList.contains('selected')) {
+        if (! highlighted || obj.headers[j].classList.contains('selected')) {
             if (minIndex >= j) {
                 minIndex = j;
             }
