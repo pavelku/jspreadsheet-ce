@@ -23,7 +23,7 @@ import { getMeta, setMeta } from './meta.js';
 import { closeEditor, openEditor } from './editor.js';
 import dispatch from './dispatch.js';
 import { getIdFromColumnName } from './internalHelpers.js';
-import { copy, paste } from './copyPaste.js';
+import { copy, paste, copyHeaders } from './copyPaste.js';
 import { isReadOnly, setReadOnly } from './cells.js';
 import { openFilter, resetFilters } from './filter.js';
 import { redo, undo } from './history.js';
@@ -652,14 +652,15 @@ const worksheetPublicMethods = [
     ['createWorksheet', createWorksheet],
     ['openWorksheet', openWorksheet],
     ['deleteWorksheet', deleteWorksheet],
-    ['copy', function(cut, includeHeaders, includeData) {
+    ['copy', function(cut, includeHeaders) {
         if (cut) {
             cutControls();
         } else {
-            copy.call(this, includeData, undefined,undefined,includeHeaders);
+            copy.call(this, true, undefined,undefined,includeHeaders);
         }
     }],
     ['paste', paste],
+    ['copyHeaders', copyHeaders],
     ['executeFormula', executeFormula],
     ['getDataFromRange', getDataFromRange],
     ['quantiyOfPages', quantiyOfPages],

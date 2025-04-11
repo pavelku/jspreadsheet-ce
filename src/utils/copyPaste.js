@@ -384,3 +384,82 @@ export const paste = function(x, y, data) {
 
     removeCopyingSelection();
 }
+
+/**
+ * Copy method
+ *
+ * @param bool highlighted - Get only highlighted cells
+ * @param delimiter - \t default to keep compatibility with excel
+ * @return string value
+ */
+export const copyHeaders = function(highlighted, delimiter) {
+    const obj = this;
+
+    console.log('copyHeaders, delimiter = ', delimiter, 'highlighted', highlighted);
+
+    if (! delimiter) {
+        delimiter = "\t";
+    }
+
+    const div = new RegExp(delimiter, 'ig');
+
+    // Controls
+    const header = [];
+    const rowLabel = [];
+    const headerCount = obj.headers.length;
+
+    console.log('headerCount = ', headerCount);
+    
+    // Partial copy
+    let minIndex = 99999;
+    let maxIndex = 0;
+    let isPartialCopy = true;
+    
+    // Go through the columns to get the data
+    for (let j = 0; j < headerCount; j++) {        
+            // If cell is highlighted
+        if (! highlighted || obj.headers[j].element.classList.contains('selected')) {
+            if (minIndex >= j) {
+                minIndex = j;
+            }
+            if (maxIndex >= j) {
+                maxIndex = j;
+            }
+        }
+    }
+    if (minIndex !== 0 && maxIndex !== obj.headers.length) {
+        isPartialCopy = false;
+    }   
+
+    console.log('sel headers = ', minIndex, maxIndex);
+
+    // Reset container
+    obj.style = [];
+
+    // Go through the columns to get the data
+    for (let j = minIndex; j <= maxIndex; j++) {
+        console.log('add current header = ', obj.headers[j].textContent);
+        header.push(obj.headers[j].textContent);
+    }
+
+    // Final string    
+    let strLabel = header.join(delimiter) + rowLabel.join("\r\n");
+    console.log('strlabel = ', strLabel);
+
+    // Create a hidden textarea to copy the values
+    if (! returnData) {
+        // Paste event
+        const selectedRange = [
+            Math.min(obj.selectedCell[0], obj.selectedCell[2]),
+            Math.min(obj.selectedCell[1], obj.selectedCell[3]),
+            Math.max(obj.selectedCell[0], obj.selectedCell[2]),
+            Math.max(obj.selectedCell[1], obj.selectedCell[3]),
+        ];
+
+        obj.textarea.value = strLabel;
+        obj.textarea.select();
+        document.execCommand("copy");
+    }
+    
+    removeCopyingSelection.call(obj);
+}

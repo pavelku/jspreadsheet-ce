@@ -5,7 +5,7 @@ import libraryBase from './libraryBase.js';
 import { down, first, last, left, right, up } from './keys.js';
 import { isColMerged, isRowMerged } from './merges.js';
 import { copyData, removeCopySelection, resetSelection, selectAll, updateCornerPosition, updateSelectionFromCoords } from './selection.js';
-import { copy, paste } from './copyPaste.js';
+import { copy, paste, copyHeaders } from './copyPaste.js';
 import { openFilter } from './filter.js';
 import { loadDown, loadUp } from './lazyLoading.js';
 import { setWidth } from './columns.js';
@@ -1381,11 +1381,21 @@ const keyDownControls = function(e) {
                     }
                 } 
                 else if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
-                    console.log('copy all called')
                     if (e.which == 67) {
+                        console.log('copy all called')                    
                         // Ctrl + Shift + C
                         // highlighted, delimiter, returnData, includeHeaders, download, isCut, processed
                         copy.call(libraryBase.jspreadsheet.current, true, '\t', undefined, true, undefined, false, undefined);
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                    }
+                    
+                    if (e.which == 72) {
+                        console.log('copy headers called')
+                        // Ctrl + Shift + C
+                        // highlighted, delimiter, returnData, includeHeaders, download, isCut, processed
+                        copyHeaders.call(libraryBase.jspreadsheet.current, true, '\t');
                         e.preventDefault();
                         e.stopPropagation();
                         e.stopImmediatePropagation();
