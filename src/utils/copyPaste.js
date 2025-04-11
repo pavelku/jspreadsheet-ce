@@ -412,11 +412,11 @@ export const copyHeaders = function(highlighted, delimiter) {
     
     // Partial copy
     let minIndex = 99999;
-    let maxIndex = 0;
+    let maxIndex = 1;
     let isPartialCopy = true;
     
     // Go through the columns to get the data
-    for (let j = 0; j < headerCount; j++) {        
+    for (let j = 1; j < headerCount; j++) {        
         // If cell is highlighted
         console.log('obj.headers[j]', obj.headers[j], 'class list = ', obj.headers[j].classList);
 
