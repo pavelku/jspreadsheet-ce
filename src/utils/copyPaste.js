@@ -424,7 +424,7 @@ export const copyHeaders = function(highlighted, delimiter) {
             if (minIndex >= j) {
                 minIndex = j;
             }
-            if (maxIndex >= j) {
+            if (maxIndex <= j) {
                 maxIndex = j;
             }
         }
@@ -449,7 +449,6 @@ export const copyHeaders = function(highlighted, delimiter) {
     console.log('strlabel = ', strLabel);
 
     // Create a hidden textarea to copy the values
-    if (! returnData) {
         // Paste event
         const selectedRange = [
             Math.min(obj.selectedCell[0], obj.selectedCell[2]),
@@ -461,7 +460,7 @@ export const copyHeaders = function(highlighted, delimiter) {
         obj.textarea.value = strLabel;
         obj.textarea.select();
         document.execCommand("copy");
-    }
+    
     
     removeCopyingSelection.call(obj);
 }
