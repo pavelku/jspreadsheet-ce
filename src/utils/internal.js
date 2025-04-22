@@ -1029,15 +1029,19 @@ export const updateScroll = function(direction) {
     } else {
         console.log('out of the viewport, obj.content.scrollTop', obj.content.scrollTop);
         // Out of viewport
-        if (y < obj.content.scrollTop + 30) {
-            console.log('condition 1, y = ', y , ' h2 = ', h2);
-            obj.content.scrollTop = y - h2;            
-        } else {
-            console.log('condition 1, y = ', y , ' h1 = ', h1);
-            obj.content.scrollTop = y - (h1 - h2);            
-        }
+        if (direction == 1 || direction == 3) 
+        {
+        
+            if (y < obj.content.scrollTop + 30) {
+                console.log('condition 1, y = ', y , ' h2 = ', h2);
+                obj.content.scrollTop = y - h2;            
+            } else {
+                console.log('condition 1, y = ', y , ' h1 = ', h1);
+                obj.content.scrollTop = y - (h1 - h2);            
+            }
 
-        console.log('out of the viewport, new obj.content.scrollTop', obj.content.scrollTop);
+            console.log('out of the viewport, new obj.content.scrollTop', obj.content.scrollTop);
+        }
     }
 
     // Freeze columns?
@@ -1048,15 +1052,18 @@ export const updateScroll = function(direction) {
         // In the viewport
     } else {
         // Out of viewport
-        if (x < obj.content.scrollLeft + 30) {
-            obj.content.scrollLeft = x;
-            if (obj.content.scrollLeft < 50) {
-                obj.content.scrollLeft = 0;
+        if (direction == 0 || direction == 2) 
+        {
+            if (x < obj.content.scrollLeft + 30) {
+                obj.content.scrollLeft = x;
+                if (obj.content.scrollLeft < 50) {
+                    obj.content.scrollLeft = 0;
+                }
+            } else if (x < obj.content.scrollLeft + freezed) {
+                obj.content.scrollLeft = x - freezed - 1;
+            } else {
+                obj.content.scrollLeft = x - (w1 - 20);
             }
-        } else if (x < obj.content.scrollLeft + freezed) {
-            obj.content.scrollLeft = x - freezed - 1;
-        } else {
-            obj.content.scrollLeft = x - (w1 - 20);
         }
     }
 }
