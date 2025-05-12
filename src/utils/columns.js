@@ -43,9 +43,15 @@ export const createCellHeader = function(colNumber) {
     obj.headers[colNumber] = document.createElement('td');
     obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || getColumnName(colNumber);
 
-    const filterSpan = document.createElement('span');
+    const filterSpan = document.createElement('button');
+    filterSpan.setAttribute('title', 'Filter');
+    filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
+    filterSpan.classList.add('filter-column');
+    filterSpan.onclick = function() {
+        dispatch.call(obj, 'onfiltercolumn', obj.options.columns[colNumber]);
+        alert('on filter click');
+    }
     obj.headers[colNumber].appendChild(filterSpan);
-
     console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
 
 
