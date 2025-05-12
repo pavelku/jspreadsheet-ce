@@ -6165,19 +6165,21 @@ const createCellHeader = function(colNumber) {
     obj.headers[colNumber] = document.createElement('td');
     obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || (0,helpers.getColumnName)(colNumber);
 
-    const filterSpan = document.createElement('button');
-    filterSpan.setAttribute('title', 'Filter');
-    filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
-    filterSpan.classList.add('filter-column');
-    filterSpan.classList.add('pi');
-    filterSpan.classList.add(obj.options.columns[colNumber].hasFilter ? 'pi-filter-slash' : 'pi-filter');
-    filterSpan.onclick = function(event) {
-        console.log('dispatch -> onfiltercolumn');
-        dispatch/* default */.A.call(obj, 'onfiltercolumn', event, obj, obj.options.columns[colNumber]);        
-        console.log('after dispatch -> onfiltercolumn');
+    if (obj.options.columns[colNumber]?.filterable) {
+        const filterSpan = document.createElement('button');
+        filterSpan.setAttribute('title', 'Filter');
+        filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
+        filterSpan.classList.add('filter-column');
+        filterSpan.classList.add('pi');
+        filterSpan.classList.add(obj.options.columns[colNumber].hasFilter ? 'pi-filter-slash' : 'pi-filter');
+        filterSpan.onclick = function(event) {
+            console.log('dispatch -> onfiltercolumn');
+            dispatch/* default */.A.call(obj, 'onfiltercolumn', event, obj, obj.options.columns[colNumber]);        
+            console.log('after dispatch -> onfiltercolumn');
+        }
+        obj.headers[colNumber].appendChild(filterSpan);
+        console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
     }
-    obj.headers[colNumber].appendChild(filterSpan);
-    console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
 
 
     obj.headers[colNumber].setAttribute('data-x', colNumber);
