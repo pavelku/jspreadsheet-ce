@@ -979,7 +979,12 @@ declare namespace jspreadsheet {
       colIndex: number,
       order: 0 | 1,
       newOrderValues: number[],
-    ) => void;
+    ) => void;    
+
+    onfiltercolumn?: (
+      instance: WorksheetInstance,
+      columnProp: any
+    ) 
 
     /**
      * Occurs when a change is undone.

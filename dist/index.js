@@ -6174,6 +6174,7 @@ const createCellHeader = function(colNumber) {
     filterSpan.onclick = function() {
         console.log('dispatch -> onfiltercolumn');
         dispatch/* default */.A.call(obj, 'onfiltercolumn', obj, obj.options.columns[colNumber]);        
+        console.log('after dispatch -> onfiltercolumn');
     }
     obj.headers[colNumber].appendChild(filterSpan);
     console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
