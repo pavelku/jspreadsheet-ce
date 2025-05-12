@@ -47,7 +47,8 @@ export const createCellHeader = function(colNumber) {
     filterSpan.setAttribute('title', 'Filter');
     filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
     filterSpan.classList.add('filter-column');
-    filterSpan.classList.add(obj.options.columns[colNumber].hasFilter ? 'pi pi-filter-slash' : 'pi pi-filter');
+    filterSpan.classList.add('pi');
+    filterSpan.classList.add(obj.options.columns[colNumber].hasFilter ? 'pi-filter-slash' : 'pi-filter');
     filterSpan.onclick = function() {
         console.log('dispatch -> onfiltercolumn');
         dispatch.call(obj, 'onfiltercolumn', obj.options.columns[colNumber]);        
