@@ -6169,9 +6169,9 @@ const createCellHeader = function(colNumber) {
     filterSpan.setAttribute('title', 'Filter');
     filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
     filterSpan.classList.add('filter-column');
+    filterSpan.classList.add(obj.options.columns[colNumber].hasFilter ? 'pi-filter-slash' : 'pi-filter');
     filterSpan.onclick = function() {
-        dispatch/* default */.A.call(obj, 'onfiltercolumn', obj.options.columns[colNumber]);
-        alert('on filter click');
+        dispatch/* default */.A.call(obj, 'onfiltercolumn', obj.options.columns[colNumber]);        
     }
     obj.headers[colNumber].appendChild(filterSpan);
     console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
