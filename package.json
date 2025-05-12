@@ -48,7 +48,7 @@
     ],
     "type": "module",
     "dependencies": {
-        "@jspreadsheet/formula": "^2.0.2",
+        "@jspreadsheet/formula": "^2.0.2",        
         "jsuites": "^5.8.2"
     },
     "devDependencies": {

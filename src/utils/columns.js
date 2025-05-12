@@ -51,7 +51,7 @@ export const createCellHeader = function(colNumber) {
     filterSpan.classList.add(obj.options.columns[colNumber].hasFilter ? 'pi-filter-slash' : 'pi-filter');
     filterSpan.onclick = function() {
         console.log('dispatch -> onfiltercolumn');
-        dispatch.call(obj, 'onfiltercolumn', obj.options.columns[colNumber]);        
+        dispatch.call(obj, 'onfiltercolumn', obj, obj.options.columns[colNumber]);        
     }
     obj.headers[colNumber].appendChild(filterSpan);
     console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
