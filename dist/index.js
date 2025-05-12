@@ -6154,6 +6154,9 @@ const getNumberOfColumns = function() {
 const createCellHeader = function(colNumber) {
     const obj = this;
 
+    console.log('createCellHeader, colNumber = ', colNumber, ' options = ', obj.options.columns[colNumber]);
+
+
     // Create col global control
     const colWidth = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].width) || obj.options.defaultColWidth || 100;
     const colAlign = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].align) || obj.options.defaultColAlign || 'center';
@@ -6161,6 +6164,12 @@ const createCellHeader = function(colNumber) {
     // Create header cell
     obj.headers[colNumber] = document.createElement('td');
     obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || (0,helpers.getColumnName)(colNumber);
+
+    const filterSpan = document.createElement('span');
+    obj.headers[colNumber].appendChild(filterSpan);
+
+    console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
+
 
     obj.headers[colNumber].setAttribute('data-x', colNumber);
     obj.headers[colNumber].style.textAlign = colAlign;
