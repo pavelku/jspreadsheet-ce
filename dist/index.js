@@ -6165,7 +6165,22 @@ const createCellHeader = function(colNumber) {
     obj.headers[colNumber] = document.createElement('td');
     obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || (0,helpers.getColumnName)(colNumber);
 
-    if (obj.options.columns[colNumber]?.filterable) {
+    if (colNumber == 0) {
+        const filterSpan = document.createElement('button');
+        filterSpan.setAttribute('title', 'Clear All Filters');
+        filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
+        filterSpan.classList.add('filter-column');
+        filterSpan.classList.add('pi');
+        filterSpan.classList.add('pi-filter-slash');
+        filterSpan.onclick = function(event) {
+            console.log('dispatch -> clear all filters');
+            dispatch/* default */.A.call(obj, 'clearAllFilters', event, obj);        
+            console.log('after dispatch -> clear all filters');
+        }
+        obj.headers[colNumber].appendChild(filterSpan);
+        console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
+    }
+    else if (obj.options.columns[colNumber]?.filterable) {
         const filterSpan = document.createElement('button');
         filterSpan.setAttribute('title', 'Filter');
         filterSpan.setAttribute('column-name', obj.options.columns[colNumber].id);
