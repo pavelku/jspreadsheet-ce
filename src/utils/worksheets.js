@@ -6,7 +6,7 @@ import { parseCSV } from './helpers.js';
 import { createCellHeader, deleteColumn, getColumnData, getNumberOfColumns, getWidth, hideColumn, insertColumn, moveColumn, setColumnData, setWidth, showColumn } from './columns.js';
 import { getData, getDataFromRange, getValue, getValueFromCoords, setData, setValue, setValueFromCoords } from './data.js';
 import { cutControls, scrollControls, wheelControls } from './events.js';
-import { getHighlighted, getRange, getSelected, getSelectedColumns, chooseSelection, getSelectedRows, getSelection, isSelected, resetSelection, selectAll, updateSelectionFromCoords } from './selection.js';
+import { getHighlighted, getRange, getSelected, getSelectedColumns, getSelectedRows, getSelection, isSelected, resetSelection, selectAll, updateSelectionFromCoords } from './selection.js'; // chooseSelection
 import { deleteRow, getHeight, getRowData, hideRow, insertRow, moveRow, setHeight, setRowData, showRow, createRow } from './rows.js';
 import { destroyMerge, getMerge, removeMerge, setMerge } from './merges.js';
 import { resetSearch, search } from './search.js';

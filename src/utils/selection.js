@@ -1,8 +1,8 @@
 import dispatch from "./dispatch.js";
 import { getFreezeWidth } from "./freeze.js";
 import { getCellNameFromCoords } from "./helpers.js";
-import { getRowData } from "./rows.js"
-import { getData } from "./data.js"
+// import { getRowData } from "./rows.js"
+// import { getData } from "./data.js"
 import { setHistory } from "./history.js";
 import { updateCell, updateFormula, updateFormulaChain, updateTable } from "./internal.js";
 import { getColumnNameFromId, getIdFromColumnName } from "./internalHelpers.js";
@@ -350,8 +350,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('origin = ', origin);
     obj.startSelCol = x1;
     console.log('after set = ', origin);
-    const val = getRowData.call(obj, y1)[0];
-    console.log('after set getRowData ', val);
+    // const val = getRowData.call(obj, y1)[0];
+    // console.log('after set getRowData ', val);
 
     /*
     // TODO NEW FUNC -> copy
@@ -407,6 +407,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     updateCornerPosition.call(obj);
 }
 
+/*
 export const chooseSelection = (startPos, endPos, scrollDirection) => {
     const obj = this;
     var data = obj.getData();
@@ -431,6 +432,7 @@ const resetMousePos = ()  => {
     const obj = this;
     obj.startSelCol = obj.endSelCol = obj.startSelRow = obj.endSelRow = -1;
 }
+*/
 
 /**
  * Get selected column numbers
