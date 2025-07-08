@@ -2221,8 +2221,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
-            obj.endSelCol = x2;
-            let scrollDirection = "down";
+            obj.endSelCol = x2;            
             if (obj.getRowData(y2)[0] > obj.endSelRow) {
                 obj.endSelRow = obj.getRowData(y2)[0];
                 obj.scrollDirection = "down";
@@ -2240,7 +2239,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, obj.startSelRow);
                 const endPos = Math.min(endRowPos, obj.endSelRow);
-                chooseSelection(startPos, endPos, obj.scrollDirection);
+                chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
         }
         else {
@@ -2263,8 +2262,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 }
 
 
-const chooseSelection = (startPos, endPos, scrollDirection) => {
-    const obj = undefined;
+const chooseSelection = function (startPos, endPos, scrollDirection) {
+    const obj = this;
+
     var data = obj.getData();
     //console.log('data = ', data);
     const startRowIndex = getDataByNrPos(data, startPos, 0);
