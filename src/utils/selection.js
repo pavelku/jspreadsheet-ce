@@ -347,6 +347,13 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
+    console.log('origin = ', origin);
+    obj.startSelCol = x1;
+    console.log('after set = ', origin);
+    const val = getRowData.call(obj, y1)[0];
+    console.log('after set getRowData ', val);
+
+    /*
     // TODO NEW FUNC -> copy
     if (origin){
         if (origin.type == "mousedown" && !origin.shiftKey){
@@ -393,7 +400,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else if (obj.preventOnSelection)
     {
         obj.preventOnSelection = false;
-    } 
+    } */
 
 
     // Find corner cell
@@ -402,7 +409,6 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
 export const chooseSelection = (startPos, endPos, scrollDirection) => {
     const obj = this;
-
     var data = obj.getData();
     //console.log('data = ', data);
     const startRowIndex = getDataByNrPos(data, startPos, 0);
@@ -422,6 +428,7 @@ const getDataByNrPos = (data, curPosNr, startIndex) =>{
 }
 
 const resetMousePos = ()  => {
+    const obj = this;
     obj.startSelCol = obj.endSelCol = obj.startSelRow = obj.endSelRow = -1;
 }
 
