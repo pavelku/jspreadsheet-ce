@@ -1835,6 +1835,7 @@ const resetFilters = function() {
 /* harmony export */   G9: function() { return /* binding */ refreshSelection; },
 /* harmony export */   Jg: function() { return /* binding */ getSelectedColumns; },
 /* harmony export */   Lo: function() { return /* binding */ getSelection; },
+/* harmony export */   Qi: function() { return /* binding */ chooseSelection; },
 /* harmony export */   R5: function() { return /* binding */ getSelectedRows; },
 /* harmony export */   Ub: function() { return /* binding */ selectAll; },
 /* harmony export */   at: function() { return /* binding */ conditionalSelectionUpdate; },
@@ -1849,7 +1850,6 @@ const resetFilters = function() {
 /* harmony export */   sp: function() { return /* binding */ isSelected; },
 /* harmony export */   tW: function() { return /* binding */ hash; }
 /* harmony export */ });
-/* unused harmony export chooseSelection */
 /* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(946);
 /* harmony import */ var _freeze_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(619);
 /* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(595);
@@ -10146,7 +10146,7 @@ const isReadOnly = function(x, y) {
 
 
 
- //chooseSelection, 
+ // 
 
 
 
@@ -10716,7 +10716,7 @@ const worksheetPublicMethods = [
     ['getSelection', selection/* getSelection */.Lo],
     ['getSelected', selection/* getSelected */.ef],
     ['getSelectedColumns', selection/* getSelectedColumns */.Jg],
-//    ['chooseSelection', chooseSelection]
+    ['chooseSelection', selection/* chooseSelection */.Qi],
     ['getSelectedRows', selection/* getSelectedRows */.R5],
     ['getData', getData],
     ['setData', setData],
