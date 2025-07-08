@@ -349,9 +349,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     console.log('origin = ', origin);
     obj.startSelCol = x1;
-    console.log('after set = ', origin);
-    // const val = getRowData.call(obj, y1)[0];
-    // console.log('after set getRowData ', val);
+    console.log('after set = ', origin);    
+    const val = obj.getRowData(obj, y1)[0];
+    console.log('after set getRowData ', val);
 
     /*
     // TODO NEW FUNC -> copy
