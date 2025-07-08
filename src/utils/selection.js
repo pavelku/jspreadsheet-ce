@@ -1,8 +1,6 @@
 import dispatch from "./dispatch.js";
 import { getFreezeWidth } from "./freeze.js";
 import { getCellNameFromCoords } from "./helpers.js";
-// import { getRowData } from "./rows.js"
-// import { getData } from "./data.js"
 import { setHistory } from "./history.js";
 import { updateCell, updateFormula, updateFormulaChain, updateTable } from "./internal.js";
 import { getColumnNameFromId, getIdFromColumnName } from "./internalHelpers.js";
@@ -371,7 +369,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.scrollDirection = "down";
             }            
 
-            if (getRowData.call(obj, y1)[0] < obj.startSelRow) {
+            if (obj.getRowData(y1)[0] < obj.startSelRow) {
                 obj.startSelRow = obj.getRowData(y1)[0];
                 obj.scrollDirection = "up";
             }
