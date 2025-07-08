@@ -10719,7 +10719,7 @@ const worksheetPublicMethods = [
     ['getSelection', selection/* getSelection */.Lo],
     ['getSelected', selection/* getSelected */.ef],
     ['getSelectedColumns', selection/* getSelectedColumns */.Jg],
-    ['chooseSelection', chooseSelection]
+    // ['chooseSelection', chooseSelection]
     ['getSelectedRows', selection/* getSelectedRows */.R5],
     ['getData', getData],
     ['setData', setData],

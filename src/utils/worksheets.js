@@ -576,7 +576,7 @@ const worksheetPublicMethods = [
     ['getSelection', getSelection],
     ['getSelected', getSelected],
     ['getSelectedColumns', getSelectedColumns],
-    ['chooseSelection', chooseSelection]
+    // ['chooseSelection', chooseSelection]
     ['getSelectedRows', getSelectedRows],
     ['getData', getData],
     ['setData', setData],
