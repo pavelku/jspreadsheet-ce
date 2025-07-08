@@ -1849,6 +1849,7 @@ const resetFilters = function() {
 /* harmony export */   sp: function() { return /* binding */ isSelected; },
 /* harmony export */   tW: function() { return /* binding */ hash; }
 /* harmony export */ });
+/* unused harmony export chooseSelection */
 /* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(946);
 /* harmony import */ var _freeze_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(619);
 /* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(595);
@@ -2208,36 +2209,35 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('origin = ', origin);
     obj.startSelCol = x1;
     console.log('after set = ', origin);    
-    const val = obj.getRowData(obj, y1)[0];
+    const val = obj.getRowData(y1)[0];
     console.log('after set getRowData ', val);
 
-    /*
     // TODO NEW FUNC -> copy
     if (origin){
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
-            obj.startSelRow = getRowData.call(obj, y1)[0];
-            obj.endSelRow = getRowData.call(obj, y2)[0];
+            obj.startSelRow = obj.getRowData(y1)[0];
+            obj.endSelRow = obj.getRowData(y2)[0];
             obj.console.log('New Selection = [', startSelRow , ',', endSelRow, ']');
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;
             let scrollDirection = "down";
-            if (getRowData.call(obj, y2)[0] > obj.endSelRow) {
-                obj.endSelRow = getRowData.call(obj, y2)[0];
+            if (obj.getRowData(y2)[0] > obj.endSelRow) {
+                obj.endSelRow = obj.getRowData(y2)[0];
                 obj.scrollDirection = "down";
             }            
 
             if (getRowData.call(obj, y1)[0] < startSelRow) {
-                obj.startSelRow = getRowData.call(obj, y1)[0];
+                obj.startSelRow = obj.getRowData(y1)[0];
                 obj.scrollDirection = "up";
             }
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
-                var data = getData.call(obj);
+                var data = obj.getData();
                 const firstRowPos = data[0][0];
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, startSelRow);
@@ -2246,34 +2246,33 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
         }
         else {
-            resetMousePos(obj);
+            resetMousePos();
         }
     }
     else if (!obj.preventOnSelection){
         startSelCol = x1;
         endSelCol = x2;
-        startSelRow = getRowData.call(obj, y1)[0];
-        endSelRow = getRowData.call(obj, y2)[0];            
+        startSelRow = obj.getRowData(y1)[0];
+        endSelRow = obj.getRowData(y2)[0];            
     }
     else if (obj.preventOnSelection)
     {
         obj.preventOnSelection = false;
-    } */
-
+    } 
 
     // Find corner cell
     updateCornerPosition.call(obj);
 }
 
-/*
-export const chooseSelection = (startPos, endPos, scrollDirection) => {
-    const obj = this;
+
+const chooseSelection = (startPos, endPos, scrollDirection) => {
+    const obj = undefined;
     var data = obj.getData();
     //console.log('data = ', data);
     const startRowIndex = getDataByNrPos(data, startPos, 0);
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
-    preventOnSelection = true;
+    obj.preventOnSelection = true;
     obj.updateSelectionFromCoords(startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
@@ -2287,10 +2286,10 @@ const getDataByNrPos = (data, curPosNr, startIndex) =>{
 }
 
 const resetMousePos = ()  => {
-    const obj = this;
+    const obj = undefined;
     obj.startSelCol = obj.endSelCol = obj.startSelRow = obj.endSelRow = -1;
 }
-*/
+
 
 /**
  * Get selected column numbers
@@ -7587,7 +7586,7 @@ const hideRow = function(rowNumber) {
 /**
  * Get a row data by rowNumber
  */
-const getRowData = function(rowNumber, processed) {
+const src_getRowData = function(rowNumber, processed) {
     const obj = this;
 
     if (processed) {
@@ -10739,7 +10738,7 @@ const worksheetPublicMethods = [
     ['deleteRow', deleteRow],
     ['hideRow', hideRow],
     ['showRow', showRow],
-    ['getRowData', getRowData],
+    ['getRowData', src_getRowData],
     ['setRowData', setRowData],
     ['getHeight', getHeight],
     ['setHeight', function(row, height) {

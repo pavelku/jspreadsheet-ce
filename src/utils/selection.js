@@ -350,36 +350,35 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('origin = ', origin);
     obj.startSelCol = x1;
     console.log('after set = ', origin);    
-    const val = obj.getRowData(obj, y1)[0];
+    const val = obj.getRowData(y1)[0];
     console.log('after set getRowData ', val);
 
-    /*
     // TODO NEW FUNC -> copy
     if (origin){
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
-            obj.startSelRow = getRowData.call(obj, y1)[0];
-            obj.endSelRow = getRowData.call(obj, y2)[0];
+            obj.startSelRow = obj.getRowData(y1)[0];
+            obj.endSelRow = obj.getRowData(y2)[0];
             obj.console.log('New Selection = [', startSelRow , ',', endSelRow, ']');
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;
             let scrollDirection = "down";
-            if (getRowData.call(obj, y2)[0] > obj.endSelRow) {
-                obj.endSelRow = getRowData.call(obj, y2)[0];
+            if (obj.getRowData(y2)[0] > obj.endSelRow) {
+                obj.endSelRow = obj.getRowData(y2)[0];
                 obj.scrollDirection = "down";
             }            
 
             if (getRowData.call(obj, y1)[0] < startSelRow) {
-                obj.startSelRow = getRowData.call(obj, y1)[0];
+                obj.startSelRow = obj.getRowData(y1)[0];
                 obj.scrollDirection = "up";
             }
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
-                var data = getData.call(obj);
+                var data = obj.getData();
                 const firstRowPos = data[0][0];
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, startSelRow);
@@ -388,26 +387,25 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
         }
         else {
-            resetMousePos(obj);
+            resetMousePos();
         }
     }
     else if (!obj.preventOnSelection){
         startSelCol = x1;
         endSelCol = x2;
-        startSelRow = getRowData.call(obj, y1)[0];
-        endSelRow = getRowData.call(obj, y2)[0];            
+        startSelRow = obj.getRowData(y1)[0];
+        endSelRow = obj.getRowData(y2)[0];            
     }
     else if (obj.preventOnSelection)
     {
         obj.preventOnSelection = false;
-    } */
-
+    } 
 
     // Find corner cell
     updateCornerPosition.call(obj);
 }
 
-/*
+
 export const chooseSelection = (startPos, endPos, scrollDirection) => {
     const obj = this;
     var data = obj.getData();
@@ -415,7 +413,7 @@ export const chooseSelection = (startPos, endPos, scrollDirection) => {
     const startRowIndex = getDataByNrPos(data, startPos, 0);
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
-    preventOnSelection = true;
+    obj.preventOnSelection = true;
     obj.updateSelectionFromCoords(startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
@@ -432,7 +430,7 @@ const resetMousePos = ()  => {
     const obj = this;
     obj.startSelCol = obj.endSelCol = obj.startSelRow = obj.endSelRow = -1;
 }
-*/
+
 
 /**
  * Get selected column numbers
