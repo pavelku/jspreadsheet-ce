@@ -48,7 +48,7 @@
     ],
     "type": "module",
     "dependencies": {
-        "@jspreadsheet/formula": "^2.0.2",        
+        "@jspreadsheet/formula": "^2.0.2",
         "jsuites": "^5.8.2"
     },
     "devDependencies": {
@@ -64,7 +64,7 @@
         "eslint": "^8.40.0",
         "eslint-config-prettier": "^8.8.0",
         "html-replace-webpack-plugin": "^2.6.0",
-        "html-webpack-plugin": "^5.5.0",
+        "html-webpack-plugin": "^5.6.3",
         "jsdoc": "^4.0.2",
         "jsdom": "^22.0.0",
         "jsdom-global": "^3.0.2",

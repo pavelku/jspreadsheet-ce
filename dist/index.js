@@ -17,1098 +17,6 @@ var jspreadsheet;
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 946:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__) {
-
-
-
-/**
- * Prepare JSON in the correct format
- */
-const prepareJson = function(data) {
-    const obj = this;
-
-    const rows = [];
-    for (let i = 0; i < data.length; i++) {
-        const x = data[i].x;
-        const y = data[i].y;
-        const k = obj.options.columns[x].name ? obj.options.columns[x].name : x;
-
-        // Create row
-        if (! rows[y]) {
-            rows[y] = {
-                row: y,
-                data: {},
-            };
-        }
-        rows[y].data[k] = data[i].value;
-    }
-
-    // Filter rows
-    return rows.filter(function (el) {
-        return el != null;
-    });
-}
-
-/**
- * Post json to a remote server
- */
-const save = function(url, data) {
-    const obj = this;
-
-    // Parse anything in the data before sending to the server
-    const ret = dispatch.call(obj.parent, 'onbeforesave', obj.parent, obj, data);
-    if (ret) {
-        data = ret;
-    } else {
-        if (ret === false) {
-            return false;
-        }
-    }
-
-    // Remove update
-    jSuites.ajax({
-        url: url,
-        method: 'POST',
-        dataType: 'json',
-        data: { data: JSON.stringify(data) },
-        success: function(result) {
-            // Event
-            dispatch.call(obj, 'onsave', obj.parent, obj, data);
-        }
-    });
-}
-
-/**
- * Trigger events
- */
-const dispatch = function(event) {
-    const obj = this;
-    let ret = null;
-
-    let spreadsheet = obj.parent ? obj.parent : obj;
-
-    // Dispatch events
-    if (! spreadsheet.ignoreEvents) {
-        // Call global event
-        if (typeof(spreadsheet.config.onevent) == 'function') {
-            ret = spreadsheet.config.onevent.apply(this, arguments);
-        }
-        // Call specific events
-        if (typeof(spreadsheet.config[event]) == 'function') {
-            ret = spreadsheet.config[event].apply(this, Array.prototype.slice.call(arguments, 1));
-        }
-
-        if (typeof spreadsheet.plugins === 'object') {
-            const pluginKeys = Object.keys(spreadsheet.plugins);
-
-            for (let pluginKeyIndex = 0; pluginKeyIndex < pluginKeys.length; pluginKeyIndex++) {
-                const key = pluginKeys[pluginKeyIndex];
-                const plugin = spreadsheet.plugins[key];
-
-                if (typeof plugin.onevent === 'function') {
-                    ret = plugin.onevent.apply(this, arguments);
-                }
-            }
-        }
-    }
-
-    if (event == 'onafterchanges') {
-        const scope = arguments;
-
-        if (typeof spreadsheet.plugins === 'object') {
-            Object.entries(spreadsheet.plugins).forEach(function([, plugin]) {
-                if (typeof plugin.persistence === 'function') {
-                    plugin.persistence(obj, 'setValue', { data: scope[2] });
-                }
-            });
-        }
-
-        if (obj.options.persistence) {
-            const url = obj.options.persistence == true ? obj.options.url : obj.options.persistence;
-            const data = prepareJson.call(obj, arguments[2]);
-            save.call(obj, url, data);
-        }
-    }
-
-    return ret;
-}
-
-/* harmony default export */ __webpack_exports__.A = (dispatch);
-
-/***/ }),
-
-/***/ 206:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   F8: function() { return /* binding */ closeFilter; },
-/* harmony export */   N$: function() { return /* binding */ openFilter; },
-/* harmony export */   dr: function() { return /* binding */ resetFilters; }
-/* harmony export */ });
-/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
-/* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(268);
-
-
-
-
-/**
- * Open the column filter
- */
-const openFilter = function(columnId) {
-    const obj = this;
-
-    if (! obj.options.filters) {
-        console.log('Jspreadsheet: filters not enabled.');
-    } else {
-        // Make sure is integer
-        columnId = parseInt(columnId);
-        // Reset selection
-        obj.resetSelection();
-        // Load options
-        let optionsFiltered = [];
-        if (obj.options.columns[columnId].type == 'checkbox') {
-            optionsFiltered.push({ id: 'true', name: 'True' });
-            optionsFiltered.push({ id: 'false', name: 'False' });
-        } else {
-            const options = [];
-            let hasBlanks = false;
-            for (let j = 0; j < obj.options.data.length; j++) {
-                const k = obj.options.data[j][columnId];
-                const v = obj.records[j][columnId].element.innerHTML;
-                if (k && v) {
-                    options[k] = v;
-                } else {
-                    hasBlanks = true;
-                }
-            }
-            const keys = Object.keys(options);
-            optionsFiltered = [];
-            for (let j = 0; j < keys.length; j++) {
-                optionsFiltered.push({ id: keys[j], name: options[keys[j]] });
-            }
-            // Has blank options
-            if (hasBlanks) {
-                optionsFiltered.push({ value: '', id: '', name: '(Blanks)' });
-            }
-        }
-
-        // Create dropdown
-        const div = document.createElement('div');
-        obj.filter.children[columnId + 1].innerHTML = '';
-        obj.filter.children[columnId + 1].appendChild(div);
-        obj.filter.children[columnId + 1].style.paddingLeft = '0px';
-        obj.filter.children[columnId + 1].style.paddingRight = '0px';
-        obj.filter.children[columnId + 1].style.overflow = 'initial';
-
-        const opt = {
-            data: optionsFiltered,
-            multiple: true,
-            autocomplete: true,
-            opened: true,
-            value: obj.filters[columnId] !== undefined ? obj.filters[columnId] : null,
-            width:'100%',
-            position: (obj.options.tableOverflow == true || obj.parent.config.fullscreen == true) ? true : false,
-            onclose: function(o) {
-                resetFilters.call(obj);
-                obj.filters[columnId] = o.dropdown.getValue(true);
-                obj.filter.children[columnId + 1].innerHTML = o.dropdown.getText();
-                obj.filter.children[columnId + 1].style.paddingLeft = '';
-                obj.filter.children[columnId + 1].style.paddingRight = '';
-                obj.filter.children[columnId + 1].style.overflow = '';
-                closeFilter.call(obj, columnId);
-                _selection_js__WEBPACK_IMPORTED_MODULE_0__/* .refreshSelection */ .G9.call(obj);
-            }
-        };
-
-        // Dynamic dropdown
-        jSuites.dropdown(div, opt);
-    }
-}
-
-const closeFilter = function(columnId) {
-    const obj = this;
-
-    if (! columnId) {
-        for (let i = 0; i < obj.filter.children.length; i++) {
-            if (obj.filters[i]) {
-                columnId = i;
-            }
-        }
-    }
-
-    // Search filter
-    const search = function(query, x, y) {
-        for (let i = 0; i < query.length; i++) {
-            const value = ''+obj.options.data[y][x];
-            const label = ''+obj.records[y][x].element.innerHTML;
-            if (query[i] == value || query[i] == label) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    const query = obj.filters[columnId];
-    obj.results = [];
-    for (let j = 0; j < obj.options.data.length; j++) {
-        if (search(query, columnId, j)) {
-            obj.results.push(j);
-        }
-    }
-    if (! obj.results.length) {
-        obj.results = null;
-    }
-
-    _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateResult */ .hG.call(obj);
-}
-
-const resetFilters = function() {
-    const obj = this;
-
-    if (obj.options.filters) {
-        for (let i = 0; i < obj.filter.children.length; i++) {
-            obj.filter.children[i].innerHTML = '&nbsp;';
-            obj.filters[i] = null;
-        }
-    }
-
-    obj.results = null;
-    _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateResult */ .hG.call(obj);
-}
-
-/***/ }),
-
-/***/ 623:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   e: function() { return /* binding */ setFooter; }
-/* harmony export */ });
-/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
-
-
-const setFooter = function(data) {
-    const obj = this;
-
-    if (data) {
-        obj.options.footers = data;
-    }
-
-    if (obj.options.footers) {
-        if (! obj.tfoot) {
-            obj.tfoot = document.createElement('tfoot');
-            obj.table.appendChild(obj.tfoot);
-        }
-
-        for (let j = 0; j < obj.options.footers.length; j++) {
-            let tr;
-
-            if (obj.tfoot.children[j]) {
-                tr = obj.tfoot.children[j];
-            } else {
-                tr = document.createElement('tr');
-                const td = document.createElement('td');
-                tr.appendChild(td);
-                obj.tfoot.appendChild(tr);
-            }
-            for (let i = 0; i < obj.headers.length; i++) {
-                if (! obj.options.footers[j][i]) {
-                    obj.options.footers[j][i] = '';
-                }
-
-                let td;
-
-                if (obj.tfoot.children[j].children[i+1]) {
-                    td = obj.tfoot.children[j].children[i+1];
-                } else {
-                    td = document.createElement('td');
-                    tr.appendChild(td);
-
-                    // Text align
-                    const colAlign = obj.options.columns[i].align || obj.options.defaultColAlign || 'center';
-                    td.style.textAlign = colAlign;
-                }
-                td.textContent = _internal_js__WEBPACK_IMPORTED_MODULE_0__/* .parseValue */ .$x.call(obj, +obj.records.length + i, j, obj.options.footers[j][i]);
-
-                // Hide/Show with hideColumn()/showColumn()
-                td.style.display = obj.cols[i].colElement.style.display;
-            }
-        }
-    }
-}
-
-/***/ }),
-
-/***/ 619:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   w: function() { return /* binding */ getFreezeWidth; }
-/* harmony export */ });
-// Get width of all freezed cells together
-const getFreezeWidth = function() {
-    const obj = this;
-
-    let width = 0;
-    if (obj.options.freezeColumns > 0) {
-        for (let i = 0; i < obj.options.freezeColumns; i++) {
-            let columnWidth;
-            if (obj.options.columns && obj.options.columns[i] && obj.options.columns[i].width !== undefined) {
-                columnWidth = parseInt(obj.options.columns[i].width);
-            } else {
-                columnWidth = obj.options.defaultColWidth !== undefined ? parseInt(obj.options.defaultColWidth) : 100;
-            }
-
-            width += columnWidth;
-        }
-    }
-    return width;
-}
-
-/***/ }),
-
-/***/ 595:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createFromTable: function() { return /* binding */ createFromTable; },
-/* harmony export */   getCaretIndex: function() { return /* binding */ getCaretIndex; },
-/* harmony export */   getCellNameFromCoords: function() { return /* binding */ getCellNameFromCoords; },
-/* harmony export */   getColumnName: function() { return /* binding */ getColumnName; },
-/* harmony export */   getCoordsFromCellName: function() { return /* binding */ getCoordsFromCellName; },
-/* harmony export */   getCoordsFromRange: function() { return /* binding */ getCoordsFromRange; },
-/* harmony export */   invert: function() { return /* binding */ invert; },
-/* harmony export */   parseCSV: function() { return /* binding */ parseCSV; }
-/* harmony export */ });
-/* harmony import */ var _internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(887);
-
-
-/**
- * Get carret position for one element
- */
-const getCaretIndex = function(e) {
-    let d;
-
-    if (this.config.root) {
-        d = this.config.root;
-    } else {
-        d = window;
-    }
-    let pos = 0;
-    const s = d.getSelection();
-    if (s) {
-        if (s.rangeCount !== 0) {
-            const r = s.getRangeAt(0);
-            const p = r.cloneRange();
-            p.selectNodeContents(e);
-            p.setEnd(r.endContainer, r.endOffset);
-            pos = p.toString().length;
-        }
-    }
-    return pos;
-}
-
-/**
- * Invert keys and values
- */
-const invert = function(o) {
-    const d = [];
-    const k = Object.keys(o);
-    for (let i = 0; i < k.length; i++) {
-        d[o[k[i]]] = k[i];
-    }
-    return d;
-}
-
-/**
- * Get letter based on a number
- *
- * @param integer i
- * @return string letter
- */
-const getColumnName = function(i) {
-    let letter = '';
-    if (i > 701) {
-        letter += String.fromCharCode(64 + parseInt(i / 676));
-        letter += String.fromCharCode(64 + parseInt((i % 676) / 26));
-    } else if (i > 25) {
-        letter += String.fromCharCode(64 + parseInt(i / 26));
-    }
-    letter += String.fromCharCode(65 + (i % 26));
-
-    return letter;
-}
-
-/**
- * Get column name from coords
- */
-const getCellNameFromCoords = function(x, y) {
-    return getColumnName(parseInt(x)) + (parseInt(y) + 1);
-}
-
-const getCoordsFromCellName = function(columnName) {
-    // Get the letters
-    const t = /^[a-zA-Z]+/.exec(columnName);
-
-    if (t) {
-        // Base 26 calculation
-        let code = 0;
-        for (let i = 0; i < t[0].length; i++) {
-            code += parseInt(t[0].charCodeAt(i) - 64) * Math.pow(26, (t[0].length - 1 - i));
-        }
-        code--;
-        // Make sure jspreadsheet starts on zero
-        if (code < 0) {
-            code = 0;
-        }
-
-        // Number
-        let number = parseInt(/[0-9]+$/.exec(columnName)) || null;
-        if (number > 0) {
-            number--;
-        }
-
-        return [ code, number ];
-    }
-}
-
-const getCoordsFromRange = function(range) {
-    const [start, end] = range.split(':');
-
-    return [...getCoordsFromCellName(start), ...getCoordsFromCellName(end)];
-}
-
-/**
- * From stack overflow contributions
- */
-const parseCSV = function(str, delimiter) {
-    // Remove last line break
-    str = str.replace(/\r?\n$|\r$|\n$/g, "");
-    // Last caracter is the delimiter
-    if (str.charCodeAt(str.length-1) == 9) {
-        str += "\0";
-    }
-    // user-supplied delimeter or default comma
-    delimiter = (delimiter || ",");
-
-    const arr = [];
-    let quote = false;  // true means we're inside a quoted field
-    // iterate over each character, keep track of current row and column (of the returned array)
-    for (let row = 0, col = 0, c = 0; c < str.length; c++) {
-        const cc = str[c], nc = str[c+1];
-        arr[row] = arr[row] || [];
-        arr[row][col] = arr[row][col] || '';
-
-        // If the current character is a quotation mark, and we're inside a quoted field, and the next character is also a quotation mark, add a quotation mark to the current column and skip the next character
-        if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
-
-        // If it's just one quotation mark, begin/end quoted field
-        if (cc == '"') { quote = !quote; continue; }
-
-        // If it's a comma and we're not in a quoted field, move on to the next column
-        if (cc == delimiter && !quote) { ++col; continue; }
-
-        // If it's a newline (CRLF) and we're not in a quoted field, skip the next character and move on to the next row and move to column 0 of that new row
-        if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
-
-        // If it's a newline (LF or CR) and we're not in a quoted field, move on to the next row and move to column 0 of that new row
-        if (cc == '\n' && !quote) { ++row; col = 0; continue; }
-        if (cc == '\r' && !quote) { ++row; col = 0; continue; }
-
-        // Otherwise, append the current character to the current column
-        arr[row][col] += cc;
-    }
-    return arr;
-}
-
-const createFromTable = function(el, options) {
-    if (el.tagName != 'TABLE') {
-        console.log('Element is not a table');
-    } else {
-        // Configuration
-        if (! options) {
-            options = {};
-        }
-
-        options.columns = [];
-        options.data = [];
-
-        // Colgroup
-        const colgroup = el.querySelectorAll('colgroup > col');
-        if (colgroup.length) {
-            // Get column width
-            for (let i = 0; i < colgroup.length; i++) {
-                let width = colgroup[i].style.width;
-                if (! width) {
-                    width = colgroup[i].getAttribute('width');
-                }
-                // Set column width
-                if (width) {
-                    if (! options.columns[i]) {
-                        options.columns[i] = {}
-                    }
-                    options.columns[i].width = width;
-                }
-            }
-        }
-
-        // Parse header
-        const parseHeader = function(header, i) {
-            // Get width information
-            let info = header.getBoundingClientRect();
-            const width = info.width > 50 ? info.width : 50;
-
-            // Create column option
-            if (! options.columns[i]) {
-                options.columns[i] = {};
-            }
-            if (header.getAttribute('data-celltype')) {
-                options.columns[i].type = header.getAttribute('data-celltype');
-            } else {
-                options.columns[i].type = 'text';
-            }
-            options.columns[i].width = width + 'px';
-            options.columns[i].title = header.innerHTML;
-            if (header.style.textAlign) {
-                options.columns[i].align = header.style.textAlign;
-            }
-
-            if (info = header.getAttribute('name')) {
-                options.columns[i].name = info;
-            }
-            if (info = header.getAttribute('id')) {
-                options.columns[i].id = info;
-            }
-            if (info = header.getAttribute('data-mask')) {
-                options.columns[i].mask = info;
-            }
-        }
-
-        // Headers
-        const nested = [];
-        let headers = el.querySelectorAll(':scope > thead > tr');
-        if (headers.length) {
-            for (let j = 0; j < headers.length - 1; j++) {
-                const cells = [];
-                for (let i = 0; i < headers[j].children.length; i++) {
-                    const row = {
-                        title: headers[j].children[i].textContent,
-                        colspan: headers[j].children[i].getAttribute('colspan') || 1,
-                    };
-                    cells.push(row);
-                }
-                nested.push(cells);
-            }
-            // Get the last row in the thead
-            headers = headers[headers.length-1].children;
-            // Go though the headers
-            for (let i = 0; i < headers.length; i++) {
-                parseHeader(headers[i], i);
-            }
-        }
-
-        // Content
-        let rowNumber = 0;
-        const mergeCells = {};
-        const rows = {};
-        const style = {};
-        const classes = {};
-
-        let content = el.querySelectorAll(':scope > tr, :scope > tbody > tr');
-        for (let j = 0; j < content.length; j++) {
-            options.data[rowNumber] = [];
-            if (options.parseTableFirstRowAsHeader == true && ! headers.length && j == 0) {
-                for (let i = 0; i < content[j].children.length; i++) {
-                    parseHeader(content[j].children[i], i);
-                }
-            } else {
-                for (let i = 0; i < content[j].children.length; i++) {
-                    // WickedGrid formula compatibility
-                    let value = content[j].children[i].getAttribute('data-formula');
-                    if (value) {
-                        if (value.substr(0,1) != '=') {
-                            value = '=' + value;
-                        }
-                    } else {
-                        value = content[j].children[i].innerHTML;
-                    }
-                    options.data[rowNumber].push(value);
-
-                    // Key
-                    const cellName = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getColumnNameFromId */ .t3)([ i, j ]);
-
-                    // Classes
-                    const tmp = content[j].children[i].getAttribute('class');
-                    if (tmp) {
-                        classes[cellName] = tmp;
-                    }
-
-                    // Merged cells
-                    const mergedColspan = parseInt(content[j].children[i].getAttribute('colspan')) || 0;
-                    const mergedRowspan = parseInt(content[j].children[i].getAttribute('rowspan')) || 0;
-                    if (mergedColspan || mergedRowspan) {
-                        mergeCells[cellName] = [ mergedColspan || 1, mergedRowspan || 1 ];
-                    }
-
-                    // Avoid problems with hidden cells
-                    if (content[j].children[i].style && content[j].children[i].style.display == 'none') {
-                        content[j].children[i].style.display = '';
-                    }
-                    // Get style
-                    const s = content[j].children[i].getAttribute('style');
-                    if (s) {
-                        style[cellName] = s;
-                    }
-                    // Bold
-                    if (content[j].children[i].classList.contains('styleBold')) {
-                        if (style[cellName]) {
-                            style[cellName] += '; font-weight:bold;';
-                        } else {
-                            style[cellName] = 'font-weight:bold;';
-                        }
-                    }
-                }
-
-                // Row Height
-                if (content[j].style && content[j].style.height) {
-                    rows[j] = { height: content[j].style.height };
-                }
-
-                // Index
-                rowNumber++;
-            }
-        }
-
-        // Nested
-        if (Object.keys(nested).length > 0) {
-            options.nestedHeaders = nested;
-        }
-        // Style
-        if (Object.keys(style).length > 0) {
-            options.style = style;
-        }
-        // Merged
-        if (Object.keys(mergeCells).length > 0) {
-            options.mergeCells = mergeCells;
-        }
-        // Row height
-        if (Object.keys(rows).length > 0) {
-            options.rows = rows;
-        }
-        // Classes
-        if (Object.keys(classes).length > 0) {
-            options.classes = classes;
-        }
-
-        content = el.querySelectorAll('tfoot tr');
-        if (content.length) {
-            const footers = [];
-            for (let j = 0; j < content.length; j++) {
-                let footer = [];
-                for (let i = 0; i < content[j].children.length; i++) {
-                    footer.push(content[j].children[i].textContent);
-                }
-                footers.push(footer);
-            }
-            if (Object.keys(footers).length > 0) {
-                options.footers = footers;
-            }
-        }
-        // TODO: data-hiddencolumns="3,4"
-
-        // I guess in terms the better column type
-        if (options.parseTableAutoCellType == true) {
-            const pattern = [];
-            for (let i = 0; i < options.columns.length; i++) {
-                let test = true;
-                let testCalendar = true;
-                pattern[i] = [];
-                for (let j = 0; j < options.data.length; j++) {
-                    const value = options.data[j][i];
-                    if (! pattern[i][value]) {
-                        pattern[i][value] = 0;
-                    }
-                    pattern[i][value]++;
-                    if (value.length > 25) {
-                        test = false;
-                    }
-                    if (value.length == 10) {
-                        if (! (value.substr(4,1) == '-' && value.substr(7,1) == '-')) {
-                            testCalendar = false;
-                        }
-                    } else {
-                        testCalendar = false;
-                    }
-                }
-
-                const keys = Object.keys(pattern[i]).length;
-                if (testCalendar) {
-                    options.columns[i].type = 'calendar';
-                } else if (test == true && keys > 1 && keys <= parseInt(options.data.length * 0.1)) {
-                    options.columns[i].type = 'dropdown';
-                    options.columns[i].source = Object.keys(pattern[i]);
-                }
-            }
-        }
-
-        return options;
-    }
-}
-
-/***/ }),
-
-/***/ 126:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Dh: function() { return /* binding */ setHistory; },
-/* harmony export */   ZS: function() { return /* binding */ redo; },
-/* harmony export */   tN: function() { return /* binding */ undo; }
-/* harmony export */ });
-/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(946);
-/* harmony import */ var _internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(887);
-/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
-/* harmony import */ var _merges_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(441);
-/* harmony import */ var _orderBy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(451);
-/* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(268);
-
-
-
-
-
-
-
-/**
- * Initializes a new history record for undo/redo
- *
- * @return null
- */
-const setHistory = function(changes) {
-    const obj = this;
-
-    if (obj.ignoreHistory != true) {
-        // Increment and get the current history index
-        const index = ++obj.historyIndex;
-
-        // Slice the array to discard undone changes
-        obj.history = (obj.history = obj.history.slice(0, index + 1));
-
-        // Keep history
-        obj.history[index] = changes;
-    }
-}
-
-/**
- * Process row
- */
-const historyProcessRow = function(type, historyRecord) {
-    const obj = this;
-
-    const rowIndex = (! historyRecord.insertBefore) ? historyRecord.rowNumber + 1 : +historyRecord.rowNumber;
-
-    if (obj.options.search == true) {
-        if (obj.results && obj.results.length != obj.rows.length) {
-            obj.resetSearch();
-        }
-    }
-
-    // Remove row
-    if (type == 1) {
-        const numOfRows = historyRecord.numOfRows;
-        // Remove nodes
-        for (let j = rowIndex; j < (numOfRows + rowIndex); j++) {
-            obj.rows[j].element.parentNode.removeChild(obj.rows[j].element);
-        }
-        // Remove references
-        obj.records.splice(rowIndex, numOfRows);
-        obj.options.data.splice(rowIndex, numOfRows);
-        obj.rows.splice(rowIndex, numOfRows);
-
-        _selection_js__WEBPACK_IMPORTED_MODULE_0__/* .conditionalSelectionUpdate */ .at.call(obj, 1, rowIndex, (numOfRows + rowIndex) - 1);
-    } else {
-        // Insert data
-        obj.records = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.records, rowIndex, historyRecord.rowRecords);
-        obj.options.data = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.data, rowIndex, historyRecord.rowData);
-        obj.rows = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.rows, rowIndex, historyRecord.rowNode);
-        // Insert nodes
-        let index = 0
-        for (let j = rowIndex; j < (historyRecord.numOfRows + rowIndex); j++) {
-            obj.tbody.insertBefore(historyRecord.rowNode[index].element, obj.tbody.children[j]);
-            index++;
-        }
-    }
-
-    for (let j = rowIndex; j < obj.rows.length; j++) {
-        obj.rows[j].y = j;
-    }
-
-    for (let j = rowIndex; j < obj.records.length; j++) {
-        for (let i = 0; i < obj.records[j].length; i++) {
-            obj.records[j][i].y = j;
-        }
-    }
-
-    // Respect pagination
-    if (obj.options.pagination > 0) {
-        obj.page(obj.pageNumber);
-    }
-
-    _internal_js__WEBPACK_IMPORTED_MODULE_2__/* .updateTableReferences */ .o8.call(obj);
-}
-
-/**
- * Process column
- */
-const historyProcessColumn = function(type, historyRecord) {
-    const obj = this;
-
-    const columnIndex = (! historyRecord.insertBefore) ? historyRecord.columnNumber + 1 : historyRecord.columnNumber;
-
-    // Remove column
-    if (type == 1) {
-        const numOfColumns = historyRecord.numOfColumns;
-
-        obj.options.columns.splice(columnIndex, numOfColumns);
-        for (let i = columnIndex; i < (numOfColumns + columnIndex); i++) {
-            obj.headers[i].parentNode.removeChild(obj.headers[i]);
-            obj.cols[i].colElement.parentNode.removeChild(obj.cols[i].colElement);
-        }
-        obj.headers.splice(columnIndex, numOfColumns);
-        obj.cols.splice(columnIndex, numOfColumns);
-        for (let j = 0; j < historyRecord.data.length; j++) {
-            for (let i = columnIndex; i < (numOfColumns + columnIndex); i++) {
-                obj.records[j][i].element.parentNode.removeChild(obj.records[j][i].element);
-            }
-            obj.records[j].splice(columnIndex, numOfColumns);
-            obj.options.data[j].splice(columnIndex, numOfColumns);
-        }
-        // Process footers
-        if (obj.options.footers) {
-            for (let j = 0; j < obj.options.footers.length; j++) {
-                obj.options.footers[j].splice(columnIndex, numOfColumns);
-            }
-        }
-    } else {
-        // Insert data
-        obj.options.columns = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.columns, columnIndex, historyRecord.columns);
-        obj.headers = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.headers, columnIndex, historyRecord.headers);
-        obj.cols = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.cols, columnIndex, historyRecord.cols);
-
-        let index = 0
-        for (let i = columnIndex; i < (historyRecord.numOfColumns + columnIndex); i++) {
-            obj.headerContainer.insertBefore(historyRecord.headers[index], obj.headerContainer.children[i+1]);
-            obj.colgroupContainer.insertBefore(historyRecord.cols[index].colElement, obj.colgroupContainer.children[i+1]);
-            index++;
-        }
-
-        for (let j = 0; j < historyRecord.data.length; j++) {
-            obj.options.data[j] = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.data[j], columnIndex, historyRecord.data[j]);
-            obj.records[j] = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.records[j], columnIndex, historyRecord.records[j]);
-            let index = 0
-            for (let i = columnIndex; i < (historyRecord.numOfColumns + columnIndex); i++) {
-                obj.rows[j].element.insertBefore(historyRecord.records[j][index].element, obj.rows[j].element.children[i+1]);
-                index++;
-            }
-        }
-        // Process footers
-        if (obj.options.footers) {
-            for (let j = 0; j < obj.options.footers.length; j++) {
-                obj.options.footers[j] = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.footers[j], columnIndex, historyRecord.footers[j]);
-            }
-        }
-    }
-
-    for (let i = columnIndex; i < obj.cols.length; i++) {
-        obj.cols[i].x = i;
-    }
-
-    for (let j = 0; j < obj.records.length; j++) {
-        for (let i = columnIndex; i < obj.records[j].length; i++) {
-            obj.records[j][i].x = i;
-        }
-    }
-
-    // Adjust nested headers
-    if (
-        obj.options.nestedHeaders &&
-        obj.options.nestedHeaders.length > 0 &&
-        obj.options.nestedHeaders[0] &&
-        obj.options.nestedHeaders[0][0]
-    ) {
-        for (let j = 0; j < obj.options.nestedHeaders.length; j++) {
-            let colspan;
-
-            if (type == 1) {
-                colspan = parseInt(obj.options.nestedHeaders[j][obj.options.nestedHeaders[j].length-1].colspan) - historyRecord.numOfColumns;
-            } else {
-                colspan = parseInt(obj.options.nestedHeaders[j][obj.options.nestedHeaders[j].length-1].colspan) + historyRecord.numOfColumns;
-            }
-            obj.options.nestedHeaders[j][obj.options.nestedHeaders[j].length-1].colspan = colspan;
-            obj.thead.children[j].children[obj.thead.children[j].children.length-1].setAttribute('colspan', colspan);
-        }
-    }
-
-    _internal_js__WEBPACK_IMPORTED_MODULE_2__/* .updateTableReferences */ .o8.call(obj);
-}
-
-/**
- * Undo last action
- */
-const undo = function() {
-    const obj = this;
-
-    // Ignore events and history
-    const ignoreEvents = obj.parent.ignoreEvents ? true : false;
-    const ignoreHistory = obj.ignoreHistory ? true : false;
-
-    obj.parent.ignoreEvents = true;
-    obj.ignoreHistory = true;
-
-    // Records
-    const records = [];
-
-    // Update cells
-    let historyRecord;
-
-    if (obj.historyIndex >= 0) {
-        // History
-        historyRecord = obj.history[obj.historyIndex--];
-
-        if (historyRecord.action == 'insertRow') {
-            historyProcessRow.call(obj, 1, historyRecord);
-        } else if (historyRecord.action == 'deleteRow') {
-            historyProcessRow.call(obj, 0, historyRecord);
-        } else if (historyRecord.action == 'insertColumn') {
-            historyProcessColumn.call(obj, 1, historyRecord);
-        } else if (historyRecord.action == 'deleteColumn') {
-            historyProcessColumn.call(obj, 0, historyRecord);
-        } else if (historyRecord.action == 'moveRow') {
-            obj.moveRow(historyRecord.newValue, historyRecord.oldValue);
-        } else if (historyRecord.action == 'moveColumn') {
-            obj.moveColumn(historyRecord.newValue, historyRecord.oldValue);
-        } else if (historyRecord.action == 'setMerge') {
-            obj.removeMerge(historyRecord.column, historyRecord.data);
-        } else if (historyRecord.action == 'setStyle') {
-            obj.setStyle(historyRecord.oldValue, null, null, 1);
-        } else if (historyRecord.action == 'setWidth') {
-            obj.setWidth(historyRecord.column, historyRecord.oldValue);
-        } else if (historyRecord.action == 'setHeight') {
-            obj.setHeight(historyRecord.row, historyRecord.oldValue);
-        } else if (historyRecord.action == 'setHeader') {
-            obj.setHeader(historyRecord.column, historyRecord.oldValue);
-        } else if (historyRecord.action == 'setComments') {
-            obj.setComments(historyRecord.oldValue);
-        } else if (historyRecord.action == 'orderBy') {
-            let rows = [];
-            for (let j = 0; j < historyRecord.rows.length; j++) {
-                rows[historyRecord.rows[j]] = j;
-            }
-            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrderArrow */ .Th.call(obj, historyRecord.column, historyRecord.order ? 0 : 1);
-            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrder */ .iY.call(obj, rows);
-        } else if (historyRecord.action == 'setValue') {
-            // Redo for changes in cells
-            for (let i = 0; i < historyRecord.records.length; i++) {
-                records.push({
-                    x: historyRecord.records[i].x,
-                    y: historyRecord.records[i].y,
-                    value: historyRecord.records[i].oldValue,
-                });
-
-                if (historyRecord.oldStyle) {
-                    obj.resetStyle(historyRecord.oldStyle);
-                }
-            }
-            // Update records
-            obj.setValue(records);
-
-            // Update selection
-            if (historyRecord.selection) {
-                obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
-            }
-        }
-    }
-    obj.parent.ignoreEvents = ignoreEvents;
-    obj.ignoreHistory = ignoreHistory;
-
-    // Events
-    _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onundo', obj, historyRecord);
-}
-
-/**
- * Redo previously undone action
- */
-const redo = function() {
-    const obj = this;
-
-    // Ignore events and history
-    const ignoreEvents = obj.parent.ignoreEvents ? true : false;
-    const ignoreHistory = obj.ignoreHistory ? true : false;
-
-    obj.parent.ignoreEvents = true;
-    obj.ignoreHistory = true;
-
-    // Records
-    var records = [];
-
-    // Update cells
-    let historyRecord;
-
-    if (obj.historyIndex < obj.history.length - 1) {
-        // History
-        historyRecord = obj.history[++obj.historyIndex];
-
-        if (historyRecord.action == 'insertRow') {
-            historyProcessRow.call(obj, 0, historyRecord);
-        } else if (historyRecord.action == 'deleteRow') {
-            historyProcessRow.call(obj, 1, historyRecord);
-        } else if (historyRecord.action == 'insertColumn') {
-            historyProcessColumn.call(obj, 0, historyRecord);
-        } else if (historyRecord.action == 'deleteColumn') {
-            historyProcessColumn.call(obj, 1, historyRecord);
-        } else if (historyRecord.action == 'moveRow') {
-            obj.moveRow(historyRecord.oldValue, historyRecord.newValue);
-        } else if (historyRecord.action == 'moveColumn') {
-            obj.moveColumn(historyRecord.oldValue, historyRecord.newValue);
-        } else if (historyRecord.action == 'setMerge') {
-            _merges_js__WEBPACK_IMPORTED_MODULE_5__/* .setMerge */ .FU.call(obj, historyRecord.column, historyRecord.colspan, historyRecord.rowspan, 1);
-        } else if (historyRecord.action == 'setStyle') {
-            obj.setStyle(historyRecord.newValue, null, null, 1);
-        } else if (historyRecord.action == 'setWidth') {
-            obj.setWidth(historyRecord.column, historyRecord.newValue);
-        } else if (historyRecord.action == 'setHeight') {
-            obj.setHeight(historyRecord.row, historyRecord.newValue);
-        } else if (historyRecord.action == 'setHeader') {
-            obj.setHeader(historyRecord.column, historyRecord.newValue);
-        } else if (historyRecord.action == 'setComments') {
-            obj.setComments(historyRecord.newValue);
-        } else if (historyRecord.action == 'orderBy') {
-            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrderArrow */ .Th.call(obj, historyRecord.column, historyRecord.order);
-            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrder */ .iY.call(obj, historyRecord.rows);
-        } else if (historyRecord.action == 'setValue') {
-            obj.setValue(historyRecord.records);
-            // Redo for changes in cells
-            for (let i = 0; i < historyRecord.records.length; i++) {
-                if (historyRecord.oldStyle) {
-                    obj.resetStyle(historyRecord.newStyle);
-                }
-            }
-            // Update selection
-            if (historyRecord.selection) {
-                obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
-            }
-        }
-    }
-    obj.parent.ignoreEvents = ignoreEvents;
-    obj.ignoreHistory = ignoreHistory;
-
-    // Events
-    _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onredo', obj, historyRecord);
-}
-
-/***/ }),
-
 /***/ 45:
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -2427,1032 +1335,493 @@ const getWorksheetInstance = function(index) {
 
 /***/ }),
 
-/***/ 887:
+/***/ 126:
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Hh: function() { return /* binding */ injectArray; },
-/* harmony export */   t3: function() { return /* binding */ getColumnNameFromId; },
-/* harmony export */   vu: function() { return /* binding */ getIdFromColumnName; }
+/* harmony export */   Dh: function() { return /* binding */ setHistory; },
+/* harmony export */   ZS: function() { return /* binding */ redo; },
+/* harmony export */   tN: function() { return /* binding */ undo; }
 /* harmony export */ });
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(595);
-
-
-/**
- * Helper injectArray
- */
-const injectArray = function(o, idx, arr) {
-    if (idx <= o.length) {
-        return o.slice(0, idx).concat(arr).concat(o.slice(idx));
-    }
-
-    const array = o.slice(0, o.length);
-
-    while (idx > array.length) {
-        array.push(undefined);
-    }
-
-    return array.concat(arr)
-}
-
-/**
- * Convert excel like column to jss id
- *
- * @param string id
- * @return string id
- */
-const getIdFromColumnName = function (id, arr) {
-    // Get the letters
-    const t = /^[a-zA-Z]+/.exec(id);
-
-    if (t) {
-        // Base 26 calculation
-        let code = 0;
-        for (let i = 0; i < t[0].length; i++) {
-            code += parseInt(t[0].charCodeAt(i) - 64) * Math.pow(26, (t[0].length - 1 - i));
-        }
-        code--;
-        // Make sure jss starts on zero
-        if (code < 0) {
-            code = 0;
-        }
-
-        // Number
-        let number = parseInt(/[0-9]+$/.exec(id));
-        if (number > 0) {
-            number--;
-        }
-
-        if (arr == true) {
-            id = [ code, number ];
-        } else {
-            id = code + '-' + number;
-        }
-    }
-
-    return id;
-}
-
-/**
- * Convert jss id to excel like column name
- *
- * @param string id
- * @return string id
- */
-const getColumnNameFromId = function (cellId) {
-    if (! Array.isArray(cellId)) {
-        cellId = cellId.split('-');
-    }
-
-    return (0,_helpers_js__WEBPACK_IMPORTED_MODULE_0__.getColumnName)(parseInt(cellId[0])) + (parseInt(cellId[1]) + 1);
-}
-
-/***/ }),
-
-/***/ 992:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AG: function() { return /* binding */ loadValidation; },
-/* harmony export */   G_: function() { return /* binding */ loadUp; },
-/* harmony export */   p6: function() { return /* binding */ loadDown; },
-/* harmony export */   wu: function() { return /* binding */ loadPage; }
-/* harmony export */ });
-/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(946);
-
-/**
- * Go to a page in a lazyLoading
- */
-const loadPage = function(pageNumber) {
-    const obj = this;
-    console.log('loadPage');
-    // Search
-    let results;
-
-    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-        results = obj.results;
-    } else {
-        results = obj.rows;
-    }
-
-    // Per page
-    const quantityPerPage = 100;
-
-    // pageNumber
-    if (pageNumber == null || pageNumber == -1) {
-        // Last page
-        pageNumber = Math.ceil(results.length / quantityPerPage) - 1;
-    }
-
-    let startRow = (pageNumber * quantityPerPage);
-    let finalRow = (pageNumber * quantityPerPage) + quantityPerPage;
-    if (finalRow > results.length) {
-        finalRow = results.length;
-    }
-    startRow = finalRow - 100;
-    if (startRow < 0) {
-        startRow = 0;
-    }
-
-    // Appeding items
-    for (let j = startRow; j < finalRow; j++) {
-        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-            obj.tbody.appendChild(obj.rows[results[j]].element);
-        } else {
-            obj.tbody.appendChild(obj.rows[j].element);
-        }
-
-        if (obj.tbody.children.length > quantityPerPage) {
-            obj.tbody.removeChild(obj.tbody.firstChild);
-        }
-    }
-}
-
-const loadValidation = function() {
-    const obj = this;
-    
-    if (obj.selectedCell) {
-        const currentPage = parseInt(obj.tbody.firstChild.getAttribute('data-y')) / 100;
-        const selectedPage = parseInt(obj.selectedCell[3] / 100);
-        const totalPages = parseInt(obj.rows.length / 100);
-
-        if (currentPage != selectedPage && selectedPage <= totalPages) {
-            if (! Array.prototype.indexOf.call(obj.tbody.children, obj.rows[obj.selectedCell[3]].element)) {
-                obj.loadPage(selectedPage);
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-const loadUp = function() {
-    const obj = this;
-    _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloadup', obj);
-    // Search
-    let results;
-
-    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-        results = obj.results;
-    } else {
-        results = obj.rows;
-    }
-    let test = 0;
-    if (results.length > 100) {
-        // Get the first element in the page
-        let item = parseInt(obj.tbody.firstChild.getAttribute('data-y'));
-        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-            item = results.indexOf(item);
-        }
-        if (item > 0) {
-            for (let j = 0; j < 30; j++) {
-                item = item - 1;
-                if (item > -1) {
-                    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-                        obj.tbody.insertBefore(obj.rows[results[item]].element, obj.tbody.firstChild);
-                    } else {
-                        obj.tbody.insertBefore(obj.rows[item].element, obj.tbody.firstChild);
-                    }
-                    if (obj.tbody.children.length > 100) {
-                        obj.tbody.removeChild(obj.tbody.lastChild);
-                        test = 1;
-                    }
-                }
-            }
-        }
-    }
-    return test;
-}
-
-const loadDown = function() {
-    const obj = this;
-    _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloaddown', obj);
-    // Search
-    let results;
-
-    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-        results = obj.results;
-    } else {
-        results = obj.rows;
-    }
-    let test = 0;
-    if (results.length > 100) {
-        // Get the last element in the page
-        let item = parseInt(obj.tbody.lastChild.getAttribute('data-y'));
-        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-            item = results.indexOf(item);
-        }
-        if (item < obj.rows.length - 1) {
-            for (let j = 0; j <= 30; j++) {
-                if (item < results.length) {
-                    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-                        obj.tbody.appendChild(obj.rows[results[item]].element);
-                    } else {
-                        obj.tbody.appendChild(obj.rows[item].element);
-                    }
-                    if (obj.tbody.children.length > 100) {
-                        obj.tbody.removeChild(obj.tbody.firstChild);
-                        test = 1;
-                    }
-                }
-                item = item + 1;
-            }
-        }
-    }
-
-    return test;
-}
-
-/***/ }),
-
-/***/ 441:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   D0: function() { return /* binding */ isRowMerged; },
-/* harmony export */   FU: function() { return /* binding */ setMerge; },
-/* harmony export */   Lt: function() { return /* binding */ isColMerged; },
-/* harmony export */   VP: function() { return /* binding */ destroyMerge; },
-/* harmony export */   Zp: function() { return /* binding */ removeMerge; },
-/* harmony export */   fd: function() { return /* binding */ getMerge; }
-/* harmony export */ });
-/* harmony import */ var _internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(887);
-/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
-/* harmony import */ var _history_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
 /* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(946);
-/* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(268);
-
-
-
-
-
-
-
-
-/**
- * Is column merged
- */
-const isColMerged = function(x, insertBefore) {
-    const obj = this;
-
-    const cols = [];
-    // Remove any merged cells
-    if (obj.options.mergeCells) {
-        const keys = Object.keys(obj.options.mergeCells);
-        for (let i = 0; i < keys.length; i++) {
-            const info = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(keys[i], true);
-            const colspan = obj.options.mergeCells[keys[i]][0];
-            const x1 = info[0];
-            const x2 = info[0] + (colspan > 1 ? colspan - 1 : 0);
-
-            if (insertBefore == null) {
-                if ((x1 <= x && x2 >= x)) {
-                    cols.push(keys[i]);
-                }
-            } else {
-                if (insertBefore) {
-                    if ((x1 < x && x2 >= x)) {
-                        cols.push(keys[i]);
-                    }
-                } else {
-                    if ((x1 <= x && x2 > x)) {
-                        cols.push(keys[i]);
-                    }
-                }
-            }
-        }
-    }
-
-    return cols;
-}
-
-/**
- * Is rows merged
- */
-const isRowMerged = function(y, insertBefore) {
-    const obj = this;
-
-    const rows = [];
-    // Remove any merged cells
-    if (obj.options.mergeCells) {
-        const keys = Object.keys(obj.options.mergeCells);
-        for (let i = 0; i < keys.length; i++) {
-            const info = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(keys[i], true);
-            const rowspan = obj.options.mergeCells[keys[i]][1];
-            const y1 = info[1];
-            const y2 = info[1] + (rowspan > 1 ? rowspan - 1 : 0);
-
-            if (insertBefore == null) {
-                if ((y1 <= y && y2 >= y)) {
-                    rows.push(keys[i]);
-                }
-            } else {
-                if (insertBefore) {
-                    if ((y1 < y && y2 >= y)) {
-                        rows.push(keys[i]);
-                    }
-                } else {
-                    if ((y1 <= y && y2 > y)) {
-                        rows.push(keys[i]);
-                    }
-                }
-            }
-        }
-    }
-
-    return rows;
-}
-
-/**
- * Merge cells
- * @param cellName
- * @param colspan
- * @param rowspan
- * @param ignoreHistoryAndEvents
- */
-const getMerge = function(cellName) {
-    const obj = this;
-
-    let data = {};
-    if (cellName) {
-        if (obj.options.mergeCells && obj.options.mergeCells[cellName]) {
-            data = [ obj.options.mergeCells[cellName][0], obj.options.mergeCells[cellName][1] ];
-        } else {
-            data = null;
-        }
-    } else {
-        if (obj.options.mergeCells) {
-            var mergedCells = obj.options.mergeCells;
-            const keys = Object.keys(obj.options.mergeCells);
-            for (let i = 0; i < keys.length; i++) {
-                data[keys[i]] = [ obj.options.mergeCells[keys[i]][0], obj.options.mergeCells[keys[i]][1] ];
-            }
-        }
-    }
-
-    return data;
-}
-
-/**
- * Merge cells
- * @param cellName
- * @param colspan
- * @param rowspan
- * @param ignoreHistoryAndEvents
- */
-const setMerge = function(cellName, colspan, rowspan, ignoreHistoryAndEvents) {
-    const obj = this;
-
-    let test = false;
-
-    if (! cellName) {
-        if (! obj.highlighted.length) {
-            alert(jSuites.translate('No cells selected'));
-            return null;
-        } else {
-            const x1 = parseInt(obj.highlighted[0].getAttribute('data-x'));
-            const y1 = parseInt(obj.highlighted[0].getAttribute('data-y'));
-            const x2 = parseInt(obj.highlighted[obj.highlighted.length-1].getAttribute('data-x'));
-            const y2 = parseInt(obj.highlighted[obj.highlighted.length-1].getAttribute('data-y'));
-            cellName = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getColumnNameFromId */ .t3)([ x1, y1 ]);
-            colspan = (x2 - x1) + 1;
-            rowspan = (y2 - y1) + 1;
-        }
-    } else if (typeof cellName !== 'string') {
-        return null
-    }
-
-    const cell = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(cellName, true);
-
-    if (obj.options.mergeCells && obj.options.mergeCells[cellName]) {
-        if (obj.records[cell[1]][cell[0]].element.getAttribute('data-merged')) {
-            test = 'Cell already merged';
-        }
-    } else if ((! colspan || colspan < 2) && (! rowspan || rowspan < 2)) {
-        test = 'Invalid merged properties';
-    } else {
-        var cells = [];
-        for (let j = cell[1]; j < cell[1] + rowspan; j++) {
-            for (let i = cell[0]; i < cell[0] + colspan; i++) {
-                var columnName = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getColumnNameFromId */ .t3)([i, j]);
-                if (obj.records[j][i].element.getAttribute('data-merged')) {
-                    test = 'There is a conflict with another merged cell';
-                }
-            }
-        }
-    }
-
-    if (test) {
-        alert(jSuites.translate(test));
-    } else {
-        // Add property
-        if (colspan > 1) {
-            obj.records[cell[1]][cell[0]].element.setAttribute('colspan', colspan);
-        } else {
-            colspan = 1;
-        }
-        if (rowspan > 1) {
-            obj.records[cell[1]][cell[0]].element.setAttribute('rowspan', rowspan);
-        } else {
-            rowspan = 1;
-        }
-        // Keep links to the existing nodes
-        if (!obj.options.mergeCells) {
-            obj.options.mergeCells = {};
-        }
-
-        obj.options.mergeCells[cellName] = [ colspan, rowspan, [] ];
-        // Mark cell as merged
-        obj.records[cell[1]][cell[0]].element.setAttribute('data-merged', 'true');
-        // Overflow
-        obj.records[cell[1]][cell[0]].element.style.overflow = 'hidden';
-        // History data
-        const data = [];
-        // Adjust the nodes
-        for (let y = cell[1]; y < cell[1] + rowspan; y++) {
-            for (let x = cell[0]; x < cell[0] + colspan; x++) {
-                if (! (cell[0] == x && cell[1] == y)) {
-                    data.push(obj.options.data[y][x]);
-                    _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateCell */ .k9.call(obj, x, y, '', true);
-                    obj.options.mergeCells[cellName][2].push(obj.records[y][x].element);
-                    obj.records[y][x].element.style.display = 'none';
-                    obj.records[y][x].element = obj.records[cell[1]][cell[0]].element;
-                }
-            }
-        }
-        // In the initialization is not necessary keep the history
-        _selection_js__WEBPACK_IMPORTED_MODULE_2__/* .updateSelection */ .c6.call(obj, obj.records[cell[1]][cell[0]].element);
-
-        if (! ignoreHistoryAndEvents) {
-            _history_js__WEBPACK_IMPORTED_MODULE_3__/* .setHistory */ .Dh.call(obj, {
-                action:'setMerge',
-                column:cellName,
-                colspan:colspan,
-                rowspan:rowspan,
-                data:data,
-            });
-
-            _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onmerge', obj, { [cellName]: [colspan, rowspan]});
-        }
-    }
-}
-
-/**
- * Remove merge by cellname
- * @param cellName
- */
-const removeMerge = function(cellName, data, keepOptions) {
-    const obj = this;
-
-    if (obj.options.mergeCells && obj.options.mergeCells[cellName]) {
-        const cell = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(cellName, true);
-        obj.records[cell[1]][cell[0]].element.removeAttribute('colspan');
-        obj.records[cell[1]][cell[0]].element.removeAttribute('rowspan');
-        obj.records[cell[1]][cell[0]].element.removeAttribute('data-merged');
-        const info = obj.options.mergeCells[cellName];
-
-        let index = 0;
-
-        let j, i;
-
-        for (j = 0; j < info[1]; j++) {
-            for (i = 0; i < info[0]; i++) {
-                if (j > 0 || i > 0) {
-                    obj.records[cell[1]+j][cell[0]+i].element = info[2][index];
-                    obj.records[cell[1]+j][cell[0]+i].element.style.display = '';
-                    // Recover data
-                    if (data && data[index]) {
-                        _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateCell */ .k9.call(obj, cell[0]+i, cell[1]+j, data[index]);
-                    }
-                    index++;
-                }
-            }
-        }
-
-        // Update selection
-        _selection_js__WEBPACK_IMPORTED_MODULE_2__/* .updateSelection */ .c6.call(obj, obj.records[cell[1]][cell[0]].element, obj.records[cell[1]+j-1][cell[0]+i-1].element);
-
-        if (! keepOptions) {
-            delete(obj.options.mergeCells[cellName]);
-        }
-    }
-}
-
-/**
- * Remove all merged cells
- */
-const destroyMerge = function(keepOptions) {
-    const obj = this;
-
-    // Remove any merged cells
-    if (obj.options.mergeCells) {
-        var mergedCells = obj.options.mergeCells;
-        const keys = Object.keys(obj.options.mergeCells);
-        for (let i = 0; i < keys.length; i++) {
-            removeMerge.call(obj, keys[i], null, keepOptions);
-        }
-    }
-}
-
-/***/ }),
-
-/***/ 617:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   IQ: function() { return /* binding */ getMeta; },
-/* harmony export */   hs: function() { return /* binding */ updateMeta; },
-/* harmony export */   iZ: function() { return /* binding */ setMeta; }
-/* harmony export */ });
-/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(946);
-
-
-/**
- * Get meta information from cell(s)
- *
- * @return integer
- */
-const getMeta = function(cell, key) {
-    const obj = this;
-
-    if (! cell) {
-        return obj.options.meta;
-    } else {
-        if (key) {
-            return obj.options.meta && obj.options.meta[cell] && obj.options.meta[cell][key] ? obj.options.meta[cell][key] : null;
-        } else {
-            return obj.options.meta && obj.options.meta[cell] ? obj.options.meta[cell] : null;
-        }
-    }
-}
-
-/**
- * Update meta information
- *
- * @return integer
- */
-const updateMeta = function(affectedCells) {
-    const obj = this;
-
-    if (obj.options.meta) {
-        const newMeta = {};
-        const keys = Object.keys(obj.options.meta);
-        for (let i = 0; i < keys.length; i++) {
-            if (affectedCells[keys[i]]) {
-                newMeta[affectedCells[keys[i]]] = obj.options.meta[keys[i]];
-            } else {
-                newMeta[keys[i]] = obj.options.meta[keys[i]];
-            }
-        }
-        // Update meta information
-        obj.options.meta = newMeta;
-    }
-}
-
-/**
- * Set meta information to cell(s)
- *
- * @return integer
- */
-const setMeta = function(o, k, v) {
-    const obj = this;
-
-    if (! obj.options.meta) {
-        obj.options.meta = {}
-    }
-
-    if (k && v) {
-        // Set data value
-        if (! obj.options.meta[o]) {
-            obj.options.meta[o] = {};
-        }
-        obj.options.meta[o][k] = v;
-
-        _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onchangemeta', obj, { [o]: { [k]: v } });
-    } else {
-        // Apply that for all cells
-        const keys = Object.keys(o);
-        for (let i = 0; i < keys.length; i++) {
-            if (! obj.options.meta[keys[i]]) {
-                obj.options.meta[keys[i]] = {};
-            }
-
-            const prop = Object.keys(o[keys[i]]);
-            for (let j = 0; j < prop.length; j++) {
-                obj.options.meta[keys[i]][prop[j]] = o[keys[i]][prop[j]];
-            }
-        }
-
-        _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onchangemeta', obj, o);
-    }
-}
-
-/***/ }),
-
-/***/ 451:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   My: function() { return /* binding */ orderBy; },
-/* harmony export */   Th: function() { return /* binding */ updateOrderArrow; },
-/* harmony export */   iY: function() { return /* binding */ updateOrder; }
-/* harmony export */ });
-/* harmony import */ var _history_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
-/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(946);
-/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
-/* harmony import */ var _lazyLoading_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(992);
-/* harmony import */ var _filter_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(206);
-
-
-
-
-
-
-
-/**
- * Update order arrow
- */
-const updateOrderArrow = function(column, order) {
-    const obj = this;
-
-    // Remove order
-    for (let i = 0; i < obj.headers.length; i++) {
-        obj.headers[i].classList.remove('arrow-up');
-        obj.headers[i].classList.remove('arrow-down');
-    }
-
-    // No order specified then toggle order
-    if (order) {
-        obj.headers[column].classList.add('arrow-down');
-    } else {
-        obj.headers[column].classList.add('arrow-up');
-    }
-}
-
-/**
- * Update rows position
- */
-const updateOrder = function(rows) {
-    const obj = this;
-
-    // History
-    let data = []
-    for (let j = 0; j < rows.length; j++) {
-        data[j] = obj.options.data[rows[j]];
-    }
-    obj.options.data = data;
-
-    data = []
-    for (let j = 0; j < rows.length; j++) {
-        data[j] = obj.records[rows[j]];
-
-        for (let i = 0; i < data[j].length; i++) {
-            data[j][i].y = j;
-        }
-    }
-    obj.records = data;
-
-    data = []
-    for (let j = 0; j < rows.length; j++) {
-        data[j] = obj.rows[rows[j]];
-        data[j].y = j;
-    }
-    obj.rows = data;
-
-    // Update references
-    _internal_js__WEBPACK_IMPORTED_MODULE_0__/* .updateTableReferences */ .o8.call(obj);
-
-    // Redo search
-    if (obj.results && obj.results.length) {
-        if (obj.searchInput.value) {
-            obj.search(obj.searchInput.value);
-        } else {
-            _filter_js__WEBPACK_IMPORTED_MODULE_1__/* .closeFilter */ .F8.call(obj);
-        }
-    } else {
-        // Create page
-        obj.results = null;
-        obj.pageNumber = 0;
-
-        if (obj.options.pagination > 0) {
-            obj.page(0);
-        } else if (obj.options.lazyLoading == true) {
-            _lazyLoading_js__WEBPACK_IMPORTED_MODULE_2__/* .loadPage */ .wu.call(obj, 0);
-        } else {
-            for (let j = 0; j < obj.rows.length; j++) {
-                obj.tbody.appendChild(obj.rows[j].element);
-            }
-        }
-    }
-}
-
-/**
- * Sort data and reload table
- */
-const orderBy = function(column, order) {
-    const obj = this;
-    console.log('orderBy at the start, 0 = asc, 1 = desc', column, order);
-        
-    if (column >= 0) {
-        // Merged cells
-        if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
-            if (! confirm(jSuites.translate('This action will destroy any existing merged cells. Are you sure?'))) {
-                return false;
-            } else {
-                // Remove merged cells
-                obj.destroyMerge();
-            }
-        }
-
-        // Direction
-        if (order == null) {
-            if (!obj.headers[column].classList.contains('arrow-down') && !obj.headers[column].classList.contains('arrow-up'))
-            {
-                order = 0;
-            }
-            else {
-                order = obj.headers[column].classList.contains('arrow-down') ? 0 : 1;
-            }
-        } else {
-            order = order == 1 ? 0 : 1;
-        }
-
-        console.log('orderBy after change, 0 = asc, 1 = desc', column, order);
-
-        // Test order
-        let temp = [];
-        if (
-            obj.options.columns &&
-            obj.options.columns[column] &&
-            (
-                obj.options.columns[column].type == 'number' ||
-                obj.options.columns[column].type == 'numeric' ||
-                obj.options.columns[column].type == 'percentage' ||
-                obj.options.columns[column].type == 'autonumber' ||
-                obj.options.columns[column].type == 'color'
-            )
-        ) {
-            for (let j = 0; j < obj.options.data.length; j++) {
-                temp[j] = [ j, Number(obj.options.data[j][column]) ];
-            }
-        } else if (
-            obj.options.columns &&
-            obj.options.columns[column] &&
-            (
-                obj.options.columns[column].type == 'calendar' ||
-                obj.options.columns[column].type == 'checkbox' ||
-                obj.options.columns[column].type == 'radio'
-            )
-        ) {
-            for (let j = 0; j < obj.options.data.length; j++) {
-                temp[j] = [ j, obj.options.data[j][column] ];
-            }
-        } else {
-            for (let j = 0; j < obj.options.data.length; j++) {
-                temp[j] = [ j, obj.records[j][column].element.textContent.toLowerCase() ];
-            }
-        }
-
-        // Default sorting method
-        if (typeof(obj.parent.config.sorting) !== 'function') {
-            obj.parent.config.sorting = function(direction) {
-                return function(a, b) {
-                    const valueA = a[1];
-                    const valueB = b[1];
-
-                    if (! direction) {
-                        return (valueA === '' && valueB !== '') ? 1 : (valueA !== '' && valueB === '') ? -1 : (valueA > valueB) ? 1 : (valueA < valueB) ? -1 :  0;
-                    } else {
-                        return (valueA === '' && valueB !== '') ? 1 : (valueA !== '' && valueB === '') ? -1 : (valueA > valueB) ? -1 : (valueA < valueB) ? 1 :  0;
-                    }
-                }
-            }
-        }
-
-        temp = temp.sort(obj.parent.config.sorting(order));
-
-        // Save history
-        const newValue = [];
-        for (let j = 0; j < temp.length; j++) {
-            newValue[j] = temp[j][0];
-        }
-
-        // Save history
-        _history_js__WEBPACK_IMPORTED_MODULE_3__/* .setHistory */ .Dh.call(obj, {
-            action: 'orderBy',
-            rows: newValue,
-            column: column,
-            order: order,
-        });
-
-        // Update order
-        updateOrderArrow.call(obj, column, order);
-        // updateOrder.call(obj, newValue);
-
-        // On sort event
-        _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onsort', obj, column, order, []);
-
-        return true;
-    }
-}
-
-/***/ }),
-
-/***/ 292:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $f: function() { return /* binding */ quantiyOfPages; },
-/* harmony export */   IV: function() { return /* binding */ updatePagination; },
-/* harmony export */   MY: function() { return /* binding */ page; },
-/* harmony export */   ho: function() { return /* binding */ whichPage; }
-/* harmony export */ });
-/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(946);
+/* harmony import */ var _internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(887);
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
+/* harmony import */ var _merges_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(441);
+/* harmony import */ var _orderBy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(451);
 /* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(268);
 
 
 
 
 
-/**
- * Which page the row is
- */
-const whichPage = function(row) {
-    const obj = this;
 
-    // Search
-    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-        row = obj.results.indexOf(row);
-    }
-
-    return (Math.ceil((parseInt(row) + 1) / parseInt(obj.options.pagination))) - 1;
-}
 
 /**
- * Update the pagination
+ * Initializes a new history record for undo/redo
+ *
+ * @return null
  */
-const updatePagination = function() {
+const setHistory = function(changes) {
     const obj = this;
 
-    // Reset container
-    obj.pagination.children[0].innerHTML = '';
-    obj.pagination.children[1].innerHTML = '';
+    if (obj.ignoreHistory != true) {
+        // Increment and get the current history index
+        const index = ++obj.historyIndex;
 
-    // Start pagination
-    if (obj.options.pagination) {
-        // Searchable
-        let results;
+        // Slice the array to discard undone changes
+        obj.history = (obj.history = obj.history.slice(0, index + 1));
 
-        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-            results = obj.results.length;
-        } else {
-            results = obj.rows.length;
-        }
-
-        if (! results) {
-            // No records found
-            obj.pagination.children[0].innerHTML = jSuites.translate('No records found');
-        } else {
-            // Pagination container
-            const quantyOfPages = Math.ceil(results / obj.options.pagination);
-
-            let startNumber, finalNumber;
-
-            if (obj.pageNumber < 6) {
-                startNumber = 1;
-                finalNumber = quantyOfPages < 10 ? quantyOfPages : 10;
-            } else if (quantyOfPages - obj.pageNumber < 5) {
-                startNumber = quantyOfPages - 9;
-                finalNumber = quantyOfPages;
-                if (startNumber < 1) {
-                    startNumber = 1;
-                }
-            } else {
-                startNumber = obj.pageNumber - 4;
-                finalNumber = obj.pageNumber + 5;
-            }
-
-            // First
-            if (startNumber > 1) {
-                const paginationItem = document.createElement('div');
-                paginationItem.className = 'jss_page';
-                paginationItem.innerHTML = '<';
-                paginationItem.title = 1;
-                obj.pagination.children[1].appendChild(paginationItem);
-            }
-
-            // Get page links
-            for (let i = startNumber; i <= finalNumber; i++) {
-                const paginationItem = document.createElement('div');
-                paginationItem.className = 'jss_page';
-                paginationItem.innerHTML = i;
-                obj.pagination.children[1].appendChild(paginationItem);
-
-                if (obj.pageNumber == (i-1)) {
-                    paginationItem.classList.add('jss_page_selected');
-                }
-            }
-
-            // Last
-            if (finalNumber < quantyOfPages) {
-                const paginationItem = document.createElement('div');
-                paginationItem.className = 'jss_page';
-                paginationItem.innerHTML = '>';
-                paginationItem.title = quantyOfPages;
-                obj.pagination.children[1].appendChild(paginationItem);
-            }
-
-            // Text
-            const format = function(format) {
-                const args = Array.prototype.slice.call(arguments, 1);
-                return format.replace(/{(\d+)}/g, function(match, number) {
-                  return typeof args[number] != 'undefined'
-                    ? args[number]
-                    : match
-                  ;
-                });
-            };
-
-            obj.pagination.children[0].innerHTML = format(jSuites.translate('Showing page {0} of {1} entries'), obj.pageNumber + 1, quantyOfPages)
-        }
+        // Keep history
+        obj.history[index] = changes;
     }
 }
 
 /**
- * Go to page
+ * Process row
  */
-const page = function(pageNumber) {
+const historyProcessRow = function(type, historyRecord) {
     const obj = this;
 
-    const oldPage = obj.pageNumber;
+    const rowIndex = (! historyRecord.insertBefore) ? historyRecord.rowNumber + 1 : +historyRecord.rowNumber;
 
-    // Search
-    let results;
+    if (obj.options.search == true) {
+        if (obj.results && obj.results.length != obj.rows.length) {
+            obj.resetSearch();
+        }
+    }
 
-    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-        results = obj.results;
+    // Remove row
+    if (type == 1) {
+        const numOfRows = historyRecord.numOfRows;
+        // Remove nodes
+        for (let j = rowIndex; j < (numOfRows + rowIndex); j++) {
+            obj.rows[j].element.parentNode.removeChild(obj.rows[j].element);
+        }
+        // Remove references
+        obj.records.splice(rowIndex, numOfRows);
+        obj.options.data.splice(rowIndex, numOfRows);
+        obj.rows.splice(rowIndex, numOfRows);
+
+        _selection_js__WEBPACK_IMPORTED_MODULE_0__/* .conditionalSelectionUpdate */ .at.call(obj, 1, rowIndex, (numOfRows + rowIndex) - 1);
     } else {
-        results = obj.rows;
-    }
-
-    // Per page
-    const quantityPerPage = parseInt(obj.options.pagination);
-
-    // pageNumber
-    if (pageNumber == null || pageNumber == -1) {
-        // Last page
-        pageNumber = Math.ceil(results.length / quantityPerPage) - 1;
-    }
-
-    // Page number
-    obj.pageNumber = pageNumber;
-
-    let startRow = (pageNumber * quantityPerPage);
-    let finalRow = (pageNumber * quantityPerPage) + quantityPerPage;
-    if (finalRow > results.length) {
-        finalRow = results.length;
-    }
-    if (startRow < 0) {
-        startRow = 0;
-    }
-
-    // Reset container
-    while (obj.tbody.firstChild) {
-        obj.tbody.removeChild(obj.tbody.firstChild);
-    }
-
-    // Appeding items
-    for (let j = startRow; j < finalRow; j++) {
-        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-            obj.tbody.appendChild(obj.rows[results[j]].element);
-        } else {
-            obj.tbody.appendChild(obj.rows[j].element);
+        // Insert data
+        obj.records = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.records, rowIndex, historyRecord.rowRecords);
+        obj.options.data = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.data, rowIndex, historyRecord.rowData);
+        obj.rows = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.rows, rowIndex, historyRecord.rowNode);
+        // Insert nodes
+        let index = 0
+        for (let j = rowIndex; j < (historyRecord.numOfRows + rowIndex); j++) {
+            obj.tbody.insertBefore(historyRecord.rowNode[index].element, obj.tbody.children[j]);
+            index++;
         }
     }
 
-    if (obj.options.pagination > 0) {
-        updatePagination.call(obj);
+    for (let j = rowIndex; j < obj.rows.length; j++) {
+        obj.rows[j].y = j;
     }
 
-    // Update corner position
-    _selection_js__WEBPACK_IMPORTED_MODULE_0__/* .updateCornerPosition */ .Aq.call(obj);
+    for (let j = rowIndex; j < obj.records.length; j++) {
+        for (let i = 0; i < obj.records[j].length; i++) {
+            obj.records[j][i].y = j;
+        }
+    }
+
+    // Respect pagination
+    if (obj.options.pagination > 0) {
+        obj.page(obj.pageNumber);
+    }
+
+    _internal_js__WEBPACK_IMPORTED_MODULE_2__/* .updateTableReferences */ .o8.call(obj);
+}
+
+/**
+ * Process column
+ */
+const historyProcessColumn = function(type, historyRecord) {
+    const obj = this;
+
+    const columnIndex = (! historyRecord.insertBefore) ? historyRecord.columnNumber + 1 : historyRecord.columnNumber;
+
+    // Remove column
+    if (type == 1) {
+        const numOfColumns = historyRecord.numOfColumns;
+
+        obj.options.columns.splice(columnIndex, numOfColumns);
+        for (let i = columnIndex; i < (numOfColumns + columnIndex); i++) {
+            obj.headers[i].parentNode.removeChild(obj.headers[i]);
+            obj.cols[i].colElement.parentNode.removeChild(obj.cols[i].colElement);
+        }
+        obj.headers.splice(columnIndex, numOfColumns);
+        obj.cols.splice(columnIndex, numOfColumns);
+        for (let j = 0; j < historyRecord.data.length; j++) {
+            for (let i = columnIndex; i < (numOfColumns + columnIndex); i++) {
+                obj.records[j][i].element.parentNode.removeChild(obj.records[j][i].element);
+            }
+            obj.records[j].splice(columnIndex, numOfColumns);
+            obj.options.data[j].splice(columnIndex, numOfColumns);
+        }
+        // Process footers
+        if (obj.options.footers) {
+            for (let j = 0; j < obj.options.footers.length; j++) {
+                obj.options.footers[j].splice(columnIndex, numOfColumns);
+            }
+        }
+    } else {
+        // Insert data
+        obj.options.columns = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.columns, columnIndex, historyRecord.columns);
+        obj.headers = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.headers, columnIndex, historyRecord.headers);
+        obj.cols = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.cols, columnIndex, historyRecord.cols);
+
+        let index = 0
+        for (let i = columnIndex; i < (historyRecord.numOfColumns + columnIndex); i++) {
+            obj.headerContainer.insertBefore(historyRecord.headers[index], obj.headerContainer.children[i+1]);
+            obj.colgroupContainer.insertBefore(historyRecord.cols[index].colElement, obj.colgroupContainer.children[i+1]);
+            index++;
+        }
+
+        for (let j = 0; j < historyRecord.data.length; j++) {
+            obj.options.data[j] = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.data[j], columnIndex, historyRecord.data[j]);
+            obj.records[j] = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.records[j], columnIndex, historyRecord.records[j]);
+            let index = 0
+            for (let i = columnIndex; i < (historyRecord.numOfColumns + columnIndex); i++) {
+                obj.rows[j].element.insertBefore(historyRecord.records[j][index].element, obj.rows[j].element.children[i+1]);
+                index++;
+            }
+        }
+        // Process footers
+        if (obj.options.footers) {
+            for (let j = 0; j < obj.options.footers.length; j++) {
+                obj.options.footers[j] = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_1__/* .injectArray */ .Hh)(obj.options.footers[j], columnIndex, historyRecord.footers[j]);
+            }
+        }
+    }
+
+    for (let i = columnIndex; i < obj.cols.length; i++) {
+        obj.cols[i].x = i;
+    }
+
+    for (let j = 0; j < obj.records.length; j++) {
+        for (let i = columnIndex; i < obj.records[j].length; i++) {
+            obj.records[j][i].x = i;
+        }
+    }
+
+    // Adjust nested headers
+    if (
+        obj.options.nestedHeaders &&
+        obj.options.nestedHeaders.length > 0 &&
+        obj.options.nestedHeaders[0] &&
+        obj.options.nestedHeaders[0][0]
+    ) {
+        for (let j = 0; j < obj.options.nestedHeaders.length; j++) {
+            let colspan;
+
+            if (type == 1) {
+                colspan = parseInt(obj.options.nestedHeaders[j][obj.options.nestedHeaders[j].length-1].colspan) - historyRecord.numOfColumns;
+            } else {
+                colspan = parseInt(obj.options.nestedHeaders[j][obj.options.nestedHeaders[j].length-1].colspan) + historyRecord.numOfColumns;
+            }
+            obj.options.nestedHeaders[j][obj.options.nestedHeaders[j].length-1].colspan = colspan;
+            obj.thead.children[j].children[obj.thead.children[j].children.length-1].setAttribute('colspan', colspan);
+        }
+    }
+
+    _internal_js__WEBPACK_IMPORTED_MODULE_2__/* .updateTableReferences */ .o8.call(obj);
+}
+
+/**
+ * Undo last action
+ */
+const undo = function() {
+    const obj = this;
+
+    // Ignore events and history
+    const ignoreEvents = obj.parent.ignoreEvents ? true : false;
+    const ignoreHistory = obj.ignoreHistory ? true : false;
+
+    obj.parent.ignoreEvents = true;
+    obj.ignoreHistory = true;
+
+    // Records
+    const records = [];
+
+    // Update cells
+    let historyRecord;
+
+    if (obj.historyIndex >= 0) {
+        // History
+        historyRecord = obj.history[obj.historyIndex--];
+
+        if (historyRecord.action == 'insertRow') {
+            historyProcessRow.call(obj, 1, historyRecord);
+        } else if (historyRecord.action == 'deleteRow') {
+            historyProcessRow.call(obj, 0, historyRecord);
+        } else if (historyRecord.action == 'insertColumn') {
+            historyProcessColumn.call(obj, 1, historyRecord);
+        } else if (historyRecord.action == 'deleteColumn') {
+            historyProcessColumn.call(obj, 0, historyRecord);
+        } else if (historyRecord.action == 'moveRow') {
+            obj.moveRow(historyRecord.newValue, historyRecord.oldValue);
+        } else if (historyRecord.action == 'moveColumn') {
+            obj.moveColumn(historyRecord.newValue, historyRecord.oldValue);
+        } else if (historyRecord.action == 'setMerge') {
+            obj.removeMerge(historyRecord.column, historyRecord.data);
+        } else if (historyRecord.action == 'setStyle') {
+            obj.setStyle(historyRecord.oldValue, null, null, 1);
+        } else if (historyRecord.action == 'setWidth') {
+            obj.setWidth(historyRecord.column, historyRecord.oldValue);
+        } else if (historyRecord.action == 'setHeight') {
+            obj.setHeight(historyRecord.row, historyRecord.oldValue);
+        } else if (historyRecord.action == 'setHeader') {
+            obj.setHeader(historyRecord.column, historyRecord.oldValue);
+        } else if (historyRecord.action == 'setComments') {
+            obj.setComments(historyRecord.oldValue);
+        } else if (historyRecord.action == 'orderBy') {
+            let rows = [];
+            for (let j = 0; j < historyRecord.rows.length; j++) {
+                rows[historyRecord.rows[j]] = j;
+            }
+            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrderArrow */ .Th.call(obj, historyRecord.column, historyRecord.order ? 0 : 1);
+            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrder */ .iY.call(obj, rows);
+        } else if (historyRecord.action == 'setValue') {
+            // Redo for changes in cells
+            for (let i = 0; i < historyRecord.records.length; i++) {
+                records.push({
+                    x: historyRecord.records[i].x,
+                    y: historyRecord.records[i].y,
+                    value: historyRecord.records[i].oldValue,
+                });
+
+                if (historyRecord.oldStyle) {
+                    obj.resetStyle(historyRecord.oldStyle);
+                }
+            }
+            // Update records
+            obj.setValue(records);
+
+            // Update selection
+            if (historyRecord.selection) {
+                obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
+            }
+        }
+    }
+    obj.parent.ignoreEvents = ignoreEvents;
+    obj.ignoreHistory = ignoreHistory;
 
     // Events
-    _dispatch_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.call(obj, 'onchangepage', obj, pageNumber, oldPage, obj.options.pagination);
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onundo', obj, historyRecord);
 }
 
-const quantiyOfPages = function() {
+/**
+ * Redo previously undone action
+ */
+const redo = function() {
     const obj = this;
 
-    let results;
-    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
-        results = obj.results.length;
+    // Ignore events and history
+    const ignoreEvents = obj.parent.ignoreEvents ? true : false;
+    const ignoreHistory = obj.ignoreHistory ? true : false;
+
+    obj.parent.ignoreEvents = true;
+    obj.ignoreHistory = true;
+
+    // Records
+    var records = [];
+
+    // Update cells
+    let historyRecord;
+
+    if (obj.historyIndex < obj.history.length - 1) {
+        // History
+        historyRecord = obj.history[++obj.historyIndex];
+
+        if (historyRecord.action == 'insertRow') {
+            historyProcessRow.call(obj, 0, historyRecord);
+        } else if (historyRecord.action == 'deleteRow') {
+            historyProcessRow.call(obj, 1, historyRecord);
+        } else if (historyRecord.action == 'insertColumn') {
+            historyProcessColumn.call(obj, 0, historyRecord);
+        } else if (historyRecord.action == 'deleteColumn') {
+            historyProcessColumn.call(obj, 1, historyRecord);
+        } else if (historyRecord.action == 'moveRow') {
+            obj.moveRow(historyRecord.oldValue, historyRecord.newValue);
+        } else if (historyRecord.action == 'moveColumn') {
+            obj.moveColumn(historyRecord.oldValue, historyRecord.newValue);
+        } else if (historyRecord.action == 'setMerge') {
+            _merges_js__WEBPACK_IMPORTED_MODULE_5__/* .setMerge */ .FU.call(obj, historyRecord.column, historyRecord.colspan, historyRecord.rowspan, 1);
+        } else if (historyRecord.action == 'setStyle') {
+            obj.setStyle(historyRecord.newValue, null, null, 1);
+        } else if (historyRecord.action == 'setWidth') {
+            obj.setWidth(historyRecord.column, historyRecord.newValue);
+        } else if (historyRecord.action == 'setHeight') {
+            obj.setHeight(historyRecord.row, historyRecord.newValue);
+        } else if (historyRecord.action == 'setHeader') {
+            obj.setHeader(historyRecord.column, historyRecord.newValue);
+        } else if (historyRecord.action == 'setComments') {
+            obj.setComments(historyRecord.newValue);
+        } else if (historyRecord.action == 'orderBy') {
+            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrderArrow */ .Th.call(obj, historyRecord.column, historyRecord.order);
+            _orderBy_js__WEBPACK_IMPORTED_MODULE_3__/* .updateOrder */ .iY.call(obj, historyRecord.rows);
+        } else if (historyRecord.action == 'setValue') {
+            obj.setValue(historyRecord.records);
+            // Redo for changes in cells
+            for (let i = 0; i < historyRecord.records.length; i++) {
+                if (historyRecord.oldStyle) {
+                    obj.resetStyle(historyRecord.newStyle);
+                }
+            }
+            // Update selection
+            if (historyRecord.selection) {
+                obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
+            }
+        }
+    }
+    obj.parent.ignoreEvents = ignoreEvents;
+    obj.ignoreHistory = ignoreHistory;
+
+    // Events
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onredo', obj, historyRecord);
+}
+
+/***/ }),
+
+/***/ 206:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   F8: function() { return /* binding */ closeFilter; },
+/* harmony export */   N$: function() { return /* binding */ openFilter; },
+/* harmony export */   dr: function() { return /* binding */ resetFilters; }
+/* harmony export */ });
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
+/* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(268);
+
+
+
+
+/**
+ * Open the column filter
+ */
+const openFilter = function(columnId) {
+    const obj = this;
+
+    if (! obj.options.filters) {
+        console.log('Jspreadsheet: filters not enabled.');
     } else {
-        results = obj.rows.length;
+        // Make sure is integer
+        columnId = parseInt(columnId);
+        // Reset selection
+        obj.resetSelection();
+        // Load options
+        let optionsFiltered = [];
+        if (obj.options.columns[columnId].type == 'checkbox') {
+            optionsFiltered.push({ id: 'true', name: 'True' });
+            optionsFiltered.push({ id: 'false', name: 'False' });
+        } else {
+            const options = [];
+            let hasBlanks = false;
+            for (let j = 0; j < obj.options.data.length; j++) {
+                const k = obj.options.data[j][columnId];
+                const v = obj.records[j][columnId].element.innerHTML;
+                if (k && v) {
+                    options[k] = v;
+                } else {
+                    hasBlanks = true;
+                }
+            }
+            const keys = Object.keys(options);
+            optionsFiltered = [];
+            for (let j = 0; j < keys.length; j++) {
+                optionsFiltered.push({ id: keys[j], name: options[keys[j]] });
+            }
+            // Has blank options
+            if (hasBlanks) {
+                optionsFiltered.push({ value: '', id: '', name: '(Blanks)' });
+            }
+        }
+
+        // Create dropdown
+        const div = document.createElement('div');
+        obj.filter.children[columnId + 1].innerHTML = '';
+        obj.filter.children[columnId + 1].appendChild(div);
+        obj.filter.children[columnId + 1].style.paddingLeft = '0px';
+        obj.filter.children[columnId + 1].style.paddingRight = '0px';
+        obj.filter.children[columnId + 1].style.overflow = 'initial';
+
+        const opt = {
+            data: optionsFiltered,
+            multiple: true,
+            autocomplete: true,
+            opened: true,
+            value: obj.filters[columnId] !== undefined ? obj.filters[columnId] : null,
+            width:'100%',
+            position: (obj.options.tableOverflow == true || obj.parent.config.fullscreen == true) ? true : false,
+            onclose: function(o) {
+                resetFilters.call(obj);
+                obj.filters[columnId] = o.dropdown.getValue(true);
+                obj.filter.children[columnId + 1].innerHTML = o.dropdown.getText();
+                obj.filter.children[columnId + 1].style.paddingLeft = '';
+                obj.filter.children[columnId + 1].style.paddingRight = '';
+                obj.filter.children[columnId + 1].style.overflow = '';
+                closeFilter.call(obj, columnId);
+                _selection_js__WEBPACK_IMPORTED_MODULE_0__/* .refreshSelection */ .G9.call(obj);
+            }
+        };
+
+        // Dynamic dropdown
+        jSuites.dropdown(div, opt);
+    }
+}
+
+const closeFilter = function(columnId) {
+    const obj = this;
+
+    if (! columnId) {
+        for (let i = 0; i < obj.filter.children.length; i++) {
+            if (obj.filters[i]) {
+                columnId = i;
+            }
+        }
     }
 
-    return Math.ceil(results / obj.options.pagination);
+    // Search filter
+    const search = function(query, x, y) {
+        for (let i = 0; i < query.length; i++) {
+            const value = ''+obj.options.data[y][x];
+            const label = ''+obj.records[y][x].element.innerHTML;
+            if (query[i] == value || query[i] == label) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const query = obj.filters[columnId];
+    obj.results = [];
+    for (let j = 0; j < obj.options.data.length; j++) {
+        if (search(query, columnId, j)) {
+            obj.results.push(j);
+        }
+    }
+    if (! obj.results.length) {
+        obj.results = null;
+    }
+
+    _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateResult */ .hG.call(obj);
+}
+
+const resetFilters = function() {
+    const obj = this;
+
+    if (obj.options.filters) {
+        for (let i = 0; i < obj.filter.children.length; i++) {
+            obj.filter.children[i].innerHTML = '&nbsp;';
+            obj.filters[i] = null;
+        }
+    }
+
+    obj.results = null;
+    _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateResult */ .hG.call(obj);
 }
 
 /***/ }),
@@ -4213,6 +2582,1277 @@ const getHighlighted = function() {
 
 /***/ }),
 
+/***/ 292:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $f: function() { return /* binding */ quantiyOfPages; },
+/* harmony export */   IV: function() { return /* binding */ updatePagination; },
+/* harmony export */   MY: function() { return /* binding */ page; },
+/* harmony export */   ho: function() { return /* binding */ whichPage; }
+/* harmony export */ });
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(946);
+/* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(268);
+
+
+
+
+
+/**
+ * Which page the row is
+ */
+const whichPage = function(row) {
+    const obj = this;
+
+    // Search
+    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+        row = obj.results.indexOf(row);
+    }
+
+    return (Math.ceil((parseInt(row) + 1) / parseInt(obj.options.pagination))) - 1;
+}
+
+/**
+ * Update the pagination
+ */
+const updatePagination = function() {
+    const obj = this;
+
+    // Reset container
+    obj.pagination.children[0].innerHTML = '';
+    obj.pagination.children[1].innerHTML = '';
+
+    // Start pagination
+    if (obj.options.pagination) {
+        // Searchable
+        let results;
+
+        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+            results = obj.results.length;
+        } else {
+            results = obj.rows.length;
+        }
+
+        if (! results) {
+            // No records found
+            obj.pagination.children[0].innerHTML = jSuites.translate('No records found');
+        } else {
+            // Pagination container
+            const quantyOfPages = Math.ceil(results / obj.options.pagination);
+
+            let startNumber, finalNumber;
+
+            if (obj.pageNumber < 6) {
+                startNumber = 1;
+                finalNumber = quantyOfPages < 10 ? quantyOfPages : 10;
+            } else if (quantyOfPages - obj.pageNumber < 5) {
+                startNumber = quantyOfPages - 9;
+                finalNumber = quantyOfPages;
+                if (startNumber < 1) {
+                    startNumber = 1;
+                }
+            } else {
+                startNumber = obj.pageNumber - 4;
+                finalNumber = obj.pageNumber + 5;
+            }
+
+            // First
+            if (startNumber > 1) {
+                const paginationItem = document.createElement('div');
+                paginationItem.className = 'jss_page';
+                paginationItem.innerHTML = '<';
+                paginationItem.title = 1;
+                obj.pagination.children[1].appendChild(paginationItem);
+            }
+
+            // Get page links
+            for (let i = startNumber; i <= finalNumber; i++) {
+                const paginationItem = document.createElement('div');
+                paginationItem.className = 'jss_page';
+                paginationItem.innerHTML = i;
+                obj.pagination.children[1].appendChild(paginationItem);
+
+                if (obj.pageNumber == (i-1)) {
+                    paginationItem.classList.add('jss_page_selected');
+                }
+            }
+
+            // Last
+            if (finalNumber < quantyOfPages) {
+                const paginationItem = document.createElement('div');
+                paginationItem.className = 'jss_page';
+                paginationItem.innerHTML = '>';
+                paginationItem.title = quantyOfPages;
+                obj.pagination.children[1].appendChild(paginationItem);
+            }
+
+            // Text
+            const format = function(format) {
+                const args = Array.prototype.slice.call(arguments, 1);
+                return format.replace(/{(\d+)}/g, function(match, number) {
+                  return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match
+                  ;
+                });
+            };
+
+            obj.pagination.children[0].innerHTML = format(jSuites.translate('Showing page {0} of {1} entries'), obj.pageNumber + 1, quantyOfPages)
+        }
+    }
+}
+
+/**
+ * Go to page
+ */
+const page = function(pageNumber) {
+    const obj = this;
+
+    const oldPage = obj.pageNumber;
+
+    // Search
+    let results;
+
+    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+        results = obj.results;
+    } else {
+        results = obj.rows;
+    }
+
+    // Per page
+    const quantityPerPage = parseInt(obj.options.pagination);
+
+    // pageNumber
+    if (pageNumber == null || pageNumber == -1) {
+        // Last page
+        pageNumber = Math.ceil(results.length / quantityPerPage) - 1;
+    }
+
+    // Page number
+    obj.pageNumber = pageNumber;
+
+    let startRow = (pageNumber * quantityPerPage);
+    let finalRow = (pageNumber * quantityPerPage) + quantityPerPage;
+    if (finalRow > results.length) {
+        finalRow = results.length;
+    }
+    if (startRow < 0) {
+        startRow = 0;
+    }
+
+    // Reset container
+    while (obj.tbody.firstChild) {
+        obj.tbody.removeChild(obj.tbody.firstChild);
+    }
+
+    // Appeding items
+    for (let j = startRow; j < finalRow; j++) {
+        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+            obj.tbody.appendChild(obj.rows[results[j]].element);
+        } else {
+            obj.tbody.appendChild(obj.rows[j].element);
+        }
+    }
+
+    if (obj.options.pagination > 0) {
+        updatePagination.call(obj);
+    }
+
+    // Update corner position
+    _selection_js__WEBPACK_IMPORTED_MODULE_0__/* .updateCornerPosition */ .Aq.call(obj);
+
+    // Events
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.call(obj, 'onchangepage', obj, pageNumber, oldPage, obj.options.pagination);
+}
+
+const quantiyOfPages = function() {
+    const obj = this;
+
+    let results;
+    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+        results = obj.results.length;
+    } else {
+        results = obj.rows.length;
+    }
+
+    return Math.ceil(results / obj.options.pagination);
+}
+
+/***/ }),
+
+/***/ 441:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   D0: function() { return /* binding */ isRowMerged; },
+/* harmony export */   FU: function() { return /* binding */ setMerge; },
+/* harmony export */   Lt: function() { return /* binding */ isColMerged; },
+/* harmony export */   VP: function() { return /* binding */ destroyMerge; },
+/* harmony export */   Zp: function() { return /* binding */ removeMerge; },
+/* harmony export */   fd: function() { return /* binding */ getMerge; }
+/* harmony export */ });
+/* harmony import */ var _internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(887);
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
+/* harmony import */ var _history_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(946);
+/* harmony import */ var _selection_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(268);
+
+
+
+
+
+
+
+
+/**
+ * Is column merged
+ */
+const isColMerged = function(x, insertBefore) {
+    const obj = this;
+
+    const cols = [];
+    // Remove any merged cells
+    if (obj.options.mergeCells) {
+        const keys = Object.keys(obj.options.mergeCells);
+        for (let i = 0; i < keys.length; i++) {
+            const info = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(keys[i], true);
+            const colspan = obj.options.mergeCells[keys[i]][0];
+            const x1 = info[0];
+            const x2 = info[0] + (colspan > 1 ? colspan - 1 : 0);
+
+            if (insertBefore == null) {
+                if ((x1 <= x && x2 >= x)) {
+                    cols.push(keys[i]);
+                }
+            } else {
+                if (insertBefore) {
+                    if ((x1 < x && x2 >= x)) {
+                        cols.push(keys[i]);
+                    }
+                } else {
+                    if ((x1 <= x && x2 > x)) {
+                        cols.push(keys[i]);
+                    }
+                }
+            }
+        }
+    }
+
+    return cols;
+}
+
+/**
+ * Is rows merged
+ */
+const isRowMerged = function(y, insertBefore) {
+    const obj = this;
+
+    const rows = [];
+    // Remove any merged cells
+    if (obj.options.mergeCells) {
+        const keys = Object.keys(obj.options.mergeCells);
+        for (let i = 0; i < keys.length; i++) {
+            const info = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(keys[i], true);
+            const rowspan = obj.options.mergeCells[keys[i]][1];
+            const y1 = info[1];
+            const y2 = info[1] + (rowspan > 1 ? rowspan - 1 : 0);
+
+            if (insertBefore == null) {
+                if ((y1 <= y && y2 >= y)) {
+                    rows.push(keys[i]);
+                }
+            } else {
+                if (insertBefore) {
+                    if ((y1 < y && y2 >= y)) {
+                        rows.push(keys[i]);
+                    }
+                } else {
+                    if ((y1 <= y && y2 > y)) {
+                        rows.push(keys[i]);
+                    }
+                }
+            }
+        }
+    }
+
+    return rows;
+}
+
+/**
+ * Merge cells
+ * @param cellName
+ * @param colspan
+ * @param rowspan
+ * @param ignoreHistoryAndEvents
+ */
+const getMerge = function(cellName) {
+    const obj = this;
+
+    let data = {};
+    if (cellName) {
+        if (obj.options.mergeCells && obj.options.mergeCells[cellName]) {
+            data = [ obj.options.mergeCells[cellName][0], obj.options.mergeCells[cellName][1] ];
+        } else {
+            data = null;
+        }
+    } else {
+        if (obj.options.mergeCells) {
+            var mergedCells = obj.options.mergeCells;
+            const keys = Object.keys(obj.options.mergeCells);
+            for (let i = 0; i < keys.length; i++) {
+                data[keys[i]] = [ obj.options.mergeCells[keys[i]][0], obj.options.mergeCells[keys[i]][1] ];
+            }
+        }
+    }
+
+    return data;
+}
+
+/**
+ * Merge cells
+ * @param cellName
+ * @param colspan
+ * @param rowspan
+ * @param ignoreHistoryAndEvents
+ */
+const setMerge = function(cellName, colspan, rowspan, ignoreHistoryAndEvents) {
+    const obj = this;
+
+    let test = false;
+
+    if (! cellName) {
+        if (! obj.highlighted.length) {
+            alert(jSuites.translate('No cells selected'));
+            return null;
+        } else {
+            const x1 = parseInt(obj.highlighted[0].getAttribute('data-x'));
+            const y1 = parseInt(obj.highlighted[0].getAttribute('data-y'));
+            const x2 = parseInt(obj.highlighted[obj.highlighted.length-1].getAttribute('data-x'));
+            const y2 = parseInt(obj.highlighted[obj.highlighted.length-1].getAttribute('data-y'));
+            cellName = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getColumnNameFromId */ .t3)([ x1, y1 ]);
+            colspan = (x2 - x1) + 1;
+            rowspan = (y2 - y1) + 1;
+        }
+    } else if (typeof cellName !== 'string') {
+        return null
+    }
+
+    const cell = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(cellName, true);
+
+    if (obj.options.mergeCells && obj.options.mergeCells[cellName]) {
+        if (obj.records[cell[1]][cell[0]].element.getAttribute('data-merged')) {
+            test = 'Cell already merged';
+        }
+    } else if ((! colspan || colspan < 2) && (! rowspan || rowspan < 2)) {
+        test = 'Invalid merged properties';
+    } else {
+        var cells = [];
+        for (let j = cell[1]; j < cell[1] + rowspan; j++) {
+            for (let i = cell[0]; i < cell[0] + colspan; i++) {
+                var columnName = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getColumnNameFromId */ .t3)([i, j]);
+                if (obj.records[j][i].element.getAttribute('data-merged')) {
+                    test = 'There is a conflict with another merged cell';
+                }
+            }
+        }
+    }
+
+    if (test) {
+        alert(jSuites.translate(test));
+    } else {
+        // Add property
+        if (colspan > 1) {
+            obj.records[cell[1]][cell[0]].element.setAttribute('colspan', colspan);
+        } else {
+            colspan = 1;
+        }
+        if (rowspan > 1) {
+            obj.records[cell[1]][cell[0]].element.setAttribute('rowspan', rowspan);
+        } else {
+            rowspan = 1;
+        }
+        // Keep links to the existing nodes
+        if (!obj.options.mergeCells) {
+            obj.options.mergeCells = {};
+        }
+
+        obj.options.mergeCells[cellName] = [ colspan, rowspan, [] ];
+        // Mark cell as merged
+        obj.records[cell[1]][cell[0]].element.setAttribute('data-merged', 'true');
+        // Overflow
+        obj.records[cell[1]][cell[0]].element.style.overflow = 'hidden';
+        // History data
+        const data = [];
+        // Adjust the nodes
+        for (let y = cell[1]; y < cell[1] + rowspan; y++) {
+            for (let x = cell[0]; x < cell[0] + colspan; x++) {
+                if (! (cell[0] == x && cell[1] == y)) {
+                    data.push(obj.options.data[y][x]);
+                    _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateCell */ .k9.call(obj, x, y, '', true);
+                    obj.options.mergeCells[cellName][2].push(obj.records[y][x].element);
+                    obj.records[y][x].element.style.display = 'none';
+                    obj.records[y][x].element = obj.records[cell[1]][cell[0]].element;
+                }
+            }
+        }
+        // In the initialization is not necessary keep the history
+        _selection_js__WEBPACK_IMPORTED_MODULE_2__/* .updateSelection */ .c6.call(obj, obj.records[cell[1]][cell[0]].element);
+
+        if (! ignoreHistoryAndEvents) {
+            _history_js__WEBPACK_IMPORTED_MODULE_3__/* .setHistory */ .Dh.call(obj, {
+                action:'setMerge',
+                column:cellName,
+                colspan:colspan,
+                rowspan:rowspan,
+                data:data,
+            });
+
+            _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onmerge', obj, { [cellName]: [colspan, rowspan]});
+        }
+    }
+}
+
+/**
+ * Remove merge by cellname
+ * @param cellName
+ */
+const removeMerge = function(cellName, data, keepOptions) {
+    const obj = this;
+
+    if (obj.options.mergeCells && obj.options.mergeCells[cellName]) {
+        const cell = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getIdFromColumnName */ .vu)(cellName, true);
+        obj.records[cell[1]][cell[0]].element.removeAttribute('colspan');
+        obj.records[cell[1]][cell[0]].element.removeAttribute('rowspan');
+        obj.records[cell[1]][cell[0]].element.removeAttribute('data-merged');
+        const info = obj.options.mergeCells[cellName];
+
+        let index = 0;
+
+        let j, i;
+
+        for (j = 0; j < info[1]; j++) {
+            for (i = 0; i < info[0]; i++) {
+                if (j > 0 || i > 0) {
+                    obj.records[cell[1]+j][cell[0]+i].element = info[2][index];
+                    obj.records[cell[1]+j][cell[0]+i].element.style.display = '';
+                    // Recover data
+                    if (data && data[index]) {
+                        _internal_js__WEBPACK_IMPORTED_MODULE_1__/* .updateCell */ .k9.call(obj, cell[0]+i, cell[1]+j, data[index]);
+                    }
+                    index++;
+                }
+            }
+        }
+
+        // Update selection
+        _selection_js__WEBPACK_IMPORTED_MODULE_2__/* .updateSelection */ .c6.call(obj, obj.records[cell[1]][cell[0]].element, obj.records[cell[1]+j-1][cell[0]+i-1].element);
+
+        if (! keepOptions) {
+            delete(obj.options.mergeCells[cellName]);
+        }
+    }
+}
+
+/**
+ * Remove all merged cells
+ */
+const destroyMerge = function(keepOptions) {
+    const obj = this;
+
+    // Remove any merged cells
+    if (obj.options.mergeCells) {
+        var mergedCells = obj.options.mergeCells;
+        const keys = Object.keys(obj.options.mergeCells);
+        for (let i = 0; i < keys.length; i++) {
+            removeMerge.call(obj, keys[i], null, keepOptions);
+        }
+    }
+}
+
+/***/ }),
+
+/***/ 451:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   My: function() { return /* binding */ orderBy; },
+/* harmony export */   Th: function() { return /* binding */ updateOrderArrow; },
+/* harmony export */   iY: function() { return /* binding */ updateOrder; }
+/* harmony export */ });
+/* harmony import */ var _history_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(946);
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
+/* harmony import */ var _lazyLoading_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(992);
+/* harmony import */ var _filter_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(206);
+
+
+
+
+
+
+
+/**
+ * Update order arrow
+ */
+const updateOrderArrow = function(column, order) {
+    const obj = this;
+
+    // Remove order
+    for (let i = 0; i < obj.headers.length; i++) {
+        obj.headers[i].classList.remove('arrow-up');
+        obj.headers[i].classList.remove('arrow-down');
+    }
+
+    // No order specified then toggle order
+    if (order) {
+        obj.headers[column].classList.add('arrow-down');
+    } else {
+        obj.headers[column].classList.add('arrow-up');
+    }
+}
+
+/**
+ * Update rows position
+ */
+const updateOrder = function(rows) {
+    const obj = this;
+
+    // History
+    let data = []
+    for (let j = 0; j < rows.length; j++) {
+        data[j] = obj.options.data[rows[j]];
+    }
+    obj.options.data = data;
+
+    data = []
+    for (let j = 0; j < rows.length; j++) {
+        data[j] = obj.records[rows[j]];
+
+        for (let i = 0; i < data[j].length; i++) {
+            data[j][i].y = j;
+        }
+    }
+    obj.records = data;
+
+    data = []
+    for (let j = 0; j < rows.length; j++) {
+        data[j] = obj.rows[rows[j]];
+        data[j].y = j;
+    }
+    obj.rows = data;
+
+    // Update references
+    _internal_js__WEBPACK_IMPORTED_MODULE_0__/* .updateTableReferences */ .o8.call(obj);
+
+    // Redo search
+    if (obj.results && obj.results.length) {
+        if (obj.searchInput.value) {
+            obj.search(obj.searchInput.value);
+        } else {
+            _filter_js__WEBPACK_IMPORTED_MODULE_1__/* .closeFilter */ .F8.call(obj);
+        }
+    } else {
+        // Create page
+        obj.results = null;
+        obj.pageNumber = 0;
+
+        if (obj.options.pagination > 0) {
+            obj.page(0);
+        } else if (obj.options.lazyLoading == true) {
+            _lazyLoading_js__WEBPACK_IMPORTED_MODULE_2__/* .loadPage */ .wu.call(obj, 0);
+        } else {
+            for (let j = 0; j < obj.rows.length; j++) {
+                obj.tbody.appendChild(obj.rows[j].element);
+            }
+        }
+    }
+}
+
+/**
+ * Sort data and reload table
+ */
+const orderBy = function(column, order) {
+    const obj = this;
+    console.log('orderBy at the start, 0 = asc, 1 = desc', column, order);
+        
+    if (column >= 0) {
+        // Merged cells
+        if (obj.options.mergeCells && Object.keys(obj.options.mergeCells).length > 0) {
+            if (! confirm(jSuites.translate('This action will destroy any existing merged cells. Are you sure?'))) {
+                return false;
+            } else {
+                // Remove merged cells
+                obj.destroyMerge();
+            }
+        }
+
+        // Direction
+        if (order == null) {
+            if (!obj.headers[column].classList.contains('arrow-down') && !obj.headers[column].classList.contains('arrow-up'))
+            {
+                order = 0;
+            }
+            else {
+                order = obj.headers[column].classList.contains('arrow-down') ? 0 : 1;
+            }
+        } else {
+            order = order == 1 ? 0 : 1;
+        }
+
+        console.log('orderBy after change, 0 = asc, 1 = desc', column, order);
+
+        // Test order
+        let temp = [];
+        if (
+            obj.options.columns &&
+            obj.options.columns[column] &&
+            (
+                obj.options.columns[column].type == 'number' ||
+                obj.options.columns[column].type == 'numeric' ||
+                obj.options.columns[column].type == 'percentage' ||
+                obj.options.columns[column].type == 'autonumber' ||
+                obj.options.columns[column].type == 'color'
+            )
+        ) {
+            for (let j = 0; j < obj.options.data.length; j++) {
+                temp[j] = [ j, Number(obj.options.data[j][column]) ];
+            }
+        } else if (
+            obj.options.columns &&
+            obj.options.columns[column] &&
+            (
+                obj.options.columns[column].type == 'calendar' ||
+                obj.options.columns[column].type == 'checkbox' ||
+                obj.options.columns[column].type == 'radio'
+            )
+        ) {
+            for (let j = 0; j < obj.options.data.length; j++) {
+                temp[j] = [ j, obj.options.data[j][column] ];
+            }
+        } else {
+            for (let j = 0; j < obj.options.data.length; j++) {
+                temp[j] = [ j, obj.records[j][column].element.textContent.toLowerCase() ];
+            }
+        }
+
+        // Default sorting method
+        if (typeof(obj.parent.config.sorting) !== 'function') {
+            obj.parent.config.sorting = function(direction) {
+                return function(a, b) {
+                    const valueA = a[1];
+                    const valueB = b[1];
+
+                    if (! direction) {
+                        return (valueA === '' && valueB !== '') ? 1 : (valueA !== '' && valueB === '') ? -1 : (valueA > valueB) ? 1 : (valueA < valueB) ? -1 :  0;
+                    } else {
+                        return (valueA === '' && valueB !== '') ? 1 : (valueA !== '' && valueB === '') ? -1 : (valueA > valueB) ? -1 : (valueA < valueB) ? 1 :  0;
+                    }
+                }
+            }
+        }
+
+        temp = temp.sort(obj.parent.config.sorting(order));
+
+        // Save history
+        const newValue = [];
+        for (let j = 0; j < temp.length; j++) {
+            newValue[j] = temp[j][0];
+        }
+
+        // Save history
+        _history_js__WEBPACK_IMPORTED_MODULE_3__/* .setHistory */ .Dh.call(obj, {
+            action: 'orderBy',
+            rows: newValue,
+            column: column,
+            order: order,
+        });
+
+        // Update order
+        updateOrderArrow.call(obj, column, order);
+        // updateOrder.call(obj, newValue);
+
+        // On sort event
+        _dispatch_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A.call(obj, 'onsort', obj, column, order, []);
+
+        return true;
+    }
+}
+
+/***/ }),
+
+/***/ 595:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createFromTable: function() { return /* binding */ createFromTable; },
+/* harmony export */   getCaretIndex: function() { return /* binding */ getCaretIndex; },
+/* harmony export */   getCellNameFromCoords: function() { return /* binding */ getCellNameFromCoords; },
+/* harmony export */   getColumnName: function() { return /* binding */ getColumnName; },
+/* harmony export */   getCoordsFromCellName: function() { return /* binding */ getCoordsFromCellName; },
+/* harmony export */   getCoordsFromRange: function() { return /* binding */ getCoordsFromRange; },
+/* harmony export */   invert: function() { return /* binding */ invert; },
+/* harmony export */   parseCSV: function() { return /* binding */ parseCSV; }
+/* harmony export */ });
+/* harmony import */ var _internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(887);
+
+
+/**
+ * Get carret position for one element
+ */
+const getCaretIndex = function(e) {
+    let d;
+
+    if (this.config.root) {
+        d = this.config.root;
+    } else {
+        d = window;
+    }
+    let pos = 0;
+    const s = d.getSelection();
+    if (s) {
+        if (s.rangeCount !== 0) {
+            const r = s.getRangeAt(0);
+            const p = r.cloneRange();
+            p.selectNodeContents(e);
+            p.setEnd(r.endContainer, r.endOffset);
+            pos = p.toString().length;
+        }
+    }
+    return pos;
+}
+
+/**
+ * Invert keys and values
+ */
+const invert = function(o) {
+    const d = [];
+    const k = Object.keys(o);
+    for (let i = 0; i < k.length; i++) {
+        d[o[k[i]]] = k[i];
+    }
+    return d;
+}
+
+/**
+ * Get letter based on a number
+ *
+ * @param integer i
+ * @return string letter
+ */
+const getColumnName = function(i) {
+    let letter = '';
+    if (i > 701) {
+        letter += String.fromCharCode(64 + parseInt(i / 676));
+        letter += String.fromCharCode(64 + parseInt((i % 676) / 26));
+    } else if (i > 25) {
+        letter += String.fromCharCode(64 + parseInt(i / 26));
+    }
+    letter += String.fromCharCode(65 + (i % 26));
+
+    return letter;
+}
+
+/**
+ * Get column name from coords
+ */
+const getCellNameFromCoords = function(x, y) {
+    return getColumnName(parseInt(x)) + (parseInt(y) + 1);
+}
+
+const getCoordsFromCellName = function(columnName) {
+    // Get the letters
+    const t = /^[a-zA-Z]+/.exec(columnName);
+
+    if (t) {
+        // Base 26 calculation
+        let code = 0;
+        for (let i = 0; i < t[0].length; i++) {
+            code += parseInt(t[0].charCodeAt(i) - 64) * Math.pow(26, (t[0].length - 1 - i));
+        }
+        code--;
+        // Make sure jspreadsheet starts on zero
+        if (code < 0) {
+            code = 0;
+        }
+
+        // Number
+        let number = parseInt(/[0-9]+$/.exec(columnName)) || null;
+        if (number > 0) {
+            number--;
+        }
+
+        return [ code, number ];
+    }
+}
+
+const getCoordsFromRange = function(range) {
+    const [start, end] = range.split(':');
+
+    return [...getCoordsFromCellName(start), ...getCoordsFromCellName(end)];
+}
+
+/**
+ * From stack overflow contributions
+ */
+const parseCSV = function(str, delimiter) {
+    // Remove last line break
+    str = str.replace(/\r?\n$|\r$|\n$/g, "");
+    // Last caracter is the delimiter
+    if (str.charCodeAt(str.length-1) == 9) {
+        str += "\0";
+    }
+    // user-supplied delimeter or default comma
+    delimiter = (delimiter || ",");
+
+    const arr = [];
+    let quote = false;  // true means we're inside a quoted field
+    // iterate over each character, keep track of current row and column (of the returned array)
+    for (let row = 0, col = 0, c = 0; c < str.length; c++) {
+        const cc = str[c], nc = str[c+1];
+        arr[row] = arr[row] || [];
+        arr[row][col] = arr[row][col] || '';
+
+        // If the current character is a quotation mark, and we're inside a quoted field, and the next character is also a quotation mark, add a quotation mark to the current column and skip the next character
+        if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+
+        // If it's just one quotation mark, begin/end quoted field
+        if (cc == '"') { quote = !quote; continue; }
+
+        // If it's a comma and we're not in a quoted field, move on to the next column
+        if (cc == delimiter && !quote) { ++col; continue; }
+
+        // If it's a newline (CRLF) and we're not in a quoted field, skip the next character and move on to the next row and move to column 0 of that new row
+        if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+
+        // If it's a newline (LF or CR) and we're not in a quoted field, move on to the next row and move to column 0 of that new row
+        if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+        if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+
+        // Otherwise, append the current character to the current column
+        arr[row][col] += cc;
+    }
+    return arr;
+}
+
+const createFromTable = function(el, options) {
+    if (el.tagName != 'TABLE') {
+        console.log('Element is not a table');
+    } else {
+        // Configuration
+        if (! options) {
+            options = {};
+        }
+
+        options.columns = [];
+        options.data = [];
+
+        // Colgroup
+        const colgroup = el.querySelectorAll('colgroup > col');
+        if (colgroup.length) {
+            // Get column width
+            for (let i = 0; i < colgroup.length; i++) {
+                let width = colgroup[i].style.width;
+                if (! width) {
+                    width = colgroup[i].getAttribute('width');
+                }
+                // Set column width
+                if (width) {
+                    if (! options.columns[i]) {
+                        options.columns[i] = {}
+                    }
+                    options.columns[i].width = width;
+                }
+            }
+        }
+
+        // Parse header
+        const parseHeader = function(header, i) {
+            // Get width information
+            let info = header.getBoundingClientRect();
+            const width = info.width > 50 ? info.width : 50;
+
+            // Create column option
+            if (! options.columns[i]) {
+                options.columns[i] = {};
+            }
+            if (header.getAttribute('data-celltype')) {
+                options.columns[i].type = header.getAttribute('data-celltype');
+            } else {
+                options.columns[i].type = 'text';
+            }
+            options.columns[i].width = width + 'px';
+            options.columns[i].title = header.innerHTML;
+            if (header.style.textAlign) {
+                options.columns[i].align = header.style.textAlign;
+            }
+
+            if (info = header.getAttribute('name')) {
+                options.columns[i].name = info;
+            }
+            if (info = header.getAttribute('id')) {
+                options.columns[i].id = info;
+            }
+            if (info = header.getAttribute('data-mask')) {
+                options.columns[i].mask = info;
+            }
+        }
+
+        // Headers
+        const nested = [];
+        let headers = el.querySelectorAll(':scope > thead > tr');
+        if (headers.length) {
+            for (let j = 0; j < headers.length - 1; j++) {
+                const cells = [];
+                for (let i = 0; i < headers[j].children.length; i++) {
+                    const row = {
+                        title: headers[j].children[i].textContent,
+                        colspan: headers[j].children[i].getAttribute('colspan') || 1,
+                    };
+                    cells.push(row);
+                }
+                nested.push(cells);
+            }
+            // Get the last row in the thead
+            headers = headers[headers.length-1].children;
+            // Go though the headers
+            for (let i = 0; i < headers.length; i++) {
+                parseHeader(headers[i], i);
+            }
+        }
+
+        // Content
+        let rowNumber = 0;
+        const mergeCells = {};
+        const rows = {};
+        const style = {};
+        const classes = {};
+
+        let content = el.querySelectorAll(':scope > tr, :scope > tbody > tr');
+        for (let j = 0; j < content.length; j++) {
+            options.data[rowNumber] = [];
+            if (options.parseTableFirstRowAsHeader == true && ! headers.length && j == 0) {
+                for (let i = 0; i < content[j].children.length; i++) {
+                    parseHeader(content[j].children[i], i);
+                }
+            } else {
+                for (let i = 0; i < content[j].children.length; i++) {
+                    // WickedGrid formula compatibility
+                    let value = content[j].children[i].getAttribute('data-formula');
+                    if (value) {
+                        if (value.substr(0,1) != '=') {
+                            value = '=' + value;
+                        }
+                    } else {
+                        value = content[j].children[i].innerHTML;
+                    }
+                    options.data[rowNumber].push(value);
+
+                    // Key
+                    const cellName = (0,_internalHelpers_js__WEBPACK_IMPORTED_MODULE_0__/* .getColumnNameFromId */ .t3)([ i, j ]);
+
+                    // Classes
+                    const tmp = content[j].children[i].getAttribute('class');
+                    if (tmp) {
+                        classes[cellName] = tmp;
+                    }
+
+                    // Merged cells
+                    const mergedColspan = parseInt(content[j].children[i].getAttribute('colspan')) || 0;
+                    const mergedRowspan = parseInt(content[j].children[i].getAttribute('rowspan')) || 0;
+                    if (mergedColspan || mergedRowspan) {
+                        mergeCells[cellName] = [ mergedColspan || 1, mergedRowspan || 1 ];
+                    }
+
+                    // Avoid problems with hidden cells
+                    if (content[j].children[i].style && content[j].children[i].style.display == 'none') {
+                        content[j].children[i].style.display = '';
+                    }
+                    // Get style
+                    const s = content[j].children[i].getAttribute('style');
+                    if (s) {
+                        style[cellName] = s;
+                    }
+                    // Bold
+                    if (content[j].children[i].classList.contains('styleBold')) {
+                        if (style[cellName]) {
+                            style[cellName] += '; font-weight:bold;';
+                        } else {
+                            style[cellName] = 'font-weight:bold;';
+                        }
+                    }
+                }
+
+                // Row Height
+                if (content[j].style && content[j].style.height) {
+                    rows[j] = { height: content[j].style.height };
+                }
+
+                // Index
+                rowNumber++;
+            }
+        }
+
+        // Nested
+        if (Object.keys(nested).length > 0) {
+            options.nestedHeaders = nested;
+        }
+        // Style
+        if (Object.keys(style).length > 0) {
+            options.style = style;
+        }
+        // Merged
+        if (Object.keys(mergeCells).length > 0) {
+            options.mergeCells = mergeCells;
+        }
+        // Row height
+        if (Object.keys(rows).length > 0) {
+            options.rows = rows;
+        }
+        // Classes
+        if (Object.keys(classes).length > 0) {
+            options.classes = classes;
+        }
+
+        content = el.querySelectorAll('tfoot tr');
+        if (content.length) {
+            const footers = [];
+            for (let j = 0; j < content.length; j++) {
+                let footer = [];
+                for (let i = 0; i < content[j].children.length; i++) {
+                    footer.push(content[j].children[i].textContent);
+                }
+                footers.push(footer);
+            }
+            if (Object.keys(footers).length > 0) {
+                options.footers = footers;
+            }
+        }
+        // TODO: data-hiddencolumns="3,4"
+
+        // I guess in terms the better column type
+        if (options.parseTableAutoCellType == true) {
+            const pattern = [];
+            for (let i = 0; i < options.columns.length; i++) {
+                let test = true;
+                let testCalendar = true;
+                pattern[i] = [];
+                for (let j = 0; j < options.data.length; j++) {
+                    const value = options.data[j][i];
+                    if (! pattern[i][value]) {
+                        pattern[i][value] = 0;
+                    }
+                    pattern[i][value]++;
+                    if (value.length > 25) {
+                        test = false;
+                    }
+                    if (value.length == 10) {
+                        if (! (value.substr(4,1) == '-' && value.substr(7,1) == '-')) {
+                            testCalendar = false;
+                        }
+                    } else {
+                        testCalendar = false;
+                    }
+                }
+
+                const keys = Object.keys(pattern[i]).length;
+                if (testCalendar) {
+                    options.columns[i].type = 'calendar';
+                } else if (test == true && keys > 1 && keys <= parseInt(options.data.length * 0.1)) {
+                    options.columns[i].type = 'dropdown';
+                    options.columns[i].source = Object.keys(pattern[i]);
+                }
+            }
+        }
+
+        return options;
+    }
+}
+
+/***/ }),
+
+/***/ 617:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   IQ: function() { return /* binding */ getMeta; },
+/* harmony export */   hs: function() { return /* binding */ updateMeta; },
+/* harmony export */   iZ: function() { return /* binding */ setMeta; }
+/* harmony export */ });
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(946);
+
+
+/**
+ * Get meta information from cell(s)
+ *
+ * @return integer
+ */
+const getMeta = function(cell, key) {
+    const obj = this;
+
+    if (! cell) {
+        return obj.options.meta;
+    } else {
+        if (key) {
+            return obj.options.meta && obj.options.meta[cell] && obj.options.meta[cell][key] ? obj.options.meta[cell][key] : null;
+        } else {
+            return obj.options.meta && obj.options.meta[cell] ? obj.options.meta[cell] : null;
+        }
+    }
+}
+
+/**
+ * Update meta information
+ *
+ * @return integer
+ */
+const updateMeta = function(affectedCells) {
+    const obj = this;
+
+    if (obj.options.meta) {
+        const newMeta = {};
+        const keys = Object.keys(obj.options.meta);
+        for (let i = 0; i < keys.length; i++) {
+            if (affectedCells[keys[i]]) {
+                newMeta[affectedCells[keys[i]]] = obj.options.meta[keys[i]];
+            } else {
+                newMeta[keys[i]] = obj.options.meta[keys[i]];
+            }
+        }
+        // Update meta information
+        obj.options.meta = newMeta;
+    }
+}
+
+/**
+ * Set meta information to cell(s)
+ *
+ * @return integer
+ */
+const setMeta = function(o, k, v) {
+    const obj = this;
+
+    if (! obj.options.meta) {
+        obj.options.meta = {}
+    }
+
+    if (k && v) {
+        // Set data value
+        if (! obj.options.meta[o]) {
+            obj.options.meta[o] = {};
+        }
+        obj.options.meta[o][k] = v;
+
+        _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onchangemeta', obj, { [o]: { [k]: v } });
+    } else {
+        // Apply that for all cells
+        const keys = Object.keys(o);
+        for (let i = 0; i < keys.length; i++) {
+            if (! obj.options.meta[keys[i]]) {
+                obj.options.meta[keys[i]] = {};
+            }
+
+            const prop = Object.keys(o[keys[i]]);
+            for (let j = 0; j < prop.length; j++) {
+                obj.options.meta[keys[i]][prop[j]] = o[keys[i]][prop[j]];
+            }
+        }
+
+        _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onchangemeta', obj, o);
+    }
+}
+
+/***/ }),
+
+/***/ 619:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   w: function() { return /* binding */ getFreezeWidth; }
+/* harmony export */ });
+// Get width of all freezed cells together
+const getFreezeWidth = function() {
+    const obj = this;
+
+    let width = 0;
+    if (obj.options.freezeColumns > 0) {
+        for (let i = 0; i < obj.options.freezeColumns; i++) {
+            let columnWidth;
+            if (obj.options.columns && obj.options.columns[i] && obj.options.columns[i].width !== undefined) {
+                columnWidth = parseInt(obj.options.columns[i].width);
+            } else {
+                columnWidth = obj.options.defaultColWidth !== undefined ? parseInt(obj.options.defaultColWidth) : 100;
+            }
+
+            width += columnWidth;
+        }
+    }
+    return width;
+}
+
+/***/ }),
+
+/***/ 623:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   e: function() { return /* binding */ setFooter; }
+/* harmony export */ });
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
+
+
+const setFooter = function(data) {
+    const obj = this;
+
+    if (data) {
+        obj.options.footers = data;
+    }
+
+    if (obj.options.footers) {
+        if (! obj.tfoot) {
+            obj.tfoot = document.createElement('tfoot');
+            obj.table.appendChild(obj.tfoot);
+        }
+
+        for (let j = 0; j < obj.options.footers.length; j++) {
+            let tr;
+
+            if (obj.tfoot.children[j]) {
+                tr = obj.tfoot.children[j];
+            } else {
+                tr = document.createElement('tr');
+                const td = document.createElement('td');
+                tr.appendChild(td);
+                obj.tfoot.appendChild(tr);
+            }
+            for (let i = 0; i < obj.headers.length; i++) {
+                if (! obj.options.footers[j][i]) {
+                    obj.options.footers[j][i] = '';
+                }
+
+                let td;
+
+                if (obj.tfoot.children[j].children[i+1]) {
+                    td = obj.tfoot.children[j].children[i+1];
+                } else {
+                    td = document.createElement('td');
+                    tr.appendChild(td);
+
+                    // Text align
+                    const colAlign = obj.options.columns[i].align || obj.options.defaultColAlign || 'center';
+                    td.style.textAlign = colAlign;
+                }
+                td.textContent = _internal_js__WEBPACK_IMPORTED_MODULE_0__/* .parseValue */ .$x.call(obj, +obj.records.length + i, j, obj.options.footers[j][i]);
+
+                // Hide/Show with hideColumn()/showColumn()
+                td.style.display = obj.cols[i].colElement.style.display;
+            }
+        }
+    }
+}
+
+/***/ }),
+
 /***/ 845:
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -4758,6 +4398,366 @@ const hideToolbar = function() {
 
         delete spreadsheet.toolbar;
     }
+}
+
+/***/ }),
+
+/***/ 887:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Hh: function() { return /* binding */ injectArray; },
+/* harmony export */   t3: function() { return /* binding */ getColumnNameFromId; },
+/* harmony export */   vu: function() { return /* binding */ getIdFromColumnName; }
+/* harmony export */ });
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(595);
+
+
+/**
+ * Helper injectArray
+ */
+const injectArray = function(o, idx, arr) {
+    if (idx <= o.length) {
+        return o.slice(0, idx).concat(arr).concat(o.slice(idx));
+    }
+
+    const array = o.slice(0, o.length);
+
+    while (idx > array.length) {
+        array.push(undefined);
+    }
+
+    return array.concat(arr)
+}
+
+/**
+ * Convert excel like column to jss id
+ *
+ * @param string id
+ * @return string id
+ */
+const getIdFromColumnName = function (id, arr) {
+    // Get the letters
+    const t = /^[a-zA-Z]+/.exec(id);
+
+    if (t) {
+        // Base 26 calculation
+        let code = 0;
+        for (let i = 0; i < t[0].length; i++) {
+            code += parseInt(t[0].charCodeAt(i) - 64) * Math.pow(26, (t[0].length - 1 - i));
+        }
+        code--;
+        // Make sure jss starts on zero
+        if (code < 0) {
+            code = 0;
+        }
+
+        // Number
+        let number = parseInt(/[0-9]+$/.exec(id));
+        if (number > 0) {
+            number--;
+        }
+
+        if (arr == true) {
+            id = [ code, number ];
+        } else {
+            id = code + '-' + number;
+        }
+    }
+
+    return id;
+}
+
+/**
+ * Convert jss id to excel like column name
+ *
+ * @param string id
+ * @return string id
+ */
+const getColumnNameFromId = function (cellId) {
+    if (! Array.isArray(cellId)) {
+        cellId = cellId.split('-');
+    }
+
+    return (0,_helpers_js__WEBPACK_IMPORTED_MODULE_0__.getColumnName)(parseInt(cellId[0])) + (parseInt(cellId[1]) + 1);
+}
+
+/***/ }),
+
+/***/ 946:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__) {
+
+
+
+/**
+ * Prepare JSON in the correct format
+ */
+const prepareJson = function(data) {
+    const obj = this;
+
+    const rows = [];
+    for (let i = 0; i < data.length; i++) {
+        const x = data[i].x;
+        const y = data[i].y;
+        const k = obj.options.columns[x].name ? obj.options.columns[x].name : x;
+
+        // Create row
+        if (! rows[y]) {
+            rows[y] = {
+                row: y,
+                data: {},
+            };
+        }
+        rows[y].data[k] = data[i].value;
+    }
+
+    // Filter rows
+    return rows.filter(function (el) {
+        return el != null;
+    });
+}
+
+/**
+ * Post json to a remote server
+ */
+const save = function(url, data) {
+    const obj = this;
+
+    // Parse anything in the data before sending to the server
+    const ret = dispatch.call(obj.parent, 'onbeforesave', obj.parent, obj, data);
+    if (ret) {
+        data = ret;
+    } else {
+        if (ret === false) {
+            return false;
+        }
+    }
+
+    // Remove update
+    jSuites.ajax({
+        url: url,
+        method: 'POST',
+        dataType: 'json',
+        data: { data: JSON.stringify(data) },
+        success: function(result) {
+            // Event
+            dispatch.call(obj, 'onsave', obj.parent, obj, data);
+        }
+    });
+}
+
+/**
+ * Trigger events
+ */
+const dispatch = function(event) {
+    const obj = this;
+    let ret = null;
+
+    let spreadsheet = obj.parent ? obj.parent : obj;
+
+    // Dispatch events
+    if (! spreadsheet.ignoreEvents) {
+        // Call global event
+        if (typeof(spreadsheet.config.onevent) == 'function') {
+            ret = spreadsheet.config.onevent.apply(this, arguments);
+        }
+        // Call specific events
+        if (typeof(spreadsheet.config[event]) == 'function') {
+            ret = spreadsheet.config[event].apply(this, Array.prototype.slice.call(arguments, 1));
+        }
+
+        if (typeof spreadsheet.plugins === 'object') {
+            const pluginKeys = Object.keys(spreadsheet.plugins);
+
+            for (let pluginKeyIndex = 0; pluginKeyIndex < pluginKeys.length; pluginKeyIndex++) {
+                const key = pluginKeys[pluginKeyIndex];
+                const plugin = spreadsheet.plugins[key];
+
+                if (typeof plugin.onevent === 'function') {
+                    ret = plugin.onevent.apply(this, arguments);
+                }
+            }
+        }
+    }
+
+    if (event == 'onafterchanges') {
+        const scope = arguments;
+
+        if (typeof spreadsheet.plugins === 'object') {
+            Object.entries(spreadsheet.plugins).forEach(function([, plugin]) {
+                if (typeof plugin.persistence === 'function') {
+                    plugin.persistence(obj, 'setValue', { data: scope[2] });
+                }
+            });
+        }
+
+        if (obj.options.persistence) {
+            const url = obj.options.persistence == true ? obj.options.url : obj.options.persistence;
+            const data = prepareJson.call(obj, arguments[2]);
+            save.call(obj, url, data);
+        }
+    }
+
+    return ret;
+}
+
+/* harmony default export */ __webpack_exports__.A = (dispatch);
+
+/***/ }),
+
+/***/ 992:
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AG: function() { return /* binding */ loadValidation; },
+/* harmony export */   G_: function() { return /* binding */ loadUp; },
+/* harmony export */   p6: function() { return /* binding */ loadDown; },
+/* harmony export */   wu: function() { return /* binding */ loadPage; }
+/* harmony export */ });
+/* harmony import */ var _dispatch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(946);
+
+/**
+ * Go to a page in a lazyLoading
+ */
+const loadPage = function(pageNumber) {
+    const obj = this;
+    console.log('loadPage');
+    // Search
+    let results;
+
+    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+        results = obj.results;
+    } else {
+        results = obj.rows;
+    }
+
+    // Per page
+    const quantityPerPage = 100;
+
+    // pageNumber
+    if (pageNumber == null || pageNumber == -1) {
+        // Last page
+        pageNumber = Math.ceil(results.length / quantityPerPage) - 1;
+    }
+
+    let startRow = (pageNumber * quantityPerPage);
+    let finalRow = (pageNumber * quantityPerPage) + quantityPerPage;
+    if (finalRow > results.length) {
+        finalRow = results.length;
+    }
+    startRow = finalRow - 100;
+    if (startRow < 0) {
+        startRow = 0;
+    }
+
+    // Appeding items
+    for (let j = startRow; j < finalRow; j++) {
+        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+            obj.tbody.appendChild(obj.rows[results[j]].element);
+        } else {
+            obj.tbody.appendChild(obj.rows[j].element);
+        }
+
+        if (obj.tbody.children.length > quantityPerPage) {
+            obj.tbody.removeChild(obj.tbody.firstChild);
+        }
+    }
+}
+
+const loadValidation = function() {
+    const obj = this;
+    
+    if (obj.selectedCell) {
+        const currentPage = parseInt(obj.tbody.firstChild.getAttribute('data-y')) / 100;
+        const selectedPage = parseInt(obj.selectedCell[3] / 100);
+        const totalPages = parseInt(obj.rows.length / 100);
+
+        if (currentPage != selectedPage && selectedPage <= totalPages) {
+            if (! Array.prototype.indexOf.call(obj.tbody.children, obj.rows[obj.selectedCell[3]].element)) {
+                obj.loadPage(selectedPage);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+const loadUp = function() {
+    const obj = this;
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloadup', obj);
+    // Search
+    let results;
+
+    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+        results = obj.results;
+    } else {
+        results = obj.rows;
+    }
+    let test = 0;
+    if (results.length > 100) {
+        // Get the first element in the page
+        let item = parseInt(obj.tbody.firstChild.getAttribute('data-y'));
+        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+            item = results.indexOf(item);
+        }
+        if (item > 0) {
+            for (let j = 0; j < 30; j++) {
+                item = item - 1;
+                if (item > -1) {
+                    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+                        obj.tbody.insertBefore(obj.rows[results[item]].element, obj.tbody.firstChild);
+                    } else {
+                        obj.tbody.insertBefore(obj.rows[item].element, obj.tbody.firstChild);
+                    }
+                    if (obj.tbody.children.length > 100) {
+                        obj.tbody.removeChild(obj.tbody.lastChild);
+                        test = 1;
+                    }
+                }
+            }
+        }
+    }
+    return test;
+}
+
+const loadDown = function() {
+    const obj = this;
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.call(obj, 'onlazyloaddown', obj);
+    // Search
+    let results;
+
+    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+        results = obj.results;
+    } else {
+        results = obj.rows;
+    }
+    let test = 0;
+    if (results.length > 100) {
+        // Get the last element in the page
+        let item = parseInt(obj.tbody.lastChild.getAttribute('data-y'));
+        if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+            item = results.indexOf(item);
+        }
+        if (item < obj.rows.length - 1) {
+            for (let j = 0; j <= 30; j++) {
+                if (item < results.length) {
+                    if ((obj.options.search == true || obj.options.filters == true) && obj.results) {
+                        obj.tbody.appendChild(obj.rows[results[item]].element);
+                    } else {
+                        obj.tbody.appendChild(obj.rows[item].element);
+                    }
+                    if (obj.tbody.children.length > 100) {
+                        obj.tbody.removeChild(obj.tbody.firstChild);
+                        test = 1;
+                    }
+                }
+                item = item + 1;
+            }
+        }
+    }
+
+    return test;
 }
 
 /***/ })
@@ -9073,25 +9073,22 @@ const updateFreezePosition = function() {
     }
 
     // Place the corner in the correct place
-    selection/* updateCornerPosition */.Aq.call(obj);
+    updateCornerPosition.call(obj);
 }
 
 const scrollControls = function(e) {
     const obj = this;
     console.log('scrollControls', e);
     return;
-    wheelControls.call(obj);
+    // removed by dead control flow
+{}
 
-    if (obj.options.freezeColumns > 0 && obj.content.scrollLeft != scrollLeft) {
-        updateFreezePosition.call(obj);
-    }
+    // removed by dead control flow
+{}
 
     // Close editor
-    if (obj.options.lazyLoading == true || obj.options.tableOverflow == true) {
-        if (obj.edition && e.target.className.substr(0,9) != 'jdropdown') {
-            closeEditor.call(obj, obj.edition[0], true);
-        }
-    }
+    // removed by dead control flow
+{}
 }
 
 const setEvents = function(root) {

@@ -7,7 +7,7 @@ import { createCellHeader, deleteColumn, getColumnData, getNumberOfColumns, getW
 import { getData, getDataFromRange, getValue, getValueFromCoords, setData, setValue, setValueFromCoords } from './data.js';
 import { cutControls, scrollControls, wheelControls } from './events.js';
 import { getHighlighted, getRange, getSelected, getSelectedColumns, getSelectedRows, getSelection, isSelected, resetSelection, selectAll, updateSelectionFromCoords } from './selection.js';
-import { deleteRow, getHeight, getRowData, hideRow, insertRow, moveRow, setHeight, setRowData, showRow } from './rows.js';
+import { deleteRow, getHeight, getRowData, hideRow, insertRow, moveRow, setHeight, setRowData, showRow, createRow } from './rows.js';
 import { destroyMerge, getMerge, removeMerge, setMerge } from './merges.js';
 import { resetSearch, search } from './search.js';
 import { getHeader, getHeaders, setHeader } from './headers.js';
@@ -579,6 +579,7 @@ const worksheetPublicMethods = [
     ['getSelectedRows', getSelectedRows],
     ['getData', getData],
     ['setData', setData],
+    ['createRow', createRow],
     ['getValue', getValue],
     ['getValueFromCoords', getValueFromCoords],
     ['setValue', setValue],
