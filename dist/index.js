@@ -2219,7 +2219,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.endSelCol = x2;
             obj.startSelRow = obj.getRowData(y1)[0];
             obj.endSelRow = obj.getRowData(y2)[0];
-            console.log('New Selection = [', startSelRow , ',', endSelRow, ']');
+            console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
@@ -2230,7 +2230,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.scrollDirection = "down";
             }            
 
-            if (getRowData.call(obj, y1)[0] < startSelRow) {
+            if (getRowData.call(obj, y1)[0] < obj.startSelRow) {
                 obj.startSelRow = obj.getRowData(y1)[0];
                 obj.scrollDirection = "up";
             }
@@ -2240,9 +2240,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 var data = obj.getData();
                 const firstRowPos = data[0][0];
                 const endRowPos = data[data.length-1][0];
-                const startPos = Math.max(firstRowPos, startSelRow);
-                const endPos = Math.min(endRowPos, endSelRow);
-                chooseSelection(startPos, endPos, scrollDirection);
+                const startPos = Math.max(firstRowPos, obj.startSelRow);
+                const endPos = Math.min(endRowPos, obj.endSelRow);
+                chooseSelection(startPos, endPos, obj.scrollDirection);
             }
         }
         else {
@@ -2250,10 +2250,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
     }
     else if (!obj.preventOnSelection){
-        startSelCol = x1;
-        endSelCol = x2;
-        startSelRow = obj.getRowData(y1)[0];
-        endSelRow = obj.getRowData(y2)[0];            
+        obj.startSelCol = x1;
+        obj.endSelCol = x2;
+        obj.startSelRow = obj.getRowData(y1)[0];
+        obj.endSelRow = obj.getRowData(y2)[0];            
     }
     else if (obj.preventOnSelection)
     {
@@ -2273,7 +2273,7 @@ const chooseSelection = (startPos, endPos, scrollDirection) => {
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
-    obj.updateSelectionFromCoords(startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
+    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
