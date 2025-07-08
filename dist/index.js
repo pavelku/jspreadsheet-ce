@@ -10640,6 +10640,7 @@ const worksheetPublicMethods = [
     ['getSelectedRows', selection/* getSelectedRows */.R5],
     ['getData', getData],
     ['setData', setData],
+    ['createRow', createRow],
     ['getValue', getValue],
     ['getValueFromCoords', getValueFromCoords],
     ['setValue', setValue],
