@@ -264,9 +264,9 @@ const mouseDownControls = function(e) {
                             o = columnId;
                             d = columnId;
                         }
-                        console.log('select header 1, totalItemsInQuery = ', libraryBase.jspreadsheet.current.totalItemsInQuery);
+                        console.log('select header 1');
                         // Update selection
-                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, libraryBase.jspreadsheet.current.totalItemsInQuery, e); //libraryBase.jspreadsheet.current.options.data.length - 1
+                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.totalItemsInQuery , e); //libraryBase.jspreadsheet.current.options.data.length - 1
                     }
                 } else {
                     if (e.target.parentNode.classList.contains('jss_nested')) {
