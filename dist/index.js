@@ -2215,18 +2215,19 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // TODO NEW FUNC -> copy
     if (origin){
+
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
             obj.startSelRow = obj.getRowData(y1)[0];
-            obj.endSelRow = obj.getRowData(y2)[0];
+            obj.endSelRow = obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;            
-            if (obj.getRowData(y2)[0] > obj.endSelRow) {
-                obj.endSelRow = obj.getRowData(y2)[0];
+            if ((obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2) > obj.endSelRow) {
+                obj.endSelRow = obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2;;
                 obj.scrollDirection = "down";
             }            
 
@@ -2253,7 +2254,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.startSelCol = x1;
         obj.endSelCol = x2;
         obj.startSelRow = obj.getRowData(y1)[0];
-        obj.endSelRow = obj.getRowData(y2)[0];            
+        obj.endSelRow = obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2;
     }
     else if (obj.preventOnSelection)
     {
