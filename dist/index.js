@@ -2017,6 +2017,8 @@ const removeCopyingSelection = function() {
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
+    console.log('onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
+
     // select column
     if (y1 == null) {
         console.log('oncolumn click , total items in query = ', obj.totalItemsInQuery);
