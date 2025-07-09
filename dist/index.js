@@ -2052,8 +2052,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     if (x2 >= obj.headers.length) {
         x2 = obj.headers.length - 1;
     }
-    if (y2 >= obj.rows.length) {
-        y2 = obj.rows.length - 1;
+    if (y2 >= obj.totalItemsInQuery) {
+        y2 = obj.totalItemsInQuery;
     }
 
     // Limits
