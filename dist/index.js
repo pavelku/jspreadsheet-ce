@@ -7893,7 +7893,7 @@ const mouseDownControls = function(e) {
                         }
                         console.log('select header 1');
                         // Update selection
-                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data.length - 1, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, libraryBase.jspreadsheet.current.totalItemsInQuery, totalItemsInQuery , e); //libraryBase.jspreadsheet.current.options.data.length - 1
                     }
                 } else {
                     if (e.target.parentNode.classList.contains('jss_nested')) {
