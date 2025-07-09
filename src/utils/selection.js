@@ -160,6 +160,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // select column
     if (y1 == null) {
+        console.log('oncolumn click , total items in query = ', obj.totalItemsInQuery);
         y1 = 0;
         y2 = obj.totalItemsInQuery; // obj.rows.length - 1;
 
