@@ -264,7 +264,7 @@ const mouseDownControls = function(e) {
                             o = columnId;
                             d = columnId;
                         }
-
+                        console.log('select header 1');
                         // Update selection
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data.length - 1, e);
                     }
@@ -280,6 +280,7 @@ const mouseDownControls = function(e) {
                             c1 = 0;
                             c2 = libraryBase.jspreadsheet.current.options.columns.length - 1;
                         }
+                        console.log('select header 2');
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, c1, 0, c2, libraryBase.jspreadsheet.current.options.data.length - 1, e);
                     }
                 }
@@ -640,6 +641,7 @@ const mouseOverControls = function(e) {
                         const o = libraryBase.jspreadsheet.current.selectedHeader;
                         const d = columnId;
                         // Update selection
+                        console.log('select header 3');
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data.length - 1, e);
                     }
                 }
@@ -651,6 +653,7 @@ const mouseOverControls = function(e) {
                             const o = libraryBase.jspreadsheet.current.selectedRow;
                             const d = rowId;
                             // Update selection
+                            console.log('select row header 1');
                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, 0, o, libraryBase.jspreadsheet.current.options.data[0].length - 1, d, e);
                         }
                     } else {
