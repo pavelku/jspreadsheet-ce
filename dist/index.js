@@ -2019,11 +2019,16 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     console.log('onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
 
+    var selectWholeColumn = false;
+    if (y2 == obj.totalItemsInQuery && y1 == 0) {
+        selectWholeColumn = true;
+    }
+
     // select column
     if (y1 == null) {
         console.log('oncolumn click , total items in query = ', obj.totalItemsInQuery);
         y1 = 0;
-        y2 = obj.totalItemsInQuery; // obj.rows.length - 1;
+        y2 = obj.rows.length - 1;; // 
 
         if (x1 == null) {
             return;
@@ -2052,8 +2057,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     if (x2 >= obj.headers.length) {
         x2 = obj.headers.length - 1;
     }
-    if (y2 >= obj.totalItemsInQuery) {
-        y2 = obj.totalItemsInQuery;
+    if (y2 >= obj.rows.length) {
+        y2 = obj.rows.length - 1;
     }
 
     // Limits
@@ -2219,20 +2224,20 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
-            obj.startSelRow = obj.getRowData(y1)[0];
-            obj.endSelRow = obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2;
+            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+            obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;            
-            if ((obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2) > obj.endSelRow) {
-                obj.endSelRow = obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2;;
+            if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+                obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
             }            
 
             if (obj.getRowData(y1)[0] < obj.startSelRow) {
-                obj.startSelRow = obj.getRowData(y1)[0];
+                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
                 obj.scrollDirection = "up";
             }
 
@@ -2253,8 +2258,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else if (!obj.preventOnSelection){
         obj.startSelCol = x1;
         obj.endSelCol = x2;
-        obj.startSelRow = obj.getRowData(y1)[0];
-        obj.endSelRow = obj.getRowData(y2) ? obj.getRowData(y2)[0] : y2;
+        obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+        obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
     }
     else if (obj.preventOnSelection)
     {
