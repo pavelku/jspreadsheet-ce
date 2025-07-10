@@ -184,7 +184,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
 
     // Same element
-    if (x2 == null || isRowSelected) {
+    if (x2 == null) {
         x2 = x1;
     }
     if (y2 == null) {
