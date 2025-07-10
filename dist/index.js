@@ -2020,6 +2020,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
 
     var selectWholeColumn = false;
+    var isRowSelected = false;
+
     if (y2 == obj.totalItemsInQuery && y1 == 0) {
         selectWholeColumn = true;
     }
@@ -2033,14 +2035,15 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         if (x1 == null) {
             return;
         }
-    } else if (x1 == null) {
+    } else if (x1 == null || x1 == 0) {
         // select row
+        isRowSelected = true;
         x1 = 0;
         x2 = obj.options.data[0].length - 1;
     }
 
     // Same element
-    if (x2 == null) {
+    if (x2 == null || isRowSelected) {
         x2 = x1;
     }
     if (y2 == null) {
