@@ -414,6 +414,8 @@ const mouseDownControls = function(e) {
 const mouseMoveControls = function(e) {
     e = e || window.event;
 
+    console.log('mouseMoveControls, e = ', e);
+
     let mouseButton;
 
     if (e.buttons) {
