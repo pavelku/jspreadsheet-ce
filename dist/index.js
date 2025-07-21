@@ -8048,10 +8048,8 @@ const mouseDownControls = function(e) {
 
 // Mouse move controls
 const mouseMoveControls = function(e) {
-    e = e || window.event;
-
-    console.log('mouseMoveControls, e = ', e);
-
+    e = e || window.event;    
+    
     let mouseButton;
 
     if (e.buttons) {
@@ -8065,6 +8063,8 @@ const mouseMoveControls = function(e) {
     if (! mouseButton) {
         libraryBase.jspreadsheet.isMouseAction = false;
     }
+
+    console.log('mouseMoveControls, e = ', e, ', libraryBase.jspreadsheet.isMouseAction = ', libraryBase.jspreadsheet.isMouseAction);
 
     if (libraryBase.jspreadsheet.current) {
         if (libraryBase.jspreadsheet.isMouseAction == true) {            
