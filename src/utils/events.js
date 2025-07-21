@@ -514,7 +514,7 @@ const mouseMoveControls = function(e) {
                     const endRowPos = data[data.length-1][0];               
 
                     console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos);
-                    if (selRowId >= firstRowPos) {
+                    if (selRowId <= firstRowPos) {
                         down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
                         e.preventDefault();
                         console.log('TODO scroll UP');
