@@ -8155,11 +8155,11 @@ const mouseMoveControls = function(e) {
                     
                     if (e.y > libraryBase.jspreadsheet.current.mouseMoveSelectionY)
                     {
-                        (0,internal/* updateScroll */.Rs)(3);
+                        internal/* updateScroll */.Rs.call(libraryBase.jspreadsheet.current, 3);
                     }
                     else if (e.y < libraryBase.jspreadsheet.current.mouseMoveSelectionY)
                     {
-                        (0,internal/* updateScroll */.Rs)(1);
+                        internal/* updateScroll */.Rs.call(libraryBase.jspreadsheet.current, 1);
                     }
 
                     libraryBase.jspreadsheet.current.mouseMoveSelectionY = e.y;
