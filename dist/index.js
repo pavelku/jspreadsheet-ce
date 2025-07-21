@@ -8149,12 +8149,7 @@ const mouseMoveControls = function(e) {
 
                 // updateScroll()
 
-                if (mouseButton == 1 && y) {
-                    const selRowId = libraryBase.jspreadsheet.current.getRowData(y)[0];
-                    var data = libraryBase.jspreadsheet.current.getData();
-                    const firstRowPos = data[0][0];
-                    const endRowPos = data[data.length-1][0];  
-                    
+                if (mouseButton == 1) {
                     if (e.y > libraryBase.jspreadsheet.current.mouseMoveSelectionY)
                     {
                         internal/* updateScroll */.Rs.call(libraryBase.jspreadsheet.current, 3);
@@ -8166,21 +8161,6 @@ const mouseMoveControls = function(e) {
 
                     libraryBase.jspreadsheet.current.mouseMoveSelectionY = e.y;
                     libraryBase.jspreadsheet.current.mouseMoveSelectionX = e.x;  
-
-                    // console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = '
-                    //     , firstRowPos, ', endRowPos = ', endRowPos, ', coords = ', coords, ', e = ', e);
-
-                    // if (selRowId <= firstRowPos) {
-                    //     down.call(libraryBase.jspreadsheet.current, true, e.ctrlKey);
-                    //     e.preventDefault();
-                    //     console.log('TODO scroll UP');
-                    // }
-                    // else if (selRowId >= endRowPos)
-                    // {
-                    //     down.call(libraryBase.jspreadsheet.current, true, e.ctrlKey);
-                    //     e.preventDefault();
-                    //     console.log('TODO scroll DOWN');
-                    // }                
                 }
             }
         } else {
