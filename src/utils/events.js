@@ -506,8 +506,20 @@ const mouseMoveControls = function(e) {
                 const x = e.target.getAttribute('data-x');
                 const y = e.target.getAttribute('data-y');
                 const rect = e.target.getBoundingClientRect();
+                const selRowId = libraryBase.jspreadsheet.current.getRowData(y)[0];                
+                
+                var data = libraryBase.jspreadsheet.current.getData();
+                const firstRowPos = data[0][0];
+                const endRowPos = data[data.length-1][0];               
 
-                console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect);
+                console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos);
+                if (selRowId == firstRowPos) {
+                    console.log('TODO scroll UP');
+                }
+                else if (selRowId == endRowPos)
+                {
+                    console.log('TODO scroll DOWN');
+                }                
             }
         } else {
             const x = e.target.getAttribute('data-x');
