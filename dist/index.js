@@ -8143,19 +8143,18 @@ const mouseMoveControls = function(e) {
             }
             else {
                 console.log('try to scroll, mouseButton = ', mouseButton, 'e.y = ', e.y, ', libraryBase.jspreadsheet.current.mouseMoveSelectionY = ', libraryBase.jspreadsheet.current.mouseMoveSelectionY);
-
-                // updateScroll()
-
-                if (mouseButton == 1) {
-                    if (e.y > libraryBase.jspreadsheet.current.mouseMoveSelectionY)
-                    {
-                        internal/* updateScroll */.Rs.call(libraryBase.jspreadsheet.current, 3);
-                    }
-                    else if (e.y < libraryBase.jspreadsheet.current.mouseMoveSelectionY)
-                    {
-                        internal/* updateScroll */.Rs.call(libraryBase.jspreadsheet.current, 1);
-                    }                    
-                }
+                
+                // TODO scroll on mouse move
+                // if (mouseButton == 1) {
+                //     if (e.y > libraryBase.jspreadsheet.current.mouseMoveSelectionY)
+                //     {
+                //         updateScroll.call(libraryBase.jspreadsheet.current, 3);
+                //     }
+                //     else if (e.y < libraryBase.jspreadsheet.current.mouseMoveSelectionY)
+                //     {
+                //         updateScroll.call(libraryBase.jspreadsheet.current, 1);
+                //     }                    
+                // }
             }
         } else {
             const x = e.target.getAttribute('data-x');
