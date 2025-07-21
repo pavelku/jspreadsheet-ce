@@ -4,7 +4,7 @@ import { closeEditor, openEditor, setCheckRadioValue } from './editor.js';
 import libraryBase from './libraryBase.js';
 import { down, first, last, left, right, up } from './keys.js';
 import { isColMerged, isRowMerged } from './merges.js';
-import { copyData, removeCopySelection, resetSelection, selectAll, updateCornerPosition, updateSelectionFromCoords } from './selection.js';
+import { copyData, removeCopySelection, resetSelection, selectAll, updateCornerPosition, updateSelectionFromCoords, getSelection } from './selection.js';
 import { copy, paste, copyHeaders } from './copyPaste.js';
 import { openFilter } from './filter.js';
 import { loadDown, loadUp } from './lazyLoading.js';
@@ -505,7 +505,8 @@ const mouseMoveControls = function(e) {
             else {
                 const x = e.target.getAttribute('data-x');
                 const y = e.target.getAttribute('data-y');
-                const rect = e.target.getBoundingClientRect();                    
+                const rect = e.target.getBoundingClientRect();              
+                const coords = getSelection.call(libraryBase.jspreadsheet.current);
 
                 if (mouseButton == 1 && y) {
                     const selRowId = libraryBase.jspreadsheet.current.getRowData(y)[0];
@@ -513,16 +514,18 @@ const mouseMoveControls = function(e) {
                     const firstRowPos = data[0][0];
                     const endRowPos = data[data.length-1][0];               
 
-                    console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos);
+                    console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = '
+                        , firstRowPos, ', endRowPos = ', endRowPos, ', coords = ', coords);
                     if (selRowId <= firstRowPos) {
-                        down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                        down.call(libraryBase.jspreadsheet.current, true, e.ctrlKey);
                         e.preventDefault();
                         console.log('TODO scroll UP');
                     }
                     else if (selRowId >= endRowPos)
                     {
-                        down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                        down.call(libraryBase.jspreadsheet.current, true, e.ctrlKey);
                         e.preventDefault();
+                        console.log('TODO scroll DOWN');
                     }                
                 }
             }
