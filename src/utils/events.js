@@ -506,10 +506,7 @@ const mouseMoveControls = function(e) {
                 }
             }
             else {
-                const x = e.target.getAttribute('data-x');
-                const y = e.target.getAttribute('data-y');
-                const rect = e.target.getBoundingClientRect();              
-                const coords = getSelection.call(libraryBase.jspreadsheet.current);
+                console.log('try to scroll, mouseButton = ', mouseButton, 'e.y = ', e.y, ', libraryBase.jspreadsheet.current.mouseMoveSelectionY = ', libraryBase.jspreadsheet.current.mouseMoveSelectionY);
 
                 // updateScroll()
 
