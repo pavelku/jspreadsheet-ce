@@ -7649,6 +7649,7 @@ const setRowData = function(rowNumber, data, force) {
 
 
 
+
 const getElement = function(element) {
     let jssSection = 0;
     let jssElement = 0;
@@ -8144,6 +8145,8 @@ const mouseMoveControls = function(e) {
                 const rect = e.target.getBoundingClientRect();              
                 const coords = selection/* getSelection */.Lo.call(libraryBase.jspreadsheet.current);
 
+                // updateScroll()
+
                 if (mouseButton == 1 && y) {
                     const selRowId = libraryBase.jspreadsheet.current.getRowData(y)[0];
                     var data = libraryBase.jspreadsheet.current.getData();
@@ -8151,7 +8154,7 @@ const mouseMoveControls = function(e) {
                     const endRowPos = data[data.length-1][0];               
 
                     console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = '
-                        , firstRowPos, ', endRowPos = ', endRowPos, ', coords = ', coords);
+                        , firstRowPos, ', endRowPos = ', endRowPos, ', coords = ', coords, ', e = ', e);
                     if (selRowId <= firstRowPos) {
                         down.call(libraryBase.jspreadsheet.current, true, e.ctrlKey);
                         e.preventDefault();
