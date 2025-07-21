@@ -518,10 +518,7 @@ const mouseMoveControls = function(e) {
                     else if (e.y < libraryBase.jspreadsheet.current.mouseMoveSelectionY)
                     {
                         updateScroll.call(libraryBase.jspreadsheet.current, 1);
-                    }
-
-                    libraryBase.jspreadsheet.current.mouseMoveSelectionY = e.y;
-                    libraryBase.jspreadsheet.current.mouseMoveSelectionX = e.x;  
+                    }                    
                 }
             }
         } else {
@@ -556,6 +553,9 @@ const mouseMoveControls = function(e) {
                 }
             }            
         }
+
+        libraryBase.jspreadsheet.current.mouseMoveSelectionY = e.y;
+        libraryBase.jspreadsheet.current.mouseMoveSelectionX = e.x;  
     }
 }
 
