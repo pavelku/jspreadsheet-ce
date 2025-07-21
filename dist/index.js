@@ -8139,6 +8139,8 @@ const mouseMoveControls = function(e) {
                 }
             }
         } else {
+            console.log('mouseMove - last option');
+
             const x = e.target.getAttribute('data-x');
             const y = e.target.getAttribute('data-y');
             const rect = e.target.getBoundingClientRect();
@@ -8168,6 +8170,9 @@ const mouseMoveControls = function(e) {
                         libraryBase.jspreadsheet.current.cursor.style.cursor = 'move';
                     }
                 }
+            }
+            else {
+                console.log('spravne misto')
             }
         }
     }
