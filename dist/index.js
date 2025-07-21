@@ -8141,21 +8141,26 @@ const mouseMoveControls = function(e) {
             else {
                 const x = e.target.getAttribute('data-x');
                 const y = e.target.getAttribute('data-y');
-                const rect = e.target.getBoundingClientRect();
-                const selRowId = libraryBase.jspreadsheet.current.getRowData(y)[0];                
-                
-                var data = libraryBase.jspreadsheet.current.getData();
-                const firstRowPos = data[0][0];
-                const endRowPos = data[data.length-1][0];               
+                const rect = e.target.getBoundingClientRect();                    
 
-                console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos);
-                if (selRowId == firstRowPos) {
-                    console.log('TODO scroll UP');
+                if (mouseButton == 1 && y) {
+                    const selRowId = libraryBase.jspreadsheet.current.getRowData(y)[0];
+                    var data = libraryBase.jspreadsheet.current.getData();
+                    const firstRowPos = data[0][0];
+                    const endRowPos = data[data.length-1][0];               
+
+                    console.log('mouseMove s butonem, mouseButton = ', mouseButton, ', x = ', x, ', y = ', y, ', rect = ', rect, ', selRowId = ', selRowId, ', firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos);
+                    if (selRowId = firstRowPos) {
+                        down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                        e.preventDefault();
+                        console.log('TODO scroll UP');
+                    }
+                    else if (selRowId >= endRowPos)
+                    {
+                        down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                        e.preventDefault();
+                    }                
                 }
-                else if (selRowId == endRowPos)
-                {
-                    console.log('TODO scroll DOWN');
-                }                
             }
         } else {
             const x = e.target.getAttribute('data-x');
