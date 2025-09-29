@@ -428,7 +428,7 @@ const mouseMoveControls = function(e) {
         libraryBase.jspreadsheet.isMouseAction = false;
     }
 
-    console.log('mouseMoveControls, e = ', e, ', libraryBase.jspreadsheet.isMouseAction = ', libraryBase.jspreadsheet.isMouseAction);
+    // console.log('mouseMoveControls, e = ', e, ', libraryBase.jspreadsheet.isMouseAction = ', libraryBase.jspreadsheet.isMouseAction);
 
     if (libraryBase.jspreadsheet.current) {
         if (libraryBase.jspreadsheet.isMouseAction == true) {            
