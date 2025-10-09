@@ -357,12 +357,10 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
-    obj.startSelCol = x1;
-    console.log('after set = ', origin);    
+    obj.startSelCol = x1;    
     const startRowIndex = obj.getRowData(y1)[0];
     const endRowIndex = obj.getRowData(y2)[0];
-    console.log('after set getRowData startRowIndex = ', startRowIndex, ', endRowIndex = ', endRowIndex);
+    console.log('after set mouseevent = ', origin, ', getRowData startRowIndex = ', startRowIndex, ', endRowIndex = ', endRowIndex, ', obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
 
     // TODO NEW FUNC -> copy
     if (origin){
