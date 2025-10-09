@@ -388,8 +388,13 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
             // pohyb nahoru
             if (endRowIndex < startRowIndex) {
-                obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                if (obj.scrollDirection == "up") {
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                }
+                else {
+                    obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                }
             }
 
             if (origin.type == "mousedown" && origin.shiftKey)
