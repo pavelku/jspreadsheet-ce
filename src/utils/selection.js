@@ -403,8 +403,14 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else if (!obj.preventOnSelection){
         obj.startSelCol = x1;
         obj.endSelCol = x2;
-        obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-        obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+        
+        if (obj.getRowData(y1)[0] < obj.startSelRow) {
+            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+        }
+
+        if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+            obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+        }
     }
     else if (obj.preventOnSelection)
     {
