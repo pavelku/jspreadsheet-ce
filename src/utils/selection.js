@@ -388,6 +388,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
             // pohyb nahoru
             if (endRowIndex < startRowIndex) {
+                // doslo ke scrollu
                 if (obj.scrollDirection == "up") {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
                 }
@@ -425,8 +426,14 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
         // pohyb nahoru
         if (endRowIndex < startRowIndex) {
-            obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-            obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+            // doslo ke scrollu
+            if (obj.scrollDirection == "up") {
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+            }
+            else {
+                obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+            }
         }
     }
     else if (obj.preventOnSelection)
