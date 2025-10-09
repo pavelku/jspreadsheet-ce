@@ -429,6 +429,7 @@ export const buildWorksheet = async function() {
     el.setAttribute('tabindex', 1);
     el.addEventListener('focus', function(e) {
         if (libraryBase.jspreadsheet.current && ! obj.selectedCell) {
+            console.log('updateSelectionFromCoords 27');
             obj.updateSelectionFromCoords(0,0,0,0);
         }
     });
@@ -568,6 +569,7 @@ export const deleteWorksheet = function(position) {
 const worksheetPublicMethods = [
     ['selectAll', selectAll],
     ['updateSelectionFromCoords', function(x1, y1, x2, y2) {
+        console.log('updateSelectionFromCoords 28');
         return updateSelectionFromCoords.call(this, x1, y1, x2, y2);
     }],
     ['resetSelection', function() {

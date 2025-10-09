@@ -141,6 +141,7 @@ export const updateSelection = function(el1, el2, origin) {
         y2 = y1;
     }
 
+    console.log('updateSelectionFromCoords 24');
     updateSelectionFromCoords.call(obj, x1, y1, x2, y2, origin);
 }
 
@@ -392,6 +393,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                        console.log('add obj.highlighted');
                         obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                     }
                     else {
@@ -438,6 +440,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    console.log('add obj.highlighted');
                     obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                 }
                 else {
@@ -471,6 +474,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
+    console.log('updateSelectionFromCoords 25');
     obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
@@ -519,6 +523,7 @@ export const refreshSelection = function() {
     const obj = this;
 
     if (obj.selectedCell) {
+        console.log('updateSelectionFromCoords 26');
         obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     }
 }
@@ -781,6 +786,7 @@ export const selectAll = function() {
     obj.selectedCell[2] = obj.headers.length - 1;
     obj.selectedCell[3] = obj.totalItemsInQuery;// obj.records.length - 1;
 
+    console.log('updateSelectionFromCoords 27');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 }
 

@@ -70,20 +70,24 @@ export const up = function(shiftKey, ctrlKey) {
     }
 
     // Update selection
+    console.log('updateSelectionFromCoords 12');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
     if (obj.options.lazyLoading == true) {
         if (obj.selectedCell[1] == 0 || obj.selectedCell[3] == 0) {
             loadPage.call(obj, 0);
+            console.log('updateSelectionFromCoords 13');
             obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
         } else {
             if (loadValidation.call(obj)) {
+                console.log('updateSelectionFromCoords 14');
                 obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
             } else {
                 const item = parseInt(obj.tbody.firstChild.getAttribute('data-y'));
                 if (obj.selectedCell[1] - item < 30) {
                     loadUp.call(obj);
+                    console.log('updateSelectionFromCoords 15');
                     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
                 }
             }
@@ -166,7 +170,7 @@ export const right = function(shiftKey, ctrlKey) {
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
     }
-
+    console.log('updateSelectionFromCoords 16');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     updateScroll.call(obj, 2);
 }
@@ -239,20 +243,24 @@ export const down = function(shiftKey, ctrlKey) {
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
+    console.log('updateSelectionFromCoords 17');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
     if (obj.options.lazyLoading == true) {
         if ((obj.selectedCell[1] == obj.records.length - 1 || obj.selectedCell[3] == obj.records.length - 1)) {
             loadPage.call(obj, -1);
+            console.log('updateSelectionFromCoords 18');
             obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
         } else {
             if (loadValidation.call(obj)) {
+                console.log('updateSelectionFromCoords 19');
                 obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
             } else {
                 const item = parseInt(obj.tbody.lastChild.getAttribute('data-y'));
                 if (item - obj.selectedCell[3] < 30) {
                     loadDown.call(obj);
+                    console.log('updateSelectionFromCoords 20');
                     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
                 }
             }
@@ -335,6 +343,7 @@ export const left = function(shiftKey, ctrlKey) {
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
+    console.log('updateSelectionFromCoords 21');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     updateScroll.call(obj, 0);
 }
@@ -367,7 +376,7 @@ export const first = function(shiftKey, ctrlKey) {
             obj.page(pageNumber);
         }
     }
-
+    console.log('updateSelectionFromCoords 22');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     updateScroll.call(obj, 1);
 }
@@ -401,6 +410,7 @@ export const last = function(shiftKey, ctrlKey) {
         }
     }
 
+    console.log('updateSelectionFromCoords 23');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     updateScroll.call(obj, 3);
 }

@@ -339,6 +339,7 @@ export const paste = function(x, y, data) {
             }
         }
 
+        console.log('updateSelectionFromCoords 1');
         // Select the new cells
         updateSelectionFromCoords.call(obj, x, y, colIndex, rowIndex);
 

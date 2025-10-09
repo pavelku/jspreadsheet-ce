@@ -337,6 +337,7 @@ const mouseDownControls = function(e) {
                             d = rowId;
                         }
 
+                        console.log('updateSelectionFromCoords 3');
                         // Update selection
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, null, o, null, d, e);
                     }
@@ -370,6 +371,7 @@ const mouseDownControls = function(e) {
                             }
 
                             if (! libraryBase.jspreadsheet.current.edition) {
+                                console.log('updateSelectionFromCoords 4');
                                 // Update cell selection
                                 if (e.shiftKey) {
                                     updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
@@ -685,6 +687,7 @@ const mouseOverControls = function(e) {
                                     updateCopySelection.call(libraryBase.jspreadsheet.current, columnId, rowId);
                                 } else {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {
+                                        console.log('updateSelectionFromCoords 5');
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                     }
                                 }
@@ -1059,6 +1062,7 @@ const contextMenuControls = function(e) {
                         (x < parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
                         (y < parseInt(libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(libraryBase.jspreadsheet.current.selectedCell[3]))
                     ) {
+                        console.log('updateSelectionFromCoords 6');
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, x, y, x, y, e);
                     }
                 } else if (role === 'row' || role === 'header') {
@@ -1073,6 +1077,7 @@ const contextMenuControls = function(e) {
                         (x < parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
                         (y < parseInt(libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(libraryBase.jspreadsheet.current.selectedCell[3]))
                     ) {
+                        console.log('updateSelectionFromCoords 7');
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, x, y, x, y, e);
                     }
                 } else if (role === 'nested') {
@@ -1086,6 +1091,7 @@ const contextMenuControls = function(e) {
                         (columns[0] != parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (columns[columns.length - 1] != parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
                         (libraryBase.jspreadsheet.current.selectedCell[1] != null || libraryBase.jspreadsheet.current.selectedCell[3] != null)
                     ) {
+                        console.log('updateSelectionFromCoords 8');
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columns[0], null, columns[columns.length - 1], null, e);
                     }
                 } else if (role === 'select-all') {
@@ -1163,6 +1169,7 @@ const touchStartControls = function(e) {
             const rowId = e.target.getAttribute('data-y');
 
             if (columnId && rowId) {
+                console.log('updateSelectionFromCoords 9');
                 updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, undefined, undefined, e);
 
                 libraryBase.jspreadsheet.timeControl = setTimeout(function() {

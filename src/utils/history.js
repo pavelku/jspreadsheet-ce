@@ -250,6 +250,7 @@ export const undo = function() {
 
             // Update selection
             if (historyRecord.selection) {
+                console.log('updateSelectionFromCoords 10');
                 obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
             }
         }
@@ -321,6 +322,7 @@ export const redo = function() {
             }
             // Update selection
             if (historyRecord.selection) {
+                console.log('updateSelectionFromCoords 11');
                 obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
             }
         }

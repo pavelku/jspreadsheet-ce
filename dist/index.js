@@ -1601,6 +1601,7 @@ const undo = function() {
 
             // Update selection
             if (historyRecord.selection) {
+                console.log('updateSelectionFromCoords 10');
                 obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
             }
         }
@@ -1672,6 +1673,7 @@ const redo = function() {
             }
             // Update selection
             if (historyRecord.selection) {
+                console.log('updateSelectionFromCoords 11');
                 obj.updateSelectionFromCoords(historyRecord.selection[0], historyRecord.selection[1], historyRecord.selection[2], historyRecord.selection[3]);
             }
         }
@@ -2000,6 +2002,7 @@ const updateSelection = function(el1, el2, origin) {
         y2 = y1;
     }
 
+    console.log('updateSelectionFromCoords 24');
     updateSelectionFromCoords.call(obj, x1, y1, x2, y2, origin);
 }
 
@@ -2251,6 +2254,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                        console.log('add obj.highlighted');
                         obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                     }
                     else {
@@ -2297,6 +2301,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    console.log('add obj.highlighted');
                     obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                 }
                 else {
@@ -2330,6 +2335,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
+    console.log('updateSelectionFromCoords 25');
     obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
@@ -2378,6 +2384,7 @@ const refreshSelection = function() {
     const obj = this;
 
     if (obj.selectedCell) {
+        console.log('updateSelectionFromCoords 26');
         obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     }
 }
@@ -2640,6 +2647,7 @@ const selectAll = function() {
     obj.selectedCell[2] = obj.headers.length - 1;
     obj.selectedCell[3] = obj.totalItemsInQuery;// obj.records.length - 1;
 
+    console.log('updateSelectionFromCoords 27');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 }
 
@@ -5447,20 +5455,24 @@ const up = function(shiftKey, ctrlKey) {
     }
 
     // Update selection
+    console.log('updateSelectionFromCoords 12');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
     if (obj.options.lazyLoading == true) {
         if (obj.selectedCell[1] == 0 || obj.selectedCell[3] == 0) {
             lazyLoading/* loadPage */.wu.call(obj, 0);
+            console.log('updateSelectionFromCoords 13');
             obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
         } else {
             if (lazyLoading/* loadValidation */.AG.call(obj)) {
+                console.log('updateSelectionFromCoords 14');
                 obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
             } else {
                 const item = parseInt(obj.tbody.firstChild.getAttribute('data-y'));
                 if (obj.selectedCell[1] - item < 30) {
                     lazyLoading/* loadUp */.G_.call(obj);
+                    console.log('updateSelectionFromCoords 15');
                     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
                 }
             }
@@ -5543,7 +5555,7 @@ const right = function(shiftKey, ctrlKey) {
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
     }
-
+    console.log('updateSelectionFromCoords 16');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     internal/* updateScroll */.Rs.call(obj, 2);
 }
@@ -5616,20 +5628,24 @@ const down = function(shiftKey, ctrlKey) {
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
+    console.log('updateSelectionFromCoords 17');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
     if (obj.options.lazyLoading == true) {
         if ((obj.selectedCell[1] == obj.records.length - 1 || obj.selectedCell[3] == obj.records.length - 1)) {
             lazyLoading/* loadPage */.wu.call(obj, -1);
+            console.log('updateSelectionFromCoords 18');
             obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
         } else {
             if (lazyLoading/* loadValidation */.AG.call(obj)) {
+                console.log('updateSelectionFromCoords 19');
                 obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
             } else {
                 const item = parseInt(obj.tbody.lastChild.getAttribute('data-y'));
                 if (item - obj.selectedCell[3] < 30) {
                     lazyLoading/* loadDown */.p6.call(obj);
+                    console.log('updateSelectionFromCoords 20');
                     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
                 }
             }
@@ -5712,6 +5728,7 @@ const left = function(shiftKey, ctrlKey) {
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
+    console.log('updateSelectionFromCoords 21');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     internal/* updateScroll */.Rs.call(obj, 0);
 }
@@ -5744,7 +5761,7 @@ const first = function(shiftKey, ctrlKey) {
             obj.page(pageNumber);
         }
     }
-
+    console.log('updateSelectionFromCoords 22');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     internal/* updateScroll */.Rs.call(obj, 1);
 }
@@ -5778,6 +5795,7 @@ const last = function(shiftKey, ctrlKey) {
         }
     }
 
+    console.log('updateSelectionFromCoords 23');
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
     internal/* updateScroll */.Rs.call(obj, 3);
 }
@@ -6131,6 +6149,7 @@ const paste = function(x, y, data) {
             }
         }
 
+        console.log('updateSelectionFromCoords 1');
         // Select the new cells
         selection/* updateSelectionFromCoords */.AH.call(obj, x, y, colIndex, rowIndex);
 
@@ -8020,6 +8039,7 @@ const mouseDownControls = function(e) {
                             d = rowId;
                         }
 
+                        console.log('updateSelectionFromCoords 3');
                         // Update selection
                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, null, o, null, d, e);
                     }
@@ -8053,6 +8073,7 @@ const mouseDownControls = function(e) {
                             }
 
                             if (! libraryBase.jspreadsheet.current.edition) {
+                                console.log('updateSelectionFromCoords 4');
                                 // Update cell selection
                                 if (e.shiftKey) {
                                     selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
@@ -8368,6 +8389,7 @@ const mouseOverControls = function(e) {
                                     updateCopySelection.call(libraryBase.jspreadsheet.current, columnId, rowId);
                                 } else {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {
+                                        console.log('updateSelectionFromCoords 5');
                                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                     }
                                 }
@@ -8742,6 +8764,7 @@ const contextMenuControls = function(e) {
                         (x < parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
                         (y < parseInt(libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(libraryBase.jspreadsheet.current.selectedCell[3]))
                     ) {
+                        console.log('updateSelectionFromCoords 6');
                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, x, y, x, y, e);
                     }
                 } else if (role === 'row' || role === 'header') {
@@ -8756,6 +8779,7 @@ const contextMenuControls = function(e) {
                         (x < parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (x > parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
                         (y < parseInt(libraryBase.jspreadsheet.current.selectedCell[1])) || (y > parseInt(libraryBase.jspreadsheet.current.selectedCell[3]))
                     ) {
+                        console.log('updateSelectionFromCoords 7');
                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, x, y, x, y, e);
                     }
                 } else if (role === 'nested') {
@@ -8769,6 +8793,7 @@ const contextMenuControls = function(e) {
                         (columns[0] != parseInt(libraryBase.jspreadsheet.current.selectedCell[0])) || (columns[columns.length - 1] != parseInt(libraryBase.jspreadsheet.current.selectedCell[2])) ||
                         (libraryBase.jspreadsheet.current.selectedCell[1] != null || libraryBase.jspreadsheet.current.selectedCell[3] != null)
                     ) {
+                        console.log('updateSelectionFromCoords 8');
                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columns[0], null, columns[columns.length - 1], null, e);
                     }
                 } else if (role === 'select-all') {
@@ -8846,6 +8871,7 @@ const touchStartControls = function(e) {
             const rowId = e.target.getAttribute('data-y');
 
             if (columnId && rowId) {
+                console.log('updateSelectionFromCoords 9');
                 selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, undefined, undefined, e);
 
                 libraryBase.jspreadsheet.timeControl = setTimeout(function() {
@@ -10652,6 +10678,7 @@ const buildWorksheet = async function() {
     el.setAttribute('tabindex', 1);
     el.addEventListener('focus', function(e) {
         if (libraryBase.jspreadsheet.current && ! obj.selectedCell) {
+            console.log('updateSelectionFromCoords 27');
             obj.updateSelectionFromCoords(0,0,0,0);
         }
     });
@@ -10791,6 +10818,7 @@ const deleteWorksheet = function(position) {
 const worksheetPublicMethods = [
     ['selectAll', selection/* selectAll */.Ub],
     ['updateSelectionFromCoords', function(x1, y1, x2, y2) {
+        console.log('updateSelectionFromCoords 28');
         return selection/* updateSelectionFromCoords */.AH.call(this, x1, y1, x2, y2);
     }],
     ['resetSelection', function() {
