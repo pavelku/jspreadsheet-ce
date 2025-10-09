@@ -2251,7 +2251,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                        obj.selectedCell = [x1, startRowIndex, x2, obj.endSelRow];
+                        obj.highlighted.push(obj.records[obj.endSelRow][x2]);
                     }
                     else {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                        
@@ -2272,6 +2272,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endPos = Math.min(endRowPos, obj.endSelRow);
                 chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
+
+            console.log('after mousemove - origin set getRowData startRowIndex = ', obj.startSelRow, ', endRowIndex = ', endRowIndex, ', obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
         }
         else {
             resetMousePos();
@@ -2295,7 +2297,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                    obj.selectedCell = [x1, startRowIndex, x2, obj.endSelRow];
+                    obj.highlighted.push(obj.records[obj.endSelRow][x2]);
                 }
                 else {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                    
