@@ -376,15 +376,22 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
-            obj.endSelCol = x2;            
+            obj.endSelCol = x2;     
+                   
             if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
                 obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
-            }            
+            }                    
 
             if (obj.getRowData(y1)[0] < obj.startSelRow) {
                 obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
                 obj.scrollDirection = "up";
+            }
+
+            // pohyb nahoru
+            if (endRowIndex < startRowIndex) {
+                obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
             }
 
             if (origin.type == "mousedown" && origin.shiftKey)
