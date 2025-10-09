@@ -393,8 +393,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                        console.log('add obj.highlighted');
-                        obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
+                        // console.log('add obj.highlighted');
+                        // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                     }
                     else {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                        
@@ -440,8 +440,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                    console.log('add obj.highlighted');
-                    obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
+                    // console.log('add obj.highlighted');
+                    // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                 }
                 else {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                    
@@ -455,6 +455,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     else if (obj.preventOnSelection)
     {
+         if (endRowIndex < startRowIndex) {
+            // doslo ke scrollu
+            if (obj.scrollDirection == "up") {
+                obj.selectedCell = [1, 0, x2, y2];
+            }
+        }
         obj.preventOnSelection = false;
     } 
 
