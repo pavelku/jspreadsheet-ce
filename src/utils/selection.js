@@ -392,7 +392,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                        obj.highlighted.push(obj.records[obj.endSelRow][px]);
+                        obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                     }
                     else {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                        
@@ -438,7 +438,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                    obj.highlighted.push(obj.records[obj.endSelRow][px]);
+                    obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                 }
                 else {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                    
