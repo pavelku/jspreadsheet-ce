@@ -2235,7 +2235,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             obj.startSelCol = x1;
-            obj.endSelCol = x2;            
+            obj.endSelCol = x2;     
+
             if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
                 obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
@@ -2276,6 +2277,12 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
         if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
             obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+        }
+
+        // pohyb nahoru
+        if (endRowIndex < startRowIndex) {
+            obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+            obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
         }
     }
     else if (obj.preventOnSelection)
