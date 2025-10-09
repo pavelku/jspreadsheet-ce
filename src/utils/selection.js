@@ -360,8 +360,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
     obj.startSelCol = x1;
     console.log('after set = ', origin);    
-    const val = obj.getRowData(y1)[0];
-    console.log('after set getRowData ', val);
+    const startRowIndex = obj.getRowData(y1)[0];
+    const endRowIndex = obj.getRowData(y2)[0];
+    console.log('after set getRowData startRowIndex = ', startRowIndex, ', endRowIndex = ', endRowIndex);
 
     // TODO NEW FUNC -> copy
     if (origin){
