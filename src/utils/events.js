@@ -506,7 +506,7 @@ const mouseMoveControls = function(e) {
                 }
             }
             else {
-                console.log('try to scroll, mouseButton = ', mouseButton, 'e.y = ', e.y, ', libraryBase.jspreadsheet.current.mouseMoveSelectionY = ', libraryBase.jspreadsheet.current.mouseMoveSelectionY);
+                // console.log('try to scroll, mouseButton = ', mouseButton, 'e.y = ', e.y, ', libraryBase.jspreadsheet.current.mouseMoveSelectionY = ', libraryBase.jspreadsheet.current.mouseMoveSelectionY);
                 
                 // TODO scroll on mouse move
                 // if (mouseButton == 1) {

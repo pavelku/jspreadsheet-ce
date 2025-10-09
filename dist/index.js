@@ -2213,9 +2213,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         removeCopyingSelection();
     }
 
+    console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    console.log('origin = ', origin);
+    console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
     obj.startSelCol = x1;
     console.log('after set = ', origin);    
     const val = obj.getRowData(y1)[0];
@@ -2268,6 +2269,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     {
         obj.preventOnSelection = false;
     } 
+
+    console.log('after onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
     // Find corner cell
     updateCornerPosition.call(obj);
@@ -8142,7 +8145,7 @@ const mouseMoveControls = function(e) {
                 }
             }
             else {
-                console.log('try to scroll, mouseButton = ', mouseButton, 'e.y = ', e.y, ', libraryBase.jspreadsheet.current.mouseMoveSelectionY = ', libraryBase.jspreadsheet.current.mouseMoveSelectionY);
+                // console.log('try to scroll, mouseButton = ', mouseButton, 'e.y = ', e.y, ', libraryBase.jspreadsheet.current.mouseMoveSelectionY = ', libraryBase.jspreadsheet.current.mouseMoveSelectionY);
                 
                 // TODO scroll on mouse move
                 // if (mouseButton == 1) {

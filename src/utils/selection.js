@@ -354,9 +354,10 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         removeCopyingSelection();
     }
 
+    console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    console.log('origin = ', origin);
+    console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
     obj.startSelCol = x1;
     console.log('after set = ', origin);    
     const val = obj.getRowData(y1)[0];
@@ -409,6 +410,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     {
         obj.preventOnSelection = false;
     } 
+
+    console.log('after onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
     // Find corner cell
     updateCornerPosition.call(obj);
