@@ -2254,6 +2254,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     }
                     else {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                        chooseSelection.call(obj, obj.startSelRow, obj.endSelRow, obj.scrollDirection);
                     }
                 }
                 else {
@@ -2291,12 +2292,18 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         // pohyb nahoru
         if (endRowIndex < startRowIndex) {
             // doslo ke scrollu
-            if (obj.scrollDirection == "up") {
-                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+           if (obj.scrollDirection == "up") {
+                if (obj.startSelRow < endRowIndex) {
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                }
+                else {
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    chooseSelection.call(obj, obj.startSelRow, obj.endSelRow, obj.scrollDirection);
+                }
             }
             else {
                 obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                
             }
         }
     }
