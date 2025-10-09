@@ -390,7 +390,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             if (endRowIndex < startRowIndex) {
                 // doslo ke scrollu
                 if (obj.scrollDirection == "up") {
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    if (obj.startSelRow < endRowIndex) {
+                        obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    }
+                    else {
+                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    }
                 }
                 else {
                     obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
