@@ -2251,7 +2251,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                        chooseSelection.call(obj, startRowIndex, obj.endSelRow, obj.scrollDirection);
+                        obj.selectedCell = [x1, startRowIndex, x2, obj.endSelRow];
                     }
                     else {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                        
@@ -2295,7 +2295,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
-                    chooseSelection.call(obj, startRowIndex, obj.endSelRow, obj.scrollDirection);                    
+                    obj.selectedCell = [x1, startRowIndex, x2, obj.endSelRow];
                 }
                 else {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                    
