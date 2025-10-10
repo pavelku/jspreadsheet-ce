@@ -8374,8 +8374,8 @@ const mouseOverControls = function(e) {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
                                         
 
-                                        // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
-                                        // libraryBase.jspreadsheet.current.endSelCol = columnId;
+                                        libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
+                                        libraryBase.jspreadsheet.current.endSelCol = columnId;
 
                                         const newSelStart = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
                                         const newSelEnd = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
@@ -8387,12 +8387,10 @@ const mouseOverControls = function(e) {
                                             libraryBase.jspreadsheet.current.startSelRow = newSelStart;
                                         }
 
-                                        if (!libraryBase.jspreadsheet.current.endSelRow) {
-                                            libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
-                                        }
+                                        libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
 
                                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                        
+
                                         if (libraryBase.jspreadsheet.current.preventOnSelection)
                                         {
                                             libraryBase.jspreadsheet.current.chooseSelection(0,0,"aaa");
