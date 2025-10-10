@@ -2266,7 +2266,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex'); 
-                        obj.selectedCell = [x1, y2, x2, y2];                  
+                        obj.selectedCell = [x1, y2, x2, 0];                  
                         console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2);                       
                     }
                     else {
