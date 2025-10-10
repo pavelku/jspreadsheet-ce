@@ -404,12 +404,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     console.log('?? var2 - endRowIndex < startRowIndex up')
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
+                        obj.selectedCell = [x1, y2, x2, y2];                  
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex')                        
                     }
                     else {
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex')                        
-                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;      
-                        obj.selectedCell = [x1, y2, x2, y2];                  
+                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                              
                     }
                 }
                 else {
