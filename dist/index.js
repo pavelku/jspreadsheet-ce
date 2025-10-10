@@ -2285,6 +2285,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }
             }
 
+            /*
             // pohyb nahoru
             // if (endRowIndex < startRowIndex) {
                 console.log('?? var1 - endRowIndex < startRowIndex')
@@ -2314,6 +2315,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     // obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
            // }
+           */
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
@@ -2331,9 +2333,53 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             resetMousePos();
         }
     }
-    else if (!obj.preventOnSelection){
-        console.log('!obj.preventOnSelection');
+    else {
+        obj.startSelCol = x1;
+        obj.endSelCol = x2;     
 
+        if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+            obj.oldEndSelRow = obj.endSelRow;
+            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+            obj.scrollDirection = "down";
+            console.log('go down 1');
+        } else if (startRowIndex < obj.startSelRow) {
+            obj.oldStartSelRow = obj.startSelRow;
+            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            obj.scrollDirection = "up";
+            console.log('go up 1');
+        }
+        else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex < endRowIndex)
+        {
+            if (endRowIndex >= startRowIndex) {
+                obj.oldEndSelRow = obj.endSelRow;
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+            }
+            obj.scrollDirection = "up";
+            console.log('go up 2');
+        }
+        else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex > endRowIndex)
+        {
+            if (obj.endSelRow == obj.oldEndSelRow && endRowIndex  < obj.oldStartSelRow)
+            {
+                if (endRowIndex >= startRowIndex) {
+                    obj.oldEndSelRow = obj.endSelRow;
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                }
+                obj.scrollDirection = "up";
+                console.log('go up 3');
+            }
+            else {
+                obj.oldStartSelRow = obj.startSelRow;
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                obj.scrollDirection = "down";
+                console.log('go down 2');
+            }
+        }
+    }
+    // else if (!obj.preventOnSelection){
+    //     console.log('!obj.preventOnSelection');
+
+        /*
         if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
             obj.oldEndSelRow = obj.endSelRow;
             obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
@@ -2413,9 +2459,11 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         //         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
         //     }
         // }
-    }
-    else if (obj.preventOnSelection)
-    {
+        */
+    // }
+    // else if (obj.preventOnSelection)
+    // {
+        /*
         console.log('obj.preventOnSelection');
        // if (endRowIndex < startRowIndex) {
             console.log('obj.preventOnSelection 2');
@@ -2428,8 +2476,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }
             }
         //}
-        obj.preventOnSelection = false;
-    } 
+        */
+    //     obj.preventOnSelection = false;
+    // } 
 
     console.log('END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
