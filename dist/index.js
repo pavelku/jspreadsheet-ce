@@ -2328,7 +2328,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 else {
                     console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;   
-                    chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);                           
+                    console.log('call choose selection again start = ', obj.startSelRow, ' end = ', obj.endSelRow);                        
+                    chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);  
+                    return;                         
                 }
             }
             else {
