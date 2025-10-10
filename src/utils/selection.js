@@ -456,98 +456,132 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             resetMousePos();
         }
     }
-    else if (!obj.preventOnSelection){
-        console.log('!obj.preventOnSelection');
-
-        if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+    else {
+        // oblast byla vybrana ze zdolua nahoru a jeli jsme mysi dolu             
+        if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow)
+        {
             obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
             obj.scrollDirection = "down";
-            console.log('go down');
-        } else if (startRowIndex < obj.startSelRow) {
-            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            console.log('go down 1');
+        }
+        // oblast byla vybrana ze zhora dolu a jeli jsme mysi dolu
+        else if ((selRegionDirection == "fromUp" &&  (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.startSelRow))
+        {
+            obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
+            obj.scrollDirection = "down";
+            console.log('go down 2');
+        }
+        //  oblast vybrana ze zdola nahoru a jedu mysi nahoru
+        else if (selRegionDirection == "fromUp" && endRowIndex < obj.startSelRow) {
+            // obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
             obj.scrollDirection = "up";
             console.log('go up 1');
         }
-        else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
+        // oblast byla vybrana ze shora dolu a jeli jsme mysi nahoru             
+        else if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
         {
             if (endRowIndex >= startRowIndex) {
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
-            }
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;                    
+            }                
             obj.scrollDirection = "up";
             console.log('go up 2');
         }
+        console.log('po nastaveno direction [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow, ',', obj.endSelRow, ']');
 
-        // pohyb nahoru
-        if (endRowIndex < startRowIndex) {
-            console.log('?? var1 - endRowIndex < startRowIndex')
-            // doslo ke scrollu
-            if (obj.scrollDirection == "up") {
-                console.log('?? var2 - endRowIndex < startRowIndex up')
-                if (obj.startSelRow < endRowIndex) {
-                    obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
-                    console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex');                         
-                    console.log('call choose selection again start = ', obj.startSelRow, ' end = ', obj.endSelRow);                        
-                    chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);  
-                    return;                         
-                }
-                else {
-                    console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                       
-                }
-            }
-            else {
-                console.log('?? var2 - endRowIndex < startRowIndex | down')                        
-                obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-                obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
-            }
-        }
-
-        // obj.startSelCol = x1;
-        // obj.endSelCol = x2;
-        
-        // if (obj.getRowData(y1)[0] < obj.startSelRow) {
-        //     obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-        // }
-
-        // if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-        //     obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-        // }
-
-        // // pohyb nahoru
-        // if (endRowIndex < startRowIndex) {
-        //     // doslo ke scrollu
-        //    if (obj.scrollDirection == "up") {
-        //         if (obj.startSelRow < endRowIndex) {
-        //             obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
-        //             // console.log('add obj.highlighted');
-        //             // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
-        //         }
-        //         else {
-        //             obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                    
-        //         }
-        //     }
-        //     else {
-        //         obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-        //         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
-        //     }
-        // }
     }
-    else if (obj.preventOnSelection)
-    {        
-        console.log('obj.preventOnSelection');
-        // if (endRowIndex < startRowIndex) {
-        //     console.log('obj.preventOnSelection 2');
-        //     // doslo ke scrollu
-        //     if (obj.scrollDirection == "up") {
-        //         console.log('obj.preventOnSelection 3');
-        //         if (obj.startSelRow < endRowIndex) {
-        //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-        //             obj.selectedCell = [x1, y2, x2, y2];
-        //         }
-        //     }
-        // }
-        obj.preventOnSelection = false;
-    } 
+    // else if (!obj.preventOnSelection){
+    //     console.log('!obj.preventOnSelection');
+
+    //     if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+    //         obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+    //         obj.scrollDirection = "down";
+    //         console.log('go down');
+    //     } else if (startRowIndex < obj.startSelRow) {
+    //         obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+    //         obj.scrollDirection = "up";
+    //         console.log('go up 1');
+    //     }
+    //     else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
+    //     {
+    //         if (endRowIndex >= startRowIndex) {
+    //             obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+    //         }
+    //         obj.scrollDirection = "up";
+    //         console.log('go up 2');
+    //     }
+
+    //     // pohyb nahoru
+    //     if (endRowIndex < startRowIndex) {
+    //         console.log('?? var1 - endRowIndex < startRowIndex')
+    //         // doslo ke scrollu
+    //         if (obj.scrollDirection == "up") {
+    //             console.log('?? var2 - endRowIndex < startRowIndex up')
+    //             if (obj.startSelRow < endRowIndex) {
+    //                 obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
+    //                 console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex');                         
+    //                 console.log('call choose selection again start = ', obj.startSelRow, ' end = ', obj.endSelRow);                        
+    //                 chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);  
+    //                 return;                         
+    //             }
+    //             else {
+    //                 console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
+    //                 obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                       
+    //             }
+    //         }
+    //         else {
+    //             console.log('?? var2 - endRowIndex < startRowIndex | down')                        
+    //             obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+    //             obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
+    //         }
+    //     }
+
+    //     // obj.startSelCol = x1;
+    //     // obj.endSelCol = x2;
+        
+    //     // if (obj.getRowData(y1)[0] < obj.startSelRow) {
+    //     //     obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+    //     // }
+
+    //     // if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+    //     //     obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+    //     // }
+
+    //     // // pohyb nahoru
+    //     // if (endRowIndex < startRowIndex) {
+    //     //     // doslo ke scrollu
+    //     //    if (obj.scrollDirection == "up") {
+    //     //         if (obj.startSelRow < endRowIndex) {
+    //     //             obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
+    //     //             // console.log('add obj.highlighted');
+    //     //             // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
+    //     //         }
+    //     //         else {
+    //     //             obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                    
+    //     //         }
+    //     //     }
+    //     //     else {
+    //     //         obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+    //     //         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+    //     //     }
+    //     // }
+    // }
+    // else if (obj.preventOnSelection)
+    // {        
+    //     console.log('obj.preventOnSelection');
+    //     // if (endRowIndex < startRowIndex) {
+    //     //     console.log('obj.preventOnSelection 2');
+    //     //     // doslo ke scrollu
+    //     //     if (obj.scrollDirection == "up") {
+    //     //         console.log('obj.preventOnSelection 3');
+    //     //         if (obj.startSelRow < endRowIndex) {
+    //     //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    //     //             obj.selectedCell = [x1, y2, x2, y2];
+    //     //         }
+    //     //     }
+    //     // }
+    //     obj.preventOnSelection = false;
+    // } 
 
     console.log('END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
