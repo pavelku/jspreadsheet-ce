@@ -2296,7 +2296,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
-            }
+            }            
+            */
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
@@ -2307,8 +2308,6 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endPos = Math.min(endRowPos, obj.endSelRow);
                 chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
-            */
-
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
         }
         else {
@@ -2346,8 +2345,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.scrollDirection = "up";
             console.log('go up 2');
         }
+        else {
+            obj.selectedCell = [x1, y2, x2, y2];
+        }
         console.log('po nastaveno direction [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow, ',', obj.endSelRow, ']');
-
     }
     // else if (!obj.preventOnSelection){
     //     console.log('!obj.preventOnSelection');
