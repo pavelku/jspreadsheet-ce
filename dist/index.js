@@ -2016,7 +2016,13 @@ const removeCopyingSelection = function() {
 
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;    
-    console.log('onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
+    if (!obj.updateCallCount) {
+        obj.updateCallCount = 1;
+    }
+    else {
+        obj.updateCallCount += 1;
+    }
+    console.log(obj.updateCallCount, 'onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
 
     var selectWholeColumn = false;
     var isRowSelected = false;
@@ -2485,7 +2491,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     //     obj.preventOnSelection = false;
     // } 
 
-    console.log('END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    console.log(obj.updateCallCount, 'END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
     // Find corner cell
     updateCornerPosition.call(obj);
