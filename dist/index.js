@@ -2221,6 +2221,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     obj.startSelCol = x1;    
     const startRowIndex = obj.getRowData(y1)[0];
     const endRowIndex = obj.getRowData(y2)[0];    
+    console.clear();
     console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
     console.log('OnSelect MODE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
 
@@ -2265,9 +2266,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     console.log('?? var2 - endRowIndex < startRowIndex up')
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
-                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex'); 
-                        obj.selectedCell = [x1, y2, x2, 0];                  
-                        console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2);                       
+                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex');                         
                     }
                     else {
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
@@ -2332,15 +2331,17 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else if (obj.preventOnSelection)
     {
         console.log('obj.preventOnSelection');
-        //  if (endRowIndex < startRowIndex) {
-        //     // doslo ke scrollu
-        //     if (obj.scrollDirection == "up") {
-        //         if (obj.startSelRow < endRowIndex) {
-        //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-        //             obj.selectedCell = [x1, y2, x2, y2];
-        //         }
-        //     }
-        // }
+        if (endRowIndex < startRowIndex) {
+            console.log('obj.preventOnSelection 2');
+            // doslo ke scrollu
+            if (obj.scrollDirection == "up") {
+                console.log('obj.preventOnSelection 3');
+                if (obj.startSelRow < endRowIndex) {
+                    console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+                    obj.selectedCell = [x1, y2, x2, y2];
+                }
+            }
+        }
         obj.preventOnSelection = false;
     } 
 
