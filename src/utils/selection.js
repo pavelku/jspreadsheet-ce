@@ -439,9 +439,13 @@ export const chooseSelection = function (startPos2, endPos2, scrollDirection) {
 
     const startPos = Math.max(firstRowPos, obj.startSelRow);
     const endPos = Math.min(endRowPos, obj.endSelRow);
+
+    console.log('startPOs = ', startPos, ' firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, 'endPos = ', endPos);
+
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startR
     const newStartRowId = obj.getRowData(startRowIndex)[0];
+
     if (obj.startSelRow > newStartRowId) {
         obj.startSelRow = newStartRowId;
     }
