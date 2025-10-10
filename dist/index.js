@@ -2220,6 +2220,14 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
     console.log('OnSelect MOVE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
     console.log('OnSelect MOVE 3 - obj.oldEndSelRow ', obj.oldEndSelRow,  ', obj.oldStartSelRow', obj.oldStartSelRow);
+    
+    if (!obj.oldEndSelRow && obj.endSelRow) {
+        obj.oldEndSelRow = obj.endSelRow;
+    }
+
+    if (!obj.oldStartSelRow && obj.startSelRow) {
+        obj.oldStartSelRow = obj.startSelRow;
+    }
 
     // TODO NEW FUNC -> copy
     if (origin){
