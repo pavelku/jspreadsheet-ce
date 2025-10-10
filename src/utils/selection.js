@@ -359,7 +359,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const startRowIndex = obj.getRowData(y1)[0];
     const endRowIndex = obj.getRowData(y2)[0];    
     console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
-    console.log('OnSelect MODE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
+    console.log('OnSelect MOVE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
+    console.log('OnSelect MOVE 3 - obj.oldEndSelRow ', obj.oldEndSelRow,  ', obj.oldStartSelRow', obj.oldStartSelRow);
 
     // TODO NEW FUNC -> copy
     if (origin){
@@ -367,7 +368,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
+            obj.oldStartSelRow = obj.startSelRow;
             obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            obj.oldEndSelRow = obj.endSelRow;
             obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
@@ -377,10 +380,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.endSelCol = x2;     
 
             if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+                obj.oldEndSelRow = obj.endSelRow;
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
                 console.log('go down 1');
             } else if (startRowIndex < obj.startSelRow) {
+                obj.oldStartSelRow = obj.startSelRow;
                 obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
                 obj.scrollDirection = "up";
                 console.log('go up 1');
@@ -388,13 +393,15 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex < endRowIndex)
             {
                 if (endRowIndex >= startRowIndex) {
+                    obj.oldEndSelRow = obj.endSelRow;
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 }
                 obj.scrollDirection = "up";
                 console.log('go up 2');
             }
-            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex > endRowIndex)
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex > endRowIndex && obj.startSelRow != startRowIndex)
             {
+                obj.oldStartSelRow = obj.startSelRow;
                 obj.startSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
                 console.log('go down 2');
@@ -407,6 +414,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     console.log('?? var2 - endRowIndex < startRowIndex up')
                     if (obj.startSelRow < endRowIndex) {
+                        obj.oldEndSelRow = obj.endSelRow;
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex');                         
                         console.log('call choose selection again start = ', obj.startSelRow, ' end = ', obj.endSelRow);                        
@@ -415,12 +423,15 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     }
                     else {
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
+                        obj.oldStartSelRow = obj.startSelRow;
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                              
                     }
                 }
                 else {
-                    console.log('?? var2 - endRowIndex < startRowIndex | down')                        
+                    console.log('?? var2 - endRowIndex < startRowIndex | down');
+                    obj.oldEndSelRow = obj.endSelRow;                        
                     obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+                    obj.oldStartSelRow = obj.startSelRow;
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
             }
@@ -445,10 +456,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         console.log('!obj.preventOnSelection');
 
         if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+            obj.oldEndSelRow = obj.endSelRow;
             obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
             obj.scrollDirection = "down";
             console.log('go down');
         } else if (startRowIndex < obj.startSelRow) {
+            obj.oldStartSelRow = obj.startSelRow;
             obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
             obj.scrollDirection = "up";
             console.log('go up 1');
@@ -456,6 +469,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
         {
             if (endRowIndex >= startRowIndex) {
+                obj.oldEndSelRow = obj.endSelRow;
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
             }
             obj.scrollDirection = "up";
@@ -469,6 +483,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             if (obj.scrollDirection == "up") {
                 console.log('?? var2 - endRowIndex < startRowIndex up')
                 if (obj.startSelRow < endRowIndex) {
+                    obj.oldEndSelRow = obj.endSelRow;
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
                     console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex');                         
                     console.log('call choose selection again start = ', obj.startSelRow, ' end = ', obj.endSelRow);                        
@@ -477,12 +492,15 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }
                 else {
                     console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
+                    obj.oldStartSelRow = obj.startSelRow;
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                       
                 }
             }
             else {
-                console.log('?? var2 - endRowIndex < startRowIndex | down')                        
+                console.log('?? var2 - endRowIndex < startRowIndex | down')     
+                obj.oldEndSelRow = obj.endSelRow;                   
                 obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+                obj.oldStartSelRow = obj.startSelRow;
                 obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
             }
         }
@@ -565,6 +583,7 @@ const getDataByNrPos = (data, curPosNr, startIndex) =>{
 const resetMousePos = ()  => {
     const obj = this;
     obj.startSelCol = obj.endSelCol = obj.startSelRow = obj.endSelRow = -1;
+    obj.oldStartSelRow = obj.oldEndSelRow = -1;
 }
 
 
