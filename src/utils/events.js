@@ -703,12 +703,13 @@ const mouseOverControls = function(e) {
 
                                         libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
 
-                                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-
                                         if (libraryBase.jspreadsheet.current.preventOnSelection)
                                         {
                                             chooseSelection.call(libraryBase.jspreadsheet.current, 0,0,"aaa");
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
+                                        else {
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
 
                                         // // if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {                                        

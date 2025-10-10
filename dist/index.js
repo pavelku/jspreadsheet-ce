@@ -8395,12 +8395,13 @@ const mouseOverControls = function(e) {
 
                                         libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
 
-                                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-
                                         if (libraryBase.jspreadsheet.current.preventOnSelection)
                                         {
                                             selection/* chooseSelection */.Qi.call(libraryBase.jspreadsheet.current, 0,0,"aaa");
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
+                                        else {
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
 
                                         // // if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {                                        
