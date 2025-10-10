@@ -2319,8 +2319,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
          if (endRowIndex < startRowIndex) {
             // doslo ke scrollu
             if (obj.scrollDirection == "up") {
-                console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-                obj.selectedCell = [x1, y2, x2, y2];
+                if (obj.startSelRow < endRowIndex) {
+                    console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+                    obj.selectedCell = [x1, y2, x2, y2];
+                }
             }
         }
         obj.preventOnSelection = false;
