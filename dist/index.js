@@ -2216,9 +2216,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         removeCopyingSelection();
     }
 
-    console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
-
     obj.startSelCol = x1;    
     const startRowIndex = obj.getRowData(y1)[0];
     const endRowIndex = obj.getRowData(y2)[0];
@@ -2230,38 +2229,44 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
-            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-            obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
+            console.log('!! mouseover')
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
-            if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-                obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
+            if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
+                console.log('go down');
             }                    
 
-            if (obj.getRowData(y1)[0] < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+            if (startRowIndex < obj.startSelRow) {
+                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
                 obj.scrollDirection = "up";
+                console.log('go up');
             }
 
             // pohyb nahoru
             if (endRowIndex < startRowIndex) {
+                console.log('?? var1 - endRowIndex < startRowIndex')
                 // doslo ke scrollu
                 if (obj.scrollDirection == "up") {
+                    console.log('?? var2 - endRowIndex < startRowIndex up')
                     if (obj.startSelRow < endRowIndex) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
-                        // console.log('add obj.highlighted');
-                        // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
+                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex')                        
                     }
                     else {
+                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex')                        
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                        
                     }
                 }
                 else {
+                    console.log('?? var2 - endRowIndex < startRowIndex | down')                        
                     obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
@@ -2328,7 +2333,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.preventOnSelection = false;
     } 
 
-    console.log('after onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    console.log('END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
     // Find corner cell
     updateCornerPosition.call(obj);
