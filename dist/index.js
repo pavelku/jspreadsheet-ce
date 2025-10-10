@@ -2291,8 +2291,8 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
 
     var data = obj.getData();
     //console.log('data = ', data);
-    const startRowIndex = getDataByNrPos(data, startPos, 0);
-    const endRowIndex = getDataByNrPos(data, endPos, 0); // startRowIndex
+    const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
+    const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     
     const newStartRowId = obj.getRowData(startRowIndex)[0];
