@@ -2091,7 +2091,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         uy = parseInt(y1);
     }
 
-    console.log('py = ', py, ', uy = ')
+    // console.log('py = ', py, ', uy = ')
 
     // Verify merged columns
     for (let i = px; i <= ux; i++) {
@@ -2215,14 +2215,14 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         removeCopyingSelection();
     }
 
-    console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
+    // console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
     obj.startSelCol = x1;
-    console.log('after set = ', origin);    
+    // console.log('after set = ', origin);    
     const val = obj.getRowData(y1)[0];
-    console.log('after set getRowData ', val);
+    // console.log('after set getRowData ', val);
 
     // TODO NEW FUNC -> copy
     // if (origin){
@@ -8346,10 +8346,23 @@ const mouseOverControls = function(e) {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
                                         console.log('!!! tady me to zajima preventSelection cell0 = ', libraryBase.jspreadsheet.current.selectedCell[0], 'cell1 =', libraryBase.jspreadsheet.current.selectedCell[1]);
 
-                                        // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
-                                        // libraryBase.jspreadsheet.current.endSelCol = columnId;
+                                        libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
+                                        libraryBase.jspreadsheet.current.endSelCol = columnId;
 
-                                        // libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
+                                        const newSelStart = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
+                                        const newSelEnd = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
+
+                                        if (!libraryBase.jspreadsheet.current.startSelRow || libraryBase.jspreadsheet.current.startSelRow > newSelStart) {
+                                            libraryBase.jspreadsheet.current.startSelRow = newSelStart;
+                                        }
+
+                                        if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {
+                                            libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
+                                        }
+
+                                        console.log('!!! mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow);
+
+                                        // libraryBase.jspreadsheet.current.startSelRow = ;
                                         // libraryBase.jspreadsheet.current.endSelRow = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
 
                                         // if (!libraryBase.jspreadsheet.current.preventOnSelection) {

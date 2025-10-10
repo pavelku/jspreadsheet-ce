@@ -232,7 +232,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         uy = parseInt(y1);
     }
 
-    console.log('py = ', py, ', uy = ')
+    // console.log('py = ', py, ', uy = ')
 
     // Verify merged columns
     for (let i = px; i <= ux; i++) {
@@ -356,14 +356,14 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         removeCopyingSelection();
     }
 
-    console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
+    // console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
     obj.startSelCol = x1;
-    console.log('after set = ', origin);    
+    // console.log('after set = ', origin);    
     const val = obj.getRowData(y1)[0];
-    console.log('after set getRowData ', val);
+    // console.log('after set getRowData ', val);
 
     // TODO NEW FUNC -> copy
     // if (origin){
