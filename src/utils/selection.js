@@ -359,7 +359,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
     obj.startSelCol = x1;    
     const startRowIndex = obj.getRowData(y1)[0];
-    const endRowIndex = obj.getRowData(y2)[0];
+    const endRowIndex = obj.getRowData(y2)[0];    
     console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
     console.log('OnSelect MODE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
 
@@ -389,7 +389,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
             else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
             {
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                if (endRowIndex >= startRowIndex) {
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                }
                 obj.scrollDirection = "up";
                 console.log('go up 2');
             }
