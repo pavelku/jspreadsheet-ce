@@ -686,25 +686,32 @@ const mouseOverControls = function(e) {
                                     updateCopySelection.call(libraryBase.jspreadsheet.current, columnId, rowId);
                                 } else {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
+                                        
+
+                                        // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
+                                        // libraryBase.jspreadsheet.current.endSelCol = columnId;
+
+                                        const newSelStart = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
+                                        const newSelEnd = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
+
+                                        // console.log('!!! tady me to zajima cell = ', libraryBase.jspreadsheet.current.selectedCell, ', rowId = ', rowId, ', prevent = ', libraryBase.jspreadsheet.current.preventOnSelection, ', newSelStart = ', newSelStart);
+
+
+                                        if (!libraryBase.jspreadsheet.current.startSelRow) {
+                                            libraryBase.jspreadsheet.current.startSelRow = newSelStart;
+                                        }
+
+                                        if (!libraryBase.jspreadsheet.current.endSelRow) {
+                                            libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
+                                        }
+
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        
                                         if (libraryBase.jspreadsheet.current.preventOnSelection)
                                         {
                                             libraryBase.jspreadsheet.current.chooseSelection(0,0,"aaa");
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         }
-
-                                        // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
-                                        // libraryBase.jspreadsheet.current.endSelCol = columnId;
-
-                                        // const newSelStart = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
-                                        // const newSelEnd = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
-
-                                        // console.log('!!! tady me to zajima cell = ', libraryBase.jspreadsheet.current.selectedCell, ', rowId = ', rowId, ', prevent = ', libraryBase.jspreadsheet.current.preventOnSelection, ', newSelStart = ', newSelStart);
-
-
-                                        // if (!libraryBase.jspreadsheet.current.startSelRow) {
-                                        //     libraryBase.jspreadsheet.current.startSelRow = newSelStart;
-                                        // }
 
                                         // // if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {                                        
                                         // //}
