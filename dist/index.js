@@ -2416,7 +2416,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else if (obj.preventOnSelection)
     {
         console.log('obj.preventOnSelection');
-        if (endRowIndex < startRowIndex) {
+       // if (endRowIndex < startRowIndex) {
             console.log('obj.preventOnSelection 2');
             // doslo ke scrollu
             if (obj.scrollDirection == "up") {
@@ -2426,7 +2426,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     obj.selectedCell = [x1, y2, x2, y2];
                 }
             }
-        }
+        //}
         obj.preventOnSelection = false;
     } 
 
