@@ -382,28 +382,28 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.endSelCol = x2;     
 
             // oblast byla vybrana ze zdolua nahoru a jeli jsme mysi dolu             
-            if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow)
+            if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) // selRegionDirection == "fromDown" && 
             {
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
                 console.log('go down 1');
             }
             // oblast byla vybrana ze zhora dolu a jeli jsme mysi dolu
-            else if ((selRegionDirection == "fromUp" &&  (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.startSelRow))
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.startSelRow) // selRegionDirection == "fromUp" &&  
             {
                 obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 obj.scrollDirection = "down";
                 console.log('go down 2');
             }
             //  oblast vybrana ze zdola nahoru a jedu mysi nahoru
-            else if (selRegionDirection == "fromUp" && endRowIndex < obj.startSelRow) {
+            else if (endRowIndex < obj.startSelRow) { //selRegionDirection == "fromUp" && 
                 // obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
                 obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 obj.scrollDirection = "up";
                 console.log('go up 1');
             }
             // oblast byla vybrana ze shora dolu a jeli jsme mysi nahoru             
-            else if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow) // selRegionDirection == "fromDown" && 
             {
                 if (endRowIndex >= startRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;                    
@@ -569,17 +569,17 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else if (obj.preventOnSelection)
     {        
         console.log('obj.preventOnSelection');
-        // if (endRowIndex < startRowIndex) {
-        //     console.log('obj.preventOnSelection 2');
-        //     // doslo ke scrollu
-        //     if (obj.scrollDirection == "up") {
-        //         console.log('obj.preventOnSelection 3');
-        //         if (obj.startSelRow < endRowIndex) {
-        //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-        //             obj.selectedCell = [x1, y2, x2, y2];
-        //         }
-        //     }
-        // }
+        if (endRowIndex < startRowIndex) {
+            console.log('obj.preventOnSelection 2');
+            // doslo ke scrollu
+            if (obj.scrollDirection == "up") {
+                console.log('obj.preventOnSelection 3');
+                if (obj.startSelRow < endRowIndex) {
+                    console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+                    obj.selectedCell = [x1, y2, x2, y2];
+                }
+            }
+        }
         obj.preventOnSelection = false;
     } 
 
