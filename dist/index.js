@@ -2018,9 +2018,7 @@ const removeCopyingSelection = function() {
 }
 
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
-    const obj = this;
-
-    console.clear();    
+    const obj = this;    
     console.log('onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
 
     var selectWholeColumn = false;
