@@ -367,7 +367,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // TODO NEW FUNC -> copy
     if (origin){
-
+        
+        console.log('origin set');
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
@@ -532,8 +533,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         // }
     }
     else if (obj.preventOnSelection)
-    {
-        // console.log('obj.preventOnSelection');
+    {        
+        console.log('obj.preventOnSelection');
         // if (endRowIndex < startRowIndex) {
         //     console.log('obj.preventOnSelection 2');
         //     // doslo ke scrollu
@@ -555,7 +556,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 }
 
 
-export const chooseSelection = function (startPos, endPos, scrollDirection) {
+export const chooseSelection = function (startPos, endPos, scrollDirection, origin) {
     const obj = this;
 
     var data = obj.getData();
@@ -564,7 +565,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
-    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
+    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex, origin);
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
