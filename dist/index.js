@@ -2244,7 +2244,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }                    
 
             if (obj.getRowData(y1)[0] < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 0;
+                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
                 obj.scrollDirection = "up";
             }
 
@@ -2253,17 +2253,17 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 // doslo ke scrollu
                 if (obj.scrollDirection == "up") {
                     if (obj.startSelRow < endRowIndex) {
-                        obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                        obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
                         // console.log('add obj.highlighted');
                         // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                     }
                     else {
-                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                        
+                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                        
                     }
                 }
                 else {
                     obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
             }
 
@@ -2288,7 +2288,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.endSelCol = x2;
         
         if (obj.getRowData(y1)[0] < obj.startSelRow) {
-            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 0;
+            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
         }
 
         if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
@@ -2300,17 +2300,17 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // doslo ke scrollu
            if (obj.scrollDirection == "up") {
                 if (obj.startSelRow < endRowIndex) {
-                    obj.endSelRow = !selectWholeColumn ? endRowIndex : 0;
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
                     // console.log('add obj.highlighted');
                     // obj.highlighted.push(obj.records[y2 > y1 ? y2 : y1][x2 > x1 ? x2 : x1]);
                 }
                 else {
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                    
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                    
                 }
             }
             else {
                 obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-                obj.startSelRow = !selectWholeColumn ? endRowIndex : 0;                
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
             }
         }
     }
