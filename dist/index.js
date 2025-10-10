@@ -1970,6 +1970,8 @@ const resetSelection = function(blur) {
 
     // Reset
     obj.selectedCell = null;
+    obj.startSelCol = obj.endSelCol = obj.startSelRow = obj.endSelRow = undefined;
+    console.log('reset style');
 
     // Hide corner
     obj.corner.style.top = '-2000px';
