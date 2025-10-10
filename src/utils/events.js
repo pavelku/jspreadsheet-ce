@@ -703,15 +703,15 @@ const mouseOverControls = function(e) {
                                         //}
 
                                         var prehodPoradi = false;
-                                        if (libraryBase.jspreadsheet.current.startSelRow > libraryBase.jspreadsheet.current.endSelRow)
-                                        {
-                                            console.log('!!!    prehod poradi start end');
-                                            const tmp = libraryBase.jspreadsheet.current.startSelRow;
-                                            libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow;
-                                            libraryBase.jspreadsheet.current.endSelRow = tmp;
-                                        }
+                                        // if (libraryBase.jspreadsheet.current.startSelRow > libraryBase.jspreadsheet.current.endSelRow)
+                                        // {
+                                        //     console.log('!!!    prehod poradi start end');
+                                        //     const tmp = libraryBase.jspreadsheet.current.startSelRow;
+                                        //     libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow;
+                                        //     libraryBase.jspreadsheet.current.endSelRow = tmp;
+                                        // }
 
-                                        console.log('!!! mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow);
+                                        console.log('!!! mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow, ', cell == ', libraryBase.jspreadsheet.current.selectedCell, 'rowId = ', rowId);
 
                                         // libraryBase.jspreadsheet.current.startSelRow = ;
                                         // libraryBase.jspreadsheet.current.endSelRow = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
