@@ -2307,9 +2307,10 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
     console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+    if (scrollDirection == "up")
+        obj.preventOnSelection = true;
 
     // obj.endSelRow = endRowIndex;    
-    // obj.preventOnSelection = true;
     // obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
@@ -8365,6 +8366,15 @@ const mouseOverControls = function(e) {
                                         //}
 
                                         var prehodPoradi = false;
+                                        if (libraryBase.jspreadsheet.current.preventOnSelection) {
+                                            const tmp = libraryBase.jspreadsheet.current.startSelRow;
+                                            libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow;
+                                            libraryBase.jspreadsheet.current.endSelRow = tmp;
+                                            prehodPoradi = true;
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
+
+                                        
                                         // if (libraryBase.jspreadsheet.current.startSelRow > libraryBase.jspreadsheet.current.endSelRow)
                                         // {
                                         //     console.log('!!!    prehod poradi start end');

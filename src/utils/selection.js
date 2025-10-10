@@ -448,9 +448,10 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
     console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+    if (scrollDirection == "up")
+        obj.preventOnSelection = true;
 
     // obj.endSelRow = endRowIndex;    
-    // obj.preventOnSelection = true;
     // obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 

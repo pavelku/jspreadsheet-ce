@@ -703,6 +703,15 @@ const mouseOverControls = function(e) {
                                         //}
 
                                         var prehodPoradi = false;
+                                        if (libraryBase.jspreadsheet.current.preventOnSelection) {
+                                            const tmp = libraryBase.jspreadsheet.current.startSelRow;
+                                            libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow;
+                                            libraryBase.jspreadsheet.current.endSelRow = tmp;
+                                            prehodPoradi = true;
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
+
+                                        
                                         // if (libraryBase.jspreadsheet.current.startSelRow > libraryBase.jspreadsheet.current.endSelRow)
                                         // {
                                         //     console.log('!!!    prehod poradi start end');
