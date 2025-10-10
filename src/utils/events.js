@@ -692,13 +692,13 @@ const mouseOverControls = function(e) {
                                         const newSelStart = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
                                         const newSelEnd = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
 
-                                        if (!libraryBase.jspreadsheet.current.startSelRow || libraryBase.jspreadsheet.current.startSelRow > newSelStart) {
+                                        if (!libraryBase.jspreadsheet.current.startSelRow) {
                                             libraryBase.jspreadsheet.current.startSelRow = newSelStart;
                                         }
 
-                                        if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {
-                                            libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
-                                        }
+                                        // if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {
+                                        libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
+                                        //}
 
                                         console.log('!!! mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow);
 
