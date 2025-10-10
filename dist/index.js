@@ -2508,6 +2508,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
     obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
+    obj.preventOnSelection = false;
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
