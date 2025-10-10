@@ -408,7 +408,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     }
                     else {
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex')                        
-                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                        
+                        obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;      
+                        obj.selectedCell = [x1, y2, x2, y2];                  
                     }
                 }
                 else {
@@ -478,7 +479,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         //         }
         //     }
         // }
-        // obj.preventOnSelection = false;
+        obj.preventOnSelection = false;
     } 
 
     console.log('END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
