@@ -403,12 +403,13 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.scrollDirection == "up") {
                     console.log('?? var2 - endRowIndex < startRowIndex up')
                     if (obj.startSelRow < endRowIndex) {
-                        obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;
+                        obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
+                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex'); 
                         obj.selectedCell = [x1, y2, x2, y2];                  
-                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex')                        
+                        console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2);                       
                     }
                     else {
-                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex')                        
+                        console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                              
                     }
                 }
