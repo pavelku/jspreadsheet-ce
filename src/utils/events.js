@@ -686,11 +686,11 @@ const mouseOverControls = function(e) {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
                                         console.log('!!! tady me to zajima preventSelection cell0 = ', libraryBase.jspreadsheet.current.selectedCell[0], 'cell1 =', libraryBase.jspreadsheet.current.selectedCell[1]);
 
-                                        libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
-                                        libraryBase.jspreadsheet.current.endSelCol = columnId;
+                                        // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
+                                        // libraryBase.jspreadsheet.current.endSelCol = columnId;
 
-                                        libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
-                                        libraryBase.jspreadsheet.current.endSelRow = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
+                                        // libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.getRowData(libraryBase.jspreadsheet.current.selectedCell[1])[0];
+                                        // libraryBase.jspreadsheet.current.endSelRow = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
 
                                         // if (!libraryBase.jspreadsheet.current.preventOnSelection) {
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
