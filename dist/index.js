@@ -2286,7 +2286,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
 
             // pohyb nahoru
-            if (endRowIndex < startRowIndex) {
+            // if (endRowIndex < startRowIndex) {
                 console.log('?? var1 - endRowIndex < startRowIndex')
                 // doslo ke scrollu
                 if (obj.scrollDirection == "up") {
@@ -2312,7 +2312,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     obj.oldStartSelRow = obj.startSelRow;
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
-            }
+           // }
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
