@@ -8397,7 +8397,7 @@ const mouseOverControls = function(e) {
 
                                         if (libraryBase.jspreadsheet.current.preventOnSelection)
                                         {
-                                            libraryBase.jspreadsheet.current.chooseSelection(0,0,"aaa");
+                                            selection/* chooseSelection */.Qi.call(libraryBase.jspreadsheet.current, 0,0,"aaa");
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         }
 

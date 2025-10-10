@@ -4,7 +4,7 @@ import { closeEditor, openEditor, setCheckRadioValue } from './editor.js';
 import libraryBase from './libraryBase.js';
 import { down, first, last, left, right, up } from './keys.js';
 import { isColMerged, isRowMerged } from './merges.js';
-import { copyData, removeCopySelection, resetSelection, selectAll, updateCornerPosition, updateSelectionFromCoords, getSelection } from './selection.js';
+import { copyData, removeCopySelection, resetSelection, selectAll, updateCornerPosition, updateSelectionFromCoords, getSelection, chooseSelection } from './selection.js';
 import { copy, paste, copyHeaders } from './copyPaste.js';
 import { openFilter } from './filter.js';
 import { loadDown, loadUp } from './lazyLoading.js';
@@ -707,7 +707,7 @@ const mouseOverControls = function(e) {
 
                                         if (libraryBase.jspreadsheet.current.preventOnSelection)
                                         {
-                                            libraryBase.jspreadsheet.current.chooseSelection(0,0,"aaa");
+                                            chooseSelection.call(libraryBase.jspreadsheet.current, 0,0,"aaa");
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         }
 
