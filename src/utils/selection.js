@@ -385,7 +385,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.scrollDirection = "up";
                 console.log('go up 1');
             }
-            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && obj.endSelRow != startRowIndex)
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex < endRowIndex)
             {
                 if (endRowIndex >= startRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
@@ -393,11 +393,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.scrollDirection = "up";
                 console.log('go up 2');
             }
-            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && obj.startSelRow == startRowIndex)
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex > endRowIndex)
             {
-                if (endRowIndex >= startRowIndex) {
-                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
-                }
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
                 console.log('go down 2');
             }
