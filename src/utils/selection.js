@@ -405,7 +405,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         obj.endSelRow = !selectWholeColumn ? endRowIndex : 1;                        
                         console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow < endRowIndex');                         
                         console.log('call choose selection again start = ', obj.startSelRow, ' end = ', obj.endSelRow);                        
-                        chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);  
+                        obj.chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);  
                         return;                         
                     }
                     else {
