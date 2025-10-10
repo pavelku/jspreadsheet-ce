@@ -2266,12 +2266,23 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.scrollDirection = "up";
                 console.log('go up 2');
             }
-            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex > endRowIndex && obj.startSelRow != startRowIndex)
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow && startRowIndex > endRowIndex)
             {
-                obj.oldStartSelRow = obj.startSelRow;
-                obj.startSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
-                obj.scrollDirection = "down";
-                console.log('go down 2');
+                if (obj.endSelRow == obj.oldEndSelRow && startRowIndex < obj.oldStartSelRow)
+                {
+                    if (endRowIndex >= startRowIndex) {
+                        obj.oldEndSelRow = obj.endSelRow;
+                        obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                    }
+                    obj.scrollDirection = "up";
+                    console.log('go up 3');
+                }
+                else {
+                    obj.oldStartSelRow = obj.startSelRow;
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                    obj.scrollDirection = "down";
+                    console.log('go down 2');
+                }
             }
 
             // pohyb nahoru
