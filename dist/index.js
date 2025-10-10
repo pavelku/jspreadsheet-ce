@@ -2305,12 +2305,13 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                              
                     }
                 }
-                else if (endRowIndex < startRowIndex) {
+                // pohyb dolu
+                else if (endRowIndex < startRowIndex){
                     console.log('?? var2 - endRowIndex < startRowIndex | down');
-                    obj.oldEndSelRow = obj.endSelRow;                        
-                    obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
-                    obj.oldStartSelRow = obj.startSelRow;
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
+                    // obj.oldEndSelRow = obj.endSelRow;                        
+                    // obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
+                    // obj.oldStartSelRow = obj.startSelRow;
+                    // obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 }
            // }
 
@@ -2419,13 +2420,13 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
        // if (endRowIndex < startRowIndex) {
             console.log('obj.preventOnSelection 2');
             // doslo ke scrollu
-            // if (obj.scrollDirection == "up") {
+            if (obj.scrollDirection == "up") {
                 console.log('obj.preventOnSelection 3');
                 if (obj.startSelRow < endRowIndex) {
                     console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
                     obj.selectedCell = [x1, y2, x2, y2];
                 }
-            // }
+            }
         //}
         obj.preventOnSelection = false;
     } 
