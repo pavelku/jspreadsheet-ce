@@ -466,7 +466,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }
                 else {
                     console.log('?? var3 - endRowIndex < startRowIndex | up | obj.startSelRow >= endRowIndex');                        
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                              
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;   
+                    chooseSelection(obj.startSelRow, obj.endSelRow, obj.scrollDirection);                           
                 }
             }
             else {
@@ -508,18 +509,18 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     else if (obj.preventOnSelection)
     {
-        console.log('obj.preventOnSelection');
-        if (endRowIndex < startRowIndex) {
-            console.log('obj.preventOnSelection 2');
-            // doslo ke scrollu
-            if (obj.scrollDirection == "up") {
-                console.log('obj.preventOnSelection 3');
-                if (obj.startSelRow < endRowIndex) {
-                    console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-                    obj.selectedCell = [x1, y2, x2, y2];
-                }
-            }
-        }
+        // console.log('obj.preventOnSelection');
+        // if (endRowIndex < startRowIndex) {
+        //     console.log('obj.preventOnSelection 2');
+        //     // doslo ke scrollu
+        //     if (obj.scrollDirection == "up") {
+        //         console.log('obj.preventOnSelection 3');
+        //         if (obj.startSelRow < endRowIndex) {
+        //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+        //             obj.selectedCell = [x1, y2, x2, y2];
+        //         }
+        //     }
+        // }
         obj.preventOnSelection = false;
     } 
 
