@@ -8349,7 +8349,7 @@ const mouseOverControls = function(e) {
                                     updateCopySelection.call(libraryBase.jspreadsheet.current, columnId, rowId);
                                 } else {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
-                                        console.log('!!! tady me to zajima preventSelection cell0 = ', libraryBase.jspreadsheet.current.selectedCell[0], 'cell1 =', libraryBase.jspreadsheet.current.selectedCell[1]);
+                                        console.log('!!! tady me to zajima cell = ', libraryBase.jspreadsheet.current.selectedCell, ', rowId = ', rowId, ', prevent = ', libraryBase.jspreadsheet.current.preventOnSelection);
 
                                         libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
                                         libraryBase.jspreadsheet.current.endSelCol = columnId;
@@ -8361,15 +8361,16 @@ const mouseOverControls = function(e) {
                                             libraryBase.jspreadsheet.current.startSelRow = newSelStart;
                                         }
 
-                                        // if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {
-                                        libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
+                                        // if (!libraryBase.jspreadsheet.current.endSelRow || libraryBase.jspreadsheet.current.endSelRow < newSelEnd) {                                        
                                         //}
 
                                         var prehodPoradi = false;
-                                        if (libraryBase.jspreadsheet.current.preventOnSelection) {
-                                            const tmp = libraryBase.jspreadsheet.current.startSelRow;
-                                            libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow;
-                                            libraryBase.jspreadsheet.current.endSelRow = tmp;
+
+                                        if (!libraryBase.jspreadsheet.current.preventOnSelection) {
+                                            libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
+                                        }
+                                        else {
+                                            libraryBase.jspreadsheet.current.startSelRow = newSelEnd;
                                             prehodPoradi = true;
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         }
@@ -8383,7 +8384,7 @@ const mouseOverControls = function(e) {
                                         //     libraryBase.jspreadsheet.current.endSelRow = tmp;
                                         // }
 
-                                        console.log('!!! mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow, ', cell == ', libraryBase.jspreadsheet.current.selectedCell, 'rowId = ', rowId);
+                                        console.log('!!! AFTER MOVE mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow, ', prehodPoradi = ', prehodPoradi);
 
                                         // libraryBase.jspreadsheet.current.startSelRow = ;
                                         // libraryBase.jspreadsheet.current.endSelRow = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
@@ -8392,7 +8393,7 @@ const mouseOverControls = function(e) {
                                         if (!prehodPoradi)
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         else
-                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         // }
                                         // else {
                                         //    console.log('NEVOLAM');
