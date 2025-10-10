@@ -7839,6 +7839,8 @@ const mouseDownControls = function(e) {
                     closeEditor.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.edition[0], true);
                 }
                 libraryBase.jspreadsheet.current.resetSelection();
+                console.log('reset start selCols and rows');
+                libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.endSelCol = libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow = undefined;
             }
             libraryBase.jspreadsheet.current = jssTable[0].jssWorksheet;
         }
