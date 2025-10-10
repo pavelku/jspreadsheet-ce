@@ -648,8 +648,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
-    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
-    obj.preventOnSelection = false;
+    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);    
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{

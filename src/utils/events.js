@@ -690,6 +690,7 @@ const mouseOverControls = function(e) {
                                         }
                                         else {
                                             console.log('NEVOLAM');
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         }
                                     }
                                 }
