@@ -232,6 +232,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         uy = parseInt(y1);
     }
 
+    console.log('py = ', py, ', uy = ')
+
     // Verify merged columns
     for (let i = px; i <= ux; i++) {
         for (let j = py; j <= uy; j++) {
@@ -364,58 +366,58 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     console.log('after set getRowData ', val);
 
     // TODO NEW FUNC -> copy
-    if (origin){
+    // if (origin){
 
-        if (origin.type == "mousedown" && !origin.shiftKey){
-            obj.startSelCol = x1;
-            obj.endSelCol = x2;
-            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-            obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-            console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
-        }
-        else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
-            obj.startSelCol = x1;
-            obj.endSelCol = x2;            
-            if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-                obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
-                obj.scrollDirection = "down";
-            }            
+    //     if (origin.type == "mousedown" && !origin.shiftKey){
+    //         obj.startSelCol = x1;
+    //         obj.endSelCol = x2;
+    //         obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+    //         obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+    //         console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
+    //     }
+    //     else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
+    //         obj.startSelCol = x1;
+    //         obj.endSelCol = x2;            
+    //         if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+    //             obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
+    //             obj.scrollDirection = "down";
+    //         }            
 
-            if (obj.getRowData(y1)[0] < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-                obj.scrollDirection = "up";
-            }
+    //         if (obj.getRowData(y1)[0] < obj.startSelRow) {
+    //             obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+    //             obj.scrollDirection = "up";
+    //         }
 
-            if (origin.type == "mousedown" && origin.shiftKey)
-            {
-                var data = obj.getData();
-                const firstRowPos = data[0][0];
-                const endRowPos = data[data.length-1][0];
-                const startPos = Math.max(firstRowPos, obj.startSelRow);
-                const endPos = Math.min(endRowPos, obj.endSelRow);
-                chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
-            }
-        }
-        else {
-            resetMousePos();
-        }
-    }
-    else if (!obj.preventOnSelection){
-        obj.startSelCol = x1;
-        obj.endSelCol = x2;
+    //         if (origin.type == "mousedown" && origin.shiftKey)
+    //         {
+    //             var data = obj.getData();
+    //             const firstRowPos = data[0][0];
+    //             const endRowPos = data[data.length-1][0];
+    //             const startPos = Math.max(firstRowPos, obj.startSelRow);
+    //             const endPos = Math.min(endRowPos, obj.endSelRow);
+    //             chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
+    //         }
+    //     }
+    //     else {
+    //         resetMousePos();
+    //     }
+    // }
+    // else if (!obj.preventOnSelection){
+    //     obj.startSelCol = x1;
+    //     obj.endSelCol = x2;
         
-        if (obj.getRowData(y1)[0] < obj.startSelRow) {
-            obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-        }
+    //     if (obj.getRowData(y1)[0] < obj.startSelRow) {
+    //         obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+    //     }
 
-        if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-            obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-        }
-    }
-    else if (obj.preventOnSelection)
-    {
-        obj.preventOnSelection = false;
-    } 
+    //     if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+    //         obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+    //     }
+    // }
+    // else if (obj.preventOnSelection)
+    // {
+    //     obj.preventOnSelection = false;
+    // } 
 
     console.log('after onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
@@ -433,8 +435,21 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const startRowIndex = getDataByNrPos(data, startPos, 0);
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
-    obj.preventOnSelection = true;
-    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
+    
+    const newStartRowId = obj.getRowData(startRowIndex)[0];
+    if (obj.startSelRow > newStartRowId) {
+        obj.startSelRow = newStartRowId;
+    }
+    const newEndRowId = obj.getRowData(endRowIndex)[0];
+    if (obj.endSelRow < newEndRowId) {
+        obj.endSelRow = newEndRowId;
+    }
+    console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  endRowIndex);
+
+    // obj.endSelRow = endRowIndex;    
+    // obj.preventOnSelection = true;
+    // obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
