@@ -2333,7 +2333,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             resetMousePos();
         }
     }
-    else {
+    else if (!obj.preventOnSelection) {
+        console.log('!obj.preventOnSelection');
+
         obj.startSelCol = x1;
         obj.endSelCol = x2;     
 
@@ -2375,6 +2377,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 console.log('go down 2');
             }
         }
+    }
+    else if (obj.preventOnSelection) {
+        obj.preventOnSelection = false;
     }
     // else if (!obj.preventOnSelection){
     //     console.log('!obj.preventOnSelection');
