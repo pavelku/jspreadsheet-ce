@@ -8543,8 +8543,13 @@ const mouseOverControls = function(e) {
                                     updateCopySelection.call(libraryBase.jspreadsheet.current, columnId, rowId);
                                 } else {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
-                                        console.log('tady me to zajima preventSelection = ', libraryBase.jspreadsheet.preventOnSelection);
-                                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        console.log('!!! tady me to zajima preventSelection = ', libraryBase.jspreadsheet.current.preventOnSelection);
+                                        if (!libraryBase.jspreadsheet.current.preventOnSelection) {
+                                          selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        }
+                                        else {
+                                            console.log('NEVOLAM');
+                                        }
                                     }
                                 }
                             }
