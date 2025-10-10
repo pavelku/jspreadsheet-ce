@@ -8364,13 +8364,25 @@ const mouseOverControls = function(e) {
                                         libraryBase.jspreadsheet.current.endSelRow = newSelEnd;
                                         //}
 
+                                        var prehodPoradi = false;
+                                        if (libraryBase.jspreadsheet.current.startSelRow > libraryBase.jspreadsheet.current.endSelRow)
+                                        {
+                                            console.log('!!!    prehod poradi start end');
+                                            const tmp = libraryBase.jspreadsheet.current.startSelRow;
+                                            libraryBase.jspreadsheet.current.startSelRow = libraryBase.jspreadsheet.current.endSelRow;
+                                            libraryBase.jspreadsheet.current.endSelRow = tmp;
+                                        }
+
                                         console.log('!!! mouse over startRow = ', libraryBase.jspreadsheet.current.startSelRow, ', endRow = ', libraryBase.jspreadsheet.current.endSelRow);
 
                                         // libraryBase.jspreadsheet.current.startSelRow = ;
                                         // libraryBase.jspreadsheet.current.endSelRow = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
 
                                         // if (!libraryBase.jspreadsheet.current.preventOnSelection) {
-                                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (!prehodPoradi)
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        else
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
                                         // }
                                         // else {
                                         //    console.log('NEVOLAM');
