@@ -446,7 +446,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                              
                     }
                 }
-                else {
+                else if (endRowIndex < startRowIndex) {
                     console.log('?? var2 - endRowIndex < startRowIndex | down');
                     obj.oldEndSelRow = obj.endSelRow;                        
                     obj.endSelRow = !selectWholeColumn ? startRowIndex : obj.totalItemsInQuery;
