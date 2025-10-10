@@ -361,7 +361,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
     // console.log('OnSelect MODE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
 
-    const selRegionDirection = y2 >= y1 ? "down" : "up";
+    const selRegionDirection = parseInt(y1) < parseInt(y2)? "fromDown" : "fromUp";
     console.log('region vybrany = ', selRegionDirection, '[y1 | y2] = [', startRowIndex, ' | ',
          endRowIndex, '] [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow,  ',', obj.endSelRow, ']');
 
@@ -380,29 +380,29 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
-            // oblast byla vybrana ze shora dolu a jeli jsme mysi dolu             
-            if (selRegionDirection == "down" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow)
+            // oblast byla vybrana ze zdolua nahoru a jeli jsme mysi dolu             
+            if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow)
             {
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
                 console.log('go down 1');
             }
-            // oblast byla vybrana ze zdola nahoru a jeli jsme mysi dolu
-            else if ((selRegionDirection == "up" &&  (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.startSelRow))
+            // oblast byla vybrana ze zhora dolu a jeli jsme mysi dolu
+            else if ((selRegionDirection == "fromUp" &&  (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.startSelRow))
             {
                 obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 obj.scrollDirection = "down";
                 console.log('go down 2');
             }
             //  oblast vybrana ze zdola nahoru a jedu mysi nahoru
-            else if (selRegionDirection == "up" && endRowIndex < obj.startSelRow) {
+            else if (selRegionDirection == "fromUp" && endRowIndex < obj.startSelRow) {
                 // obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
                 obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 obj.scrollDirection = "up";
                 console.log('go up 1');
             }
             // oblast byla vybrana ze shora dolu a jeli jsme mysi nahoru             
-            else if (selRegionDirection == "down" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
+            else if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
             {
                 if (endRowIndex >= startRowIndex) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;                    
