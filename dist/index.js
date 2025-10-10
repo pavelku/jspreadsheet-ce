@@ -8545,10 +8545,10 @@ const mouseOverControls = function(e) {
                                     if (libraryBase.jspreadsheet.current.selectedCell) {   
                                         console.log('!!! tady me to zajima preventSelection = ', libraryBase.jspreadsheet.current.preventOnSelection);
                                         // if (!libraryBase.jspreadsheet.current.preventOnSelection) {
-                                          selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
+                                          selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         // }
                                         // else {
-                                         //   console.log('NEVOLAM');
+                                        //    console.log('NEVOLAM');
                                             // libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         // }
                                     }
