@@ -429,11 +429,31 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
 
 
-export const chooseSelection = function (startPos, endPos, scrollDirection) {
+export const chooseSelection = function (startPos2, endPos2, scrollDirection) {
     const obj = this;
 
-    var data = obj.getData();
-    //console.log('data = ', data);
+    var data = obj.getData();   
+
+    const firstRowPos = data[0].id;
+    const endRowPos = data[data.length-1].id;
+
+    const startPos = Math.max(firstRowPos, obj.startSelRow);
+    const endPos = Math.min(endRowPos, obj.endSelRow);
+    const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
+    const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startR
+    const newStartRowId = obj.getRowData(startRowIndex)[0];
+    if (obj.startSelRow > newStartRowId) {
+        obj.startSelRow = newStartRowId;
+    }
+    const newEndRowId = obj.getRowData(endRowIndex)[0];
+    if (obj.endSelRow < newEndRowId) {
+        obj.endSelRow = newEndRowId;
+    }
+    console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+
+
+    /*
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
@@ -448,8 +468,11 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
     console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    if (scrollDirection == "up")
-        obj.preventOnSelection = true;
+    */
+    // if ((scrollDirection == "up" && obj.lastScrollDirection == "down") || (scrollDirection == "down" && obj.lastScrollDirection == "up")) {
+    //     obj.preventOnSelection = true;
+    //     obj.scrollDirection = scrollDirection;
+    // }
 
     // obj.endSelRow = endRowIndex;    
     // obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
