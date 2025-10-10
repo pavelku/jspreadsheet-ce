@@ -366,9 +366,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
          endRowIndex, '] [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow,  ',', obj.endSelRow, ']');
 
     // TODO NEW FUNC -> copy
-    if (origin){
-        
+    if (origin){        
         console.log('origin set');
+
         if (origin.type == "mousedown" && !origin.shiftKey){
             obj.startSelCol = x1;
             obj.endSelCol = x2;
@@ -455,7 +455,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             resetMousePos();
         }
     }
-    else {
+    else if (!obj.preventOnSelection) {
+        console.log('!obj.preventOnSelection');
         // oblast byla vybrana ze zdolua nahoru a jeli jsme mysi dolu             
         if (selRegionDirection == "fromDown" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow)
         {
@@ -486,9 +487,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.scrollDirection = "up";
             console.log('go up 2');
         }
-        else {
-            obj.selectedCell = [x1, y2, x2, y2];
-        }
+        
         console.log('po nastaveno direction [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow, ',', obj.endSelRow, ']');
     }
     // else if (!obj.preventOnSelection){
@@ -567,22 +566,22 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     //     //     }
     //     // }
     // }
-    // else if (obj.preventOnSelection)
-    // {        
-    //     console.log('obj.preventOnSelection');
-    //     // if (endRowIndex < startRowIndex) {
-    //     //     console.log('obj.preventOnSelection 2');
-    //     //     // doslo ke scrollu
-    //     //     if (obj.scrollDirection == "up") {
-    //     //         console.log('obj.preventOnSelection 3');
-    //     //         if (obj.startSelRow < endRowIndex) {
-    //     //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-    //     //             obj.selectedCell = [x1, y2, x2, y2];
-    //     //         }
-    //     //     }
-    //     // }
-    //     obj.preventOnSelection = false;
-    // } 
+    else if (obj.preventOnSelection)
+    {        
+        console.log('obj.preventOnSelection');
+        // if (endRowIndex < startRowIndex) {
+        //     console.log('obj.preventOnSelection 2');
+        //     // doslo ke scrollu
+        //     if (obj.scrollDirection == "up") {
+        //         console.log('obj.preventOnSelection 3');
+        //         if (obj.startSelRow < endRowIndex) {
+        //             console.log('TODO GO UP -> SET Y1 x1 = ', x1, ', y1 = ' , y1 , ', x2 = ', x2, ' y2 = ', y2, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+        //             obj.selectedCell = [x1, y2, x2, y2];
+        //         }
+        //     }
+        // }
+        obj.preventOnSelection = false;
+    } 
 
     console.log('END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
@@ -591,7 +590,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 }
 
 
-export const chooseSelection = function (startPos, endPos, scrollDirection, origin) {
+export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const obj = this;
 
     var data = obj.getData();
@@ -600,7 +599,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection, orig
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
-    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex, origin);
+    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
