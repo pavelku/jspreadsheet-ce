@@ -2217,8 +2217,12 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     obj.startSelCol = x1;    
     const startRowIndex = obj.getRowData(y1)[0];
     const endRowIndex = obj.getRowData(y2)[0];    
-    console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
-    console.log('OnSelect MODE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
+    // console.log('OnSelect MOVE 1 - origin = ', origin ? 'is set' : 'not set', ' obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
+    // console.log('OnSelect MODE 2 - obj.startSelRow = ', obj.startSelRow, ' startRowIndex = ', startRowIndex, ' obj.endSelRow = ', obj.endSelRow, ' endRowIndex = ', endRowIndex);
+
+    const selRegionDirection = y2 >= y1 ? "down" : "up";
+    console.log('region vybrany = ', selRegionDirection, '[y1 | y2] = [', startRowIndex, ' | ',
+         endRowIndex, '] [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow,  ',', obj.endSelRow, ']');
 
     // TODO NEW FUNC -> copy
     if (origin){
@@ -2235,24 +2239,39 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
-            if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+            // oblast byla vybrana ze shora dolu a jeli jsme mysi dolu             
+            if (selRegionDirection == "down" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow)
+            {
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
-                console.log('go down');
-            } else if (startRowIndex < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+                console.log('go down 1');
+            }
+            // oblast byla vybrana ze zdola nahoru a jeli jsme mysi dolu
+            else if ((selRegionDirection == "up" &&  (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.startSelRow))
+            {
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
+                obj.scrollDirection = "down";
+                console.log('go down 2');
+            }
+            //  oblast vybrana ze zdola nahoru a jedu mysi nahoru
+            else if (selRegionDirection == "up" && endRowIndex < obj.startSelRow) {
+                // obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;
                 obj.scrollDirection = "up";
                 console.log('go up 1');
             }
-            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
+            // oblast byla vybrana ze shora dolu a jeli jsme mysi nahoru             
+            else if (selRegionDirection == "down" && (!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
             {
                 if (endRowIndex >= startRowIndex) {
-                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
-                }
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;                    
+                }                
                 obj.scrollDirection = "up";
                 console.log('go up 2');
             }
+            console.log('po nastaveno direction [obj.startSelRow, obj.endSelRow] = [', obj.startSelRow, ',', obj.endSelRow, ']');
 
+            /* TODO UNCOMMENT
             // pohyb nahoru
             if (endRowIndex < startRowIndex) {
                 console.log('?? var1 - endRowIndex < startRowIndex')
@@ -2287,6 +2306,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endPos = Math.min(endRowPos, obj.endSelRow);
                 chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
+            */
 
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
         }
