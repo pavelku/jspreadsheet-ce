@@ -434,6 +434,8 @@ export const chooseSelection = function (startPos2, endPos2, scrollDirection) {
 
     var data = obj.getData();   
 
+    console.log('chooseSelection obj = ', obj, ', data = ', data);
+
     const firstRowPos = data[0].id;
     const endRowPos = data[data.length-1].id;
 
