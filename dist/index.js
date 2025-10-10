@@ -2304,7 +2304,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.endSelRow = newEndRowId;
     }
     console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-    obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  endRowIndex);
+    obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
 
     // obj.endSelRow = endRowIndex;    
     // obj.preventOnSelection = true;
