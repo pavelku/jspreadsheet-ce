@@ -360,7 +360,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     obj.startSelCol = x1;    
     const startRowIndex = obj.getRowData(y1)[0];
     const endRowIndex = obj.getRowData(y2)[0];
-    console.log('after set mouseevent = ', origin, ', getRowData startRowIndex = ', startRowIndex, ', endRowIndex = ', endRowIndex, ', obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
+    console.log('origin = ', origin ? 'is set' : 'not set',  ', getRowData startRowIndex = ', startRowIndex, ', endRowIndex = ', endRowIndex, ', obj.preventOnSelection = ', obj.preventOnSelection, ', obj.scrollDirection = ', obj.scrollDirection);
 
     // TODO NEW FUNC -> copy
     if (origin){
@@ -381,12 +381,16 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
                 obj.scrollDirection = "down";
                 console.log('go down');
-            }                    
-
-            if (startRowIndex < obj.startSelRow) {
+            } else if (startRowIndex < obj.startSelRow) {
                 obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
                 obj.scrollDirection = "up";
-                console.log('go up');
+                console.log('go up 1');
+            }
+            else if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) < obj.endSelRow)
+            {
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;
+                obj.scrollDirection = "up";
+                console.log('go up 2');
             }
 
             // pohyb nahoru
