@@ -308,6 +308,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // Keep selected cell
     obj.selectedCell = [x1, y1, x2, y2];
+    console.log('onselection, selected cell = ',obj.selectedCell);
 
     // Add selected cell
     if (obj.records[y1][x1]) {
@@ -648,7 +649,8 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const endRowIndex = getDataByNrPos(data, endPos, startRowIndex);
     console.log('data to show = [', startRowIndex, ',', endRowIndex, ']');
     obj.preventOnSelection = true;
-    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);    
+    // obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);    
+    obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);    
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
