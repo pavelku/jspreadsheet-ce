@@ -163,7 +163,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else {
         obj.updateCallCount += 1;
     }
-    console.log(obj.updateCallCount, 'onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
+    console.log('Call - count = ', obj.updateCallCount, 'onclick updateSelectionFromCoords x1, y1, x2, y2,', x1, y1, x2, y2);
 
     var selectWholeColumn = false;
     var isRowSelected = false;
@@ -526,7 +526,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
     }
     else if (obj.preventOnSelection) {
-        obj.preventOnSelection = false;
+        // obj.preventOnSelection = false;
     }
     // else if (!obj.preventOnSelection){
     //     console.log('!obj.preventOnSelection');
@@ -632,7 +632,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     //     obj.preventOnSelection = false;
     // } 
 
-    console.log(obj.updateCallCount, 'END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
+    console.log('Call - count = ', obj.updateCallCount, 'END OF onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
 
     // Find corner cell
     updateCornerPosition.call(obj);
