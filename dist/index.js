@@ -2019,7 +2019,7 @@ const removeCopyingSelection = function() {
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
-    console.log('--updateSelectionFromCoords-- startPos = [', y1, ',', x1, '] endPos = [', y2, ',', x2,'], scrollDirection ', obj.scrollDirection);
+    console.log('--updateSelectionFromCoords-- y1 = [', y1, '] y2 = [', y2, '], scrollDirection ', obj.scrollDirection);
 
     var selectWholeColumn = false;
     var isRowSelected = false;
@@ -2233,7 +2233,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.startSelRow = obj.getRowData(y1)[0];
         obj.endSelRow = obj.getRowData(y2)[0];
 
-        console.log('--updateSelectionFromCoords-- SetPositions startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
+        console.log('--updateSelectionFromCoords-- SetPositions startSelRow = [', obj.startSelRow, '], endSelRow = [', obj.endSelRow,']');
     }
 
     // TODO NEW FUNC -> copy
@@ -2290,7 +2290,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     //     obj.preventOnSelection = false;
     // } 
 
-    console.log('--updateSelectionFromCoords-- at the end  startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
+    // console.log('--updateSelectionFromCoords-- at the end  startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
 
     // Find corner cell
     updateCornerPosition.call(obj);
@@ -2325,7 +2325,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     // }
     // console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    console.log('--chooseSelection-- AT input = [',startPos, ',', endPos,'], selRows = [', obj.startSelRow, ',', obj.endSelRow ,']');
+    console.log('--chooseSelection-- start new PosId = [',startPos, ',', endPos,'], oldPosId = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
@@ -2338,9 +2338,11 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     if (obj.endSelRow < newEndRowId) {
         obj.endSelRow = newEndRowId;
     }
-    console.log('--chooseSelection-- AFTER CHANGE rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
+
+    obj.preventOnSelection = true;
+    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid= [', startRowIndex, ',', endRowIndex, '], new row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']');
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
+    // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
     // if ((scrollDirection == "up" && obj.lastScrollDirection == "down") || (scrollDirection == "down" && obj.lastScrollDirection == "up")) {
     //     obj.preventOnSelection = true;
