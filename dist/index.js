@@ -2340,8 +2340,10 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     obj.preventOnSelection = true;
-    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid= [', startRowIndex, ',', endRowIndex, '], new row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']');
+    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid= [', startRowIndex, ',', endRowIndex, '], new row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']');    
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+    obj.scrollDirection = undefined;
+
     // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
     // if ((scrollDirection == "up" && obj.lastScrollDirection == "down") || (scrollDirection == "down" && obj.lastScrollDirection == "up")) {
@@ -8397,10 +8399,10 @@ const mouseOverControls = function(e) {
                                         console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
                                             ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection);
 
-                                        if (scrollDirection) {
-                                            console.log('--mouseOverControls-- reset scrollDirection');
-                                            libraryBase.jspreadsheet.current.scrollDirection = undefined;
-                                        }
+                                        // if (scrollDirection) {
+                                        //     console.log('--mouseOverControls-- reset scrollDirection');
+                                        //     libraryBase.jspreadsheet.current.scrollDirection = undefined;
+                                        // }
                                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         
 

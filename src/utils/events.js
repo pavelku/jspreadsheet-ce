@@ -695,10 +695,10 @@ const mouseOverControls = function(e) {
                                         console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
                                             ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection);
 
-                                        if (scrollDirection) {
-                                            console.log('--mouseOverControls-- reset scrollDirection');
-                                            libraryBase.jspreadsheet.current.scrollDirection = undefined;
-                                        }
+                                        // if (scrollDirection) {
+                                        //     console.log('--mouseOverControls-- reset scrollDirection');
+                                        //     libraryBase.jspreadsheet.current.scrollDirection = undefined;
+                                        // }
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         
 

@@ -481,8 +481,10 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     obj.preventOnSelection = true;
-    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid= [', startRowIndex, ',', endRowIndex, '], new row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']');
+    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid= [', startRowIndex, ',', endRowIndex, '], new row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']');    
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+    obj.scrollDirection = undefined;
+
     // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
     // if ((scrollDirection == "up" && obj.lastScrollDirection == "down") || (scrollDirection == "down" && obj.lastScrollDirection == "up")) {
