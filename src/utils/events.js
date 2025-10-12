@@ -690,10 +690,12 @@ const mouseOverControls = function(e) {
                                         const startSelRow = libraryBase.jspreadsheet.current.startSelRow;
                                         const endSelRow = libraryBase.jspreadsheet.current.endSelRow;
                                         const scrollDirection = libraryBase.jspreadsheet.current.scrollDirection;
+                                        const preventOnSelection = libraryBase.jspreadsheet.current.preventOnSelection;
 
 
                                         console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
-                                            ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection);
+                                            ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,
+                                            ', preventOnSelection = ', preventOnSelection);
 
                                         // if (scrollDirection) {
                                         //     console.log('--mouseOverControls-- reset scrollDirection');
