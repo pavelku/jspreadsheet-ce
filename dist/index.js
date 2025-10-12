@@ -2237,11 +2237,11 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         else {
             if (obj.scrollDirection == "down")
             {
-                obj.endSelRow = obj.getRowData(y2)[0];
+                obj.endSelRow = obj.getRowData(y1)[0];
             }
             else if (obj.scrollDirection == "up") 
             {
-                obj.startSelRow = obj.getRowData(y1)[0];
+                obj.endSelRow = obj.getRowData(y2)[0];
             }
         }
 
