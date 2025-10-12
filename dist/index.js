@@ -2230,8 +2230,20 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.startSelCol = x1;
         obj.endSelCol = x2;
 
-        obj.startSelRow = obj.getRowData(y1)[0];
-        obj.endSelRow = obj.getRowData(y2)[0];
+        if (!obj.preventOnSelection) {
+            obj.startSelRow = obj.getRowData(y1)[0];
+            obj.endSelRow = obj.getRowData(y2)[0];
+        }
+        else {
+            if (obj.scrollDirection == "down")
+            {
+                obj.endSelRow = obj.getRowData(y2)[0];
+            }
+            else if (obj.scrollDirection == "up") 
+            {
+                obj.startSelRow = obj.getRowData(y1)[0];
+            }
+        }
 
         console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
     }
