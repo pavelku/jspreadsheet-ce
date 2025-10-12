@@ -2235,13 +2235,26 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.endSelRow = obj.getRowData(y2)[0];
         }
         else {
-            if (obj.scrollDirection == "down")
+            if (y1 <= y2) 
             {
-                obj.endSelRow = obj.getRowData(y2)[0];
+                if (obj.scrollDirection == "down")
+                {
+                    obj.endSelRow = obj.getRowData(y2)[0];
+                }
+                else if (obj.scrollDirection == "up") 
+                {
+                    obj.endSelRow = obj.getRowData(y1)[0];
+                }
             }
-            else if (obj.scrollDirection == "up") 
-            {
-                obj.endSelRow = obj.getRowData(y1)[0];
+            else {
+                if (obj.scrollDirection == "down")
+                {
+                    obj.startSelRow = obj.getRowData(y2)[0];
+                }
+                else if (obj.scrollDirection == "up") 
+                {
+                    obj.startSelRow = obj.getRowData(y1)[0];
+                }
             }
         }
 
@@ -8416,15 +8429,7 @@ const mouseOverControls = function(e) {
                                             ', preventOnSelection = ', preventOnSelection);
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = true;
-
-                                        // if (scrollDirection) {
-                                        //     console.log('--mouseOverControls-- reset scrollDirection');
-                                        //     libraryBase.jspreadsheet.current.scrollDirection = undefined;
-                                        // }                                        
                                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                        if (preventOnSelection) {
-                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
-                                        }
                                         libraryBase.jspreadsheet.current.mouseOverControls = false;
 
                                         
