@@ -367,7 +367,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // const val = obj.getRowData(y1)[0];
     // console.log('after set getRowData ', val);
 
-    if (!obj.preventOnSelection || libraryBase.jspreadsheet.current.mouseOverControls) {
+    if (!obj.preventOnSelection || obj.mouseOverControls) {
         obj.startSelCol = x1;
         obj.endSelCol = x2;
 
