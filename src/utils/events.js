@@ -699,7 +699,7 @@ const mouseOverControls = function(e) {
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = true;
 
-                                        if (libraryBase.jspreadsheet.current.selectedCell[1] >= libraryBase.jspreadsheet.current.selectedCell[1])
+                                        if (libraryBase.jspreadsheet.current.selectedCell[1] >= libraryBase.jspreadsheet.current.selectedCell[3])
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         else 
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
