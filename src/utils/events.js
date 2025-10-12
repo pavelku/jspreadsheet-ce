@@ -696,6 +696,9 @@ const mouseOverControls = function(e) {
                                             ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection);
 
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (scrollDirection) {
+                                            libraryBase.jspreadsheet.current.scrollDirection = undefined;
+                                        }
 
 
                                         // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];

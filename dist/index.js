@@ -2019,7 +2019,7 @@ const removeCopyingSelection = function() {
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
-    console.log('--updateSelectionFromCoords-- startPos = [', y1, ',', x1, '] endPos = [', y2, ',', x2,']');
+    console.log('--updateSelectionFromCoords-- startPos = [', y1, ',', x1, '] endPos = [', y2, ',', x2,'], scrollDirection ', obj.scrollDirection);
 
     var selectWholeColumn = false;
     var isRowSelected = false;
@@ -8386,6 +8386,9 @@ const mouseOverControls = function(e) {
                                             ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection);
 
                                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (scrollDirection) {
+                                            libraryBase.jspreadsheet.current.scrollDirection = undefined;
+                                        }
 
 
                                         // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];
