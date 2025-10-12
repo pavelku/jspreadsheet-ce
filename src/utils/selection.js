@@ -367,6 +367,16 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const val = obj.getRowData(y1)[0];
     // console.log('after set getRowData ', val);
 
+    if (!obj.scrollDirection) {
+        obj.startSelCol = x1;
+        obj.endSelCol = x2;
+
+        obj.startSelRow = obj.getRowData(y1)[0];
+        obj.endSelRow = obj.getRowData(y2)[0];
+
+        console.log('--updateSelectionFromCoords-- SetPositions startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
+    }
+
     // TODO NEW FUNC -> copy
     // if (origin){
 
