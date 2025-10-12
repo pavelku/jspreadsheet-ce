@@ -2344,7 +2344,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
         , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
         , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    obj.preventOnSelection = false;
+    // obj.preventOnSelection = false;
 
     // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
@@ -8406,8 +8406,12 @@ const mouseOverControls = function(e) {
                                         // if (scrollDirection) {
                                         //     console.log('--mouseOverControls-- reset scrollDirection');
                                         //     libraryBase.jspreadsheet.current.scrollDirection = undefined;
-                                        // }
+                                        // }                                        
                                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (preventOnSelection) {
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
+
                                         
 
                                         // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];

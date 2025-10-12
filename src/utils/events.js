@@ -700,8 +700,12 @@ const mouseOverControls = function(e) {
                                         // if (scrollDirection) {
                                         //     console.log('--mouseOverControls-- reset scrollDirection');
                                         //     libraryBase.jspreadsheet.current.scrollDirection = undefined;
-                                        // }
+                                        // }                                        
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (preventOnSelection) {
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
+
                                         
 
                                         // libraryBase.jspreadsheet.current.startSelCol = libraryBase.jspreadsheet.current.selectedCell[0];

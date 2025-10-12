@@ -485,7 +485,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
         , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
         , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    obj.preventOnSelection = false;
+    // obj.preventOnSelection = false;
 
     // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
