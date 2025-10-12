@@ -8423,10 +8423,10 @@ const mouseOverControls = function(e) {
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = true;
 
-                                        if (cell1 >= cell2)
+                                        // if (cell1 >= cell2)
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                        else 
-                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
+                                        // else 
+                                           // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = false;
 
