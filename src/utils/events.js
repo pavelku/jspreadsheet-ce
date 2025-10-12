@@ -697,6 +697,8 @@ const mouseOverControls = function(e) {
                                             ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,
                                             ', preventOnSelection = ', preventOnSelection);
 
+                                        libraryBase.jspreadsheet.current.mouseOverControls = true;
+
                                         // if (scrollDirection) {
                                         //     console.log('--mouseOverControls-- reset scrollDirection');
                                         //     libraryBase.jspreadsheet.current.scrollDirection = undefined;
@@ -705,6 +707,7 @@ const mouseOverControls = function(e) {
                                         if (preventOnSelection) {
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
                                         }
+                                        libraryBase.jspreadsheet.current.mouseOverControls = false;
 
                                         
 
