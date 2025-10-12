@@ -700,13 +700,16 @@ const mouseOverControls = function(e) {
                                             ', preventOnSelection = ', preventOnSelection);
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = true;
-
                                         if (cell1 <= cell2)
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         else 
                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = false;
+                                        if (libraryBase.jspreadsheet.current.preventOnSelection)
+                                        {
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
 
                                         
 
