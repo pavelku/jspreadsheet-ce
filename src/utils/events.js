@@ -697,6 +697,7 @@ const mouseOverControls = function(e) {
 
                                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         if (scrollDirection) {
+                                            console.log('--mouseOverControls-- reset scrollDirection');
                                             libraryBase.jspreadsheet.current.scrollDirection = undefined;
                                         }
 
