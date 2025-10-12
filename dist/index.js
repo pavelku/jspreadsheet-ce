@@ -8413,6 +8413,8 @@ const mouseOverControls = function(e) {
                                         const endSelRow = libraryBase.jspreadsheet.current.endSelRow;
                                         const scrollDirection = libraryBase.jspreadsheet.current.scrollDirection;
                                         const preventOnSelection = libraryBase.jspreadsheet.current.preventOnSelection;
+                                        const cell1 = parseInt(libraryBase.jspreadsheet.current.selectedCell[1]);
+                                        const cell2 = parseInt(libraryBase.jspreadsheet.current.selectedCell[3]);
 
 
                                         console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
@@ -8421,7 +8423,7 @@ const mouseOverControls = function(e) {
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = true;
 
-                                        if (libraryBase.jspreadsheet.current.selectedCell[1] >= libraryBase.jspreadsheet.current.selectedCell[3])
+                                        if (cell1 >= cell2)
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         else 
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
