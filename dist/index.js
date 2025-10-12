@@ -2301,7 +2301,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 const chooseSelection = function (startPos, endPos, scrollDirection) {
     const obj = this;
 
-    // var data = obj.getData();
+    var data = obj.getData();
     // console.log('chooseSelection obj = ', obj, ', data = ', data);
 
     // const firstRowPos = data[0][0];
