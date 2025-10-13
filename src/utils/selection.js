@@ -579,7 +579,16 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
     //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
+    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp") {
+        obj.selectedCell[1] = startRowIndex;
+        obj.selectedCell[3] = endRowIndex;
+    }
+    else {
+        obj.selectedCell[1] = endRowIndex;
+        obj.selectedCell[3] = startRowIndex;
+    }
+    
+    // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
     // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
