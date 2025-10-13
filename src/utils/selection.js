@@ -565,14 +565,14 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
     
-    const newStartRowId = obj.getRowData(startRowIndex)[0];
-    if (obj.startSelRow > newStartRowId) {
-        obj.startSelRow = newStartRowId;
-    }
-    const newEndRowId = obj.getRowData(endRowIndex)[0];
-    if (obj.endSelRow < newEndRowId) {
-        obj.endSelRow = newEndRowId;
-    }
+    // const newStartRowId = obj.getRowData(startRowIndex)[0];
+    // if (obj.startSelRow > newStartRowId) {
+    //     obj.startSelRow = newStartRowId;
+    // }
+    // const newEndRowId = obj.getRowData(endRowIndex)[0];
+    // if (obj.endSelRow < newEndRowId) {
+    //     obj.endSelRow = newEndRowId;
+    // }
 
     obj.preventOnSelection = true;
     // console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
