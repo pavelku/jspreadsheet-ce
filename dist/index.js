@@ -9237,15 +9237,15 @@ const keyDownControls = function (e) {
         if (!libraryBase.jspreadsheet.current.edition && libraryBase.jspreadsheet.current.selectedCell) {
             // Which key
             if (e.which == 37) {
-                libraryBase.jspreadsheet.current.keyDirection = 0;           
-                libraryBase.jspreadsheet.current.keyDirectionDone = false;     
-                libraryBase.jspreadsheet.current.mouseOverDirection = "none";
+                // libraryBase.jspreadsheet.current.keyDirection = 0;           
+                // libraryBase.jspreadsheet.current.keyDirectionDone = false;     
+                // libraryBase.jspreadsheet.current.mouseOverDirection = "none";
                 left.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                                
                 e.preventDefault();
             } else if (e.which == 39) {
-                libraryBase.jspreadsheet.current.keyDirection = 2;       
-                libraryBase.jspreadsheet.current.keyDirectionDone = false;         
-                libraryBase.jspreadsheet.current.mouseOverDirection = "none";     
+                // libraryBase.jspreadsheet.current.keyDirection = 2;       
+                // libraryBase.jspreadsheet.current.keyDirectionDone = false;         
+                // libraryBase.jspreadsheet.current.mouseOverDirection = "none";     
                 right.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                                
                 e.preventDefault();
             } else if (e.which == 38) {
