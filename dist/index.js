@@ -8427,7 +8427,7 @@ const mouseOverControls = function (e) {
                                         const cell1 = parseInt(libraryBase.jspreadsheet.current.selectedCell[1]);
                                         const cell2 = parseInt(libraryBase.jspreadsheet.current.selectedCell[3]);
 
-                                        const rowToId = rowToId ? libraryBase.jspreadsheet.current.getRowData(rowId)[0] : undefined;
+                                        const rowToId = rowId ? libraryBase.jspreadsheet.current.getRowData(rowId)[0] : undefined;
                                         const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
                                         const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell3)[0] : undefined;
 
