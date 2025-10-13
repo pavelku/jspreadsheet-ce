@@ -150,8 +150,7 @@ const mouseUpControls = function (e) {
         libraryBase.jspreadsheet.timeControl = null;
     }
 
-    // Mouse up
-    console.log('isMouseAction set 3');
+    // Mouse up    
     libraryBase.jspreadsheet.isMouseAction = false;
     libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
 }
@@ -403,16 +402,14 @@ const mouseDownControls = function (e) {
             }
         }
 
-        if (libraryBase.jspreadsheet.current.edition) {
-            console.log('isMouseAction set 1');
+        if (libraryBase.jspreadsheet.current.edition) {            
             libraryBase.jspreadsheet.isMouseAction = false;
             libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
         } else {
             libraryBase.jspreadsheet.isMouseAction = true;
             libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
         }
-    } else {
-        console.log('isMouseAction set 2');
+    } else {        
         libraryBase.jspreadsheet.isMouseAction = false;
         libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
     }
@@ -432,8 +429,7 @@ const mouseMoveControls = function (e) {
         mouseButton = e.which;
     }
 
-    if (!mouseButton) {
-        console.log('isMouseAction set 4');
+    if (!mouseButton) {        
         libraryBase.jspreadsheet.isMouseAction = false;
         libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
     }
@@ -645,8 +641,7 @@ const mouseOverControls = function (e) {
         mouseButton = e.which;
     }
 
-    if (!mouseButton) {
-        console.log('isMouseAction set 5');
+    if (!mouseButton) {        
         libraryBase.jspreadsheet.isMouseAction = false;
         libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
     }

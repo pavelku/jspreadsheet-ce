@@ -588,6 +588,8 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.selectedCell[3] = startRowIndex;
     }
 
+    refreshSelection.call(obj);
+    
     if (obj.isMouseAction)
     {
         console.log('chooseSelection ISMOUSEACTION, obj = ', obj);        
