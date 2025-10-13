@@ -2277,7 +2277,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 else {
                     obj.mouseOverDirection = 'up';                    
                 }
-                console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection);                
+                console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
                 chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
 
