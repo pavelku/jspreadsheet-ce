@@ -420,6 +420,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb na klavesnici
     else {
+        if (obj.keyDirection != -1) {
         // if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
@@ -449,6 +450,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
                 obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
             }
+
+            obj.keyDirection = -1;
+        }
         // }
     }
 
