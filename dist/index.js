@@ -2236,8 +2236,11 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.endSelCol = x2;
 
         if (!obj.preventOnSelection) {
-            obj.startSelRow = obj.getRowData(y1)[0];
-            obj.endSelRow = obj.getRowData(y2)[0];
+            if (obj.getRowData(y1)[0] < obj.startSelRow)
+                obj.startSelRow = obj.getRowData(y1)[0];
+
+            if (obj.getRowData(y2)[0] > obj.endSelRow)
+                obj.endSelRow = obj.getRowData(y2)[0];
         }
         else {
             if (y1 <= y2) 
@@ -8426,7 +8429,7 @@ const mouseOverControls = function (e) {
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         else {
                                             if (libraryBase.jspreadsheet.current.preventOnSelection)
-                                                selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
+                                                selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
                                             else
                                                 selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
