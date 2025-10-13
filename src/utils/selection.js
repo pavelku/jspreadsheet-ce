@@ -377,11 +377,19 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.endSelCol = x2;
 
         if (!obj.preventOnSelection) {
-            if (obj.getRowData(y1)[0] < obj.startSelRow)
-                obj.startSelRow = obj.getRowData(y1)[0];
+            if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+                obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+            }
 
-            if (obj.getRowData(y2)[0] < obj.endSelRow)
-                obj.endSelRow = obj.getRowData(y2)[0];
+            if (obj.getRowData(y1)[0] < obj.startSelRow) {
+                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;             
+             }
+
+            // if (obj.getRowData(y1)[0] < obj.startSelRow)
+            //     obj.startSelRow = obj.getRowData(y1)[0];
+
+            // if (obj.getRowData(y2)[0] < obj.endSelRow)
+            //     obj.endSelRow = obj.getRowData(y2)[0];
         }
         else {
             if (y1 <= y2) 
@@ -393,7 +401,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
         }
 
-        console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
+       // console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
     }
 
     // TODO NEW FUNC -> copy

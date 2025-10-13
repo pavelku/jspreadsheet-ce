@@ -2236,11 +2236,19 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.endSelCol = x2;
 
         if (!obj.preventOnSelection) {
-            if (obj.getRowData(y1)[0] < obj.startSelRow)
-                obj.startSelRow = obj.getRowData(y1)[0];
+            if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+                obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+            }
 
-            if (obj.getRowData(y2)[0] < obj.endSelRow)
-                obj.endSelRow = obj.getRowData(y2)[0];
+            if (obj.getRowData(y1)[0] < obj.startSelRow) {
+                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;             
+             }
+
+            // if (obj.getRowData(y1)[0] < obj.startSelRow)
+            //     obj.startSelRow = obj.getRowData(y1)[0];
+
+            // if (obj.getRowData(y2)[0] < obj.endSelRow)
+            //     obj.endSelRow = obj.getRowData(y2)[0];
         }
         else {
             if (y1 <= y2) 
@@ -2252,7 +2260,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
         }
 
-        console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
+       // console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
     }
 
     // TODO NEW FUNC -> copy
@@ -8419,19 +8427,33 @@ const mouseOverControls = function (e) {
                                         const cell1 = parseInt(libraryBase.jspreadsheet.current.selectedCell[1]);
                                         const cell2 = parseInt(libraryBase.jspreadsheet.current.selectedCell[3]);
 
+                                        const rowToId = libraryBase.jspreadsheet.current.getRowData(row)[0];
+                                        const cell1ToId = libraryBase.jspreadsheet.current.getRowData(cell1)[0];
+                                        const cell2ToId = libraryBase.jspreadsheet.current.getRowData(cell3)[0];
 
-                                        console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
-                                            ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,
-                                            ', preventOnSelection = ', preventOnSelection);
+                                        console.log('--mouseOverControls-- indexex = ', row, 'y1Id = ', cell1, ' y2Id = ', cell3, ', preventOnSelection = ', preventOnSelection);
+                                        console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
+
+
+                                        // console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
+                                        //     ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,
+                                        //     ', preventOnSelection = ', preventOnSelection);
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = true;
-                                        if (cell1 <= cell2)
+                                        if (cell1 <= cell2) {
+                                            console.log('--mouseOverControls-- mensi');
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        }
                                         else {
                                             if (libraryBase.jspreadsheet.current.preventOnSelection)
+                                            {                                                
+                                                console.log('--mouseOverControls-- mensi');
                                                 selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
-                                            else
+                                            }
+                                            else 
+                                            {
                                                 selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                            }
                                         }
 
                                         libraryBase.jspreadsheet.current.mouseOverControls = false;
