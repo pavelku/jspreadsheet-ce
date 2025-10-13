@@ -2449,10 +2449,10 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
 
     if (obj.isMouseAction)
     {
-        console.log('chooseSelection ISMOUSEACTION, obj = ', obj);
-        obj.refreshSelection();
+        console.log('chooseSelection ISMOUSEACTION, obj = ', obj);        
     }
     else {
+        refreshSelection.call(obj);
         console.log('chooseSelection NO MOUSE ACTION, obj = ', obj);
     }
 
