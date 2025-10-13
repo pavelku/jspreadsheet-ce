@@ -8452,9 +8452,9 @@ const mouseOverControls = function (e) {
                                             console.log('--1. mouseOverControls-- MOVE DOWN');
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell1 <= cell2 && rowId < cell2) {
+                                        else if (cell1 <= cell2 && rowId < cell1) {
                                             console.log('--2. mouseOverControls-- MOVE UP');
-                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
                                         else if (cell2 > cell1 && rowId < cell2) {
                                             console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
@@ -8462,7 +8462,7 @@ const mouseOverControls = function (e) {
                                         }
                                         else if (cell1 > cell2 && rowId > cell2) {
                                             console.log('--4. mouseOverControls-- MOVE UP SELECTED AND THAN MOVE DOWN');
-                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
 
 
