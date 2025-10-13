@@ -1446,15 +1446,19 @@ const keyDownControls = function (e) {
             // Which key
             if (e.which == 37) {
                 left.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 0;
                 e.preventDefault();
             } else if (e.which == 39) {
                 right.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 2;
                 e.preventDefault();
             } else if (e.which == 38) {
                 up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 1;
                 e.preventDefault();
             } else if (e.which == 40) {
                 down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 3;
                 e.preventDefault();
             } else if (e.which == 36) {
                 first.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);

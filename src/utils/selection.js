@@ -430,14 +430,20 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // 3 = dolu
             const endRowIndex = obj.getRowData(y2)[0]; 
             const startRowIndex = obj.getRowData(y1)[0]; 
-            
+
             console.log('pohyb klavesnici smer = ', obj.keyDirection);
-            if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;            
-                console.log('go down');
-            } else if (startRowIndex < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
-                console.log('go up');
+
+            // vybrana oblast ze shora dolu
+            if (y1 < y2) {   
+                if (obj.keyDirection == 1 || obj.keyDirection == 2) {
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+                }
+            }
+            // vybrana oblast ze zdola dolu
+            else {
+                if (obj.keyDirection == 1 || obj.keyDirection == 2) {
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+                }
             }
         }
     }

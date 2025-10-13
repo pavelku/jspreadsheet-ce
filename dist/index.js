@@ -1073,8 +1073,7 @@ const updateScroll = function(direction) {
     }
 
     console.log('cell height = ', h2, ', container top = ', y1, ', cell top =', y2, ', new y = ', y, ', direction = ', direction, 'obj.content.scrollTop =', obj.content.scrollTop,
-        ' y = ', y, ', h1 = ', h1);
-    obj.keyDirection = direction;
+        ' y = ', y, ', h1 = ', h1);    
 
     // Top position check
     if (y > (obj.content.scrollTop + 30) && ((y + 5) < (obj.content.scrollTop + h1))) {
@@ -2290,14 +2289,20 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // 3 = dolu
             const endRowIndex = obj.getRowData(y2)[0]; 
             const startRowIndex = obj.getRowData(y1)[0]; 
-            
+
             console.log('pohyb klavesnici smer = ', obj.keyDirection);
-            if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;            
-                console.log('go down');
-            } else if (startRowIndex < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
-                console.log('go up');
+
+            // vybrana oblast ze shora dolu
+            if (y1 < y2) {   
+                if (obj.keyDirection == 1 || obj.keyDirection == 2) {
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+                }
+            }
+            // vybrana oblast ze zdola dolu
+            else {
+                if (obj.keyDirection == 1 || obj.keyDirection == 2) {
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+                }
             }
         }
     }
@@ -9283,15 +9288,19 @@ const keyDownControls = function (e) {
             // Which key
             if (e.which == 37) {
                 left.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 0;
                 e.preventDefault();
             } else if (e.which == 39) {
                 right.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 2;
                 e.preventDefault();
             } else if (e.which == 38) {
                 up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 1;
                 e.preventDefault();
             } else if (e.which == 40) {
                 down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
+                libraryBase.jspreadsheet.current.keyDirection = 3;
                 e.preventDefault();
             } else if (e.which == 36) {
                 first.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
