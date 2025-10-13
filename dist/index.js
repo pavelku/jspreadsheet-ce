@@ -2276,14 +2276,6 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 var data = obj.getData();                
                 obj.endSelRow = obj.getRowData(y2)[0];    
 
-                const firstRowPos = data[0][0];
-                const endRowPos = data[data.length-1][0];
-                const startPos = Math.max(firstRowPos, obj.startSelRow);
-                const endPos = Math.min(endRowPos, obj.endSelRow);
-
-                const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
-                const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
-                
                 if (obj.startSelRow < obj.endSelRow)
                 {
                     obj.mouseOverDirection = 'down';                    
@@ -2292,6 +2284,20 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     obj.mouseOverDirection = 'up';                    
                 }
 
+                if (obj.startSelRow > obj.endSelRow) {
+                    const tmpStart = obj.startSelRow;
+                    obj.startSelRow = obj.endSelRow;
+                    obj.endSelRow = tmpStart;
+                }
+
+                const firstRowPos = data[0][0];
+                const endRowPos = data[data.length-1][0];
+                const startPos = Math.max(firstRowPos, obj.startSelRow);
+                const endPos = Math.min(endRowPos, obj.endSelRow);
+
+                const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
+                const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
+                
                 if (obj.mouseOverDirection == "down") {
                     obj.selectedCell[1] = startRowIndex;
                     obj.selectedCell[3] = endRowIndex;
