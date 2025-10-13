@@ -435,14 +435,23 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
             // vybrana oblast ze shora dolu
             if (y1 < y2) {   
-                if (obj.keyDirection == 1 || obj.keyDirection == 2) {
+                if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                     obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
                 }
             }
-            // vybrana oblast ze zdola dolu
-            else {
-                if (obj.keyDirection == 1 || obj.keyDirection == 2) {
+            // vybrana oblast ze zdola nahoru
+            else if (y1 > y2) {  
+                if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+                }
+            }
+            // vybrana jedna radka
+            else {
+                if (obj.keyDirection == 1) {
+                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+                }
+                else if (obj.keyDirection == 3) {
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
                 }
             }
         }
