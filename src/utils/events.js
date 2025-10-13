@@ -694,9 +694,9 @@ const mouseOverControls = function (e) {
                                         const cell1 = parseInt(libraryBase.jspreadsheet.current.selectedCell[1]);
                                         const cell2 = parseInt(libraryBase.jspreadsheet.current.selectedCell[3]);
 
-                                        const rowToId = libraryBase.jspreadsheet.current.getRowData(rowId)[0];
-                                        const cell1ToId = libraryBase.jspreadsheet.current.getRowData(cell1)[0];
-                                        const cell2ToId = libraryBase.jspreadsheet.current.getRowData(cell3)[0];
+                                        const rowToId = rowToId ? libraryBase.jspreadsheet.current.getRowData(rowId)[0] : undefined;
+                                        const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
+                                        const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell3)[0] : undefined;
 
                                         console.log('--mouseOverControls-- indexes row = ', row, 'y1 = ', cell1, ' y2 = ', cell3, ', preventOnSelection = ', preventOnSelection);
                                         console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
