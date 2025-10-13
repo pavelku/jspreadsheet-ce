@@ -8053,10 +8053,7 @@ const mouseDownControls = function (e) {
         mouseButton = e.button;
     } else {
         mouseButton = e.which;
-    }
-
-    libraryBase.jspreadsheet.current.keyDirection = "-1";
-    libraryBase.jspreadsheet.current.keyDirectionDone = true;
+    }    
 
     // Get elements
     const jssTable = getElement(e.target);
@@ -8084,6 +8081,11 @@ const mouseDownControls = function (e) {
                 libraryBase.jspreadsheet.current = null;
             }
         }
+    }
+
+    if (libraryBase.jspreadsheet.current) {
+        libraryBase.jspreadsheet.current.keyDirection = "-1";
+        libraryBase.jspreadsheet.current.keyDirectionDone = true;
     }
 
     if (libraryBase.jspreadsheet.current && mouseButton == 1) {
