@@ -590,11 +590,11 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
 
     if (obj.isMouseAction)
     {
-        console.log('chooseSelection ISMOUSEACTION');
+        console.log('chooseSelection ISMOUSEACTION, obj = ', obj);
         obj.refreshSelection();
     }
     else {
-        console.log('chooseSelection NO MOUSE ACTION');
+        console.log('chooseSelection NO MOUSE ACTION, obj = ', obj);
     }
 
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
