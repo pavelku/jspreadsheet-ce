@@ -633,7 +633,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.proceedKeyboard = true;
     }
 
-    if (obj.keyDirection != -1) {
+    if (!obj.keyDirectionDone) {
         const y1 = obj.selectedCell[1];
         const y2 = obj.selectedCell[3];
 
@@ -659,7 +659,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
             obj.endSelRow = obj.startSelRow = !endRowIndex;                                
         }
 
-        obj.keyDirection = -1;
+        obj.keyDirectionDone = true;
         obj.preventOnSelection = true;
     }
 

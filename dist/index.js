@@ -2492,7 +2492,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.proceedKeyboard = true;
     }
 
-    if (obj.keyDirection != -1) {
+    if (!obj.keyDirectionDone) {
         const y1 = obj.selectedCell[1];
         const y2 = obj.selectedCell[3];
 
@@ -2518,7 +2518,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
             obj.endSelRow = obj.startSelRow = !endRowIndex;                                
         }
 
-        obj.keyDirection = -1;
+        obj.keyDirectionDone = true;
         obj.preventOnSelection = true;
     }
 
@@ -8595,30 +8595,35 @@ const mouseOverControls = function (e) {
                                             // console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             libraryBase.jspreadsheet.current.keyDirection = -1;  
+                                            libraryBase.jspreadsheet.current.keyDirectionDone = true;
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell2 > cell1 && rowId > cell2) {
                                             // console.log('--1. mouseOverControls-- MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'down';                                            
                                             libraryBase.jspreadsheet.current.keyDirection = -1;  
+                                            libraryBase.jspreadsheet.current.keyDirectionDone = true;
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell1 > cell2 && rowId < cell2) {
                                             // console.log('--2. mouseOverControls-- MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'up';    
-                                            libraryBase.jspreadsheet.current.keyDirection = -1;                                          
+                                            libraryBase.jspreadsheet.current.keyDirection = -1;       
+                                            libraryBase.jspreadsheet.current.keyDirectionDone = true;                                   
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
                                         else if (cell2 > cell1 && rowId < cell2) {
                                             //console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'sellDownAndThanUp';                                            
                                             libraryBase.jspreadsheet.current.keyDirection = -1;  
+                                            libraryBase.jspreadsheet.current.keyDirectionDone = true;
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell1 > cell2 && rowId > cell2) {
                                            // console.log('--4. mouseOverControls-- MOVE UP SELECTED AND THAN MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'sellUpnAndThanDown';                                            
                                             libraryBase.jspreadsheet.current.keyDirection = -1;  
+                                            libraryBase.jspreadsheet.current.keyDirectionDone = true;
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
 
@@ -9337,22 +9342,26 @@ const keyDownControls = function (e) {
         if (!libraryBase.jspreadsheet.current.edition && libraryBase.jspreadsheet.current.selectedCell) {
             // Which key
             if (e.which == 37) {
-                libraryBase.jspreadsheet.current.keyDirection = 0;                
+                libraryBase.jspreadsheet.current.keyDirection = 0;           
+                libraryBase.jspreadsheet.current.keyDirectionDone = false;     
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
                 left.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                                
                 e.preventDefault();
             } else if (e.which == 39) {
-                libraryBase.jspreadsheet.current.keyDirection = 2;           
+                libraryBase.jspreadsheet.current.keyDirection = 2;       
+                libraryBase.jspreadsheet.current.keyDirectionDone = false;         
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";     
                 right.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                                
                 e.preventDefault();
             } else if (e.which == 38) {
-                libraryBase.jspreadsheet.current.keyDirection = 1;                
+                libraryBase.jspreadsheet.current.keyDirection = 1;      
+                libraryBase.jspreadsheet.current.keyDirectionDone = false;               
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
                 up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
                 e.preventDefault();
             } else if (e.which == 40) {
-                libraryBase.jspreadsheet.current.keyDirection = 3;                
+                libraryBase.jspreadsheet.current.keyDirection = 3;    
+                libraryBase.jspreadsheet.current.keyDirectionDone = false;                 
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
                 down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
                 e.preventDefault();
