@@ -587,7 +587,16 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;
     }
-    
+
+    if (obj.isMouseAction)
+    {
+        console.log('chooseSelection ISMOUSEACTION');
+        obj.refreshSelection();
+    }
+    else {
+        console.log('chooseSelection NO MOUSE ACTION');
+    }
+
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
