@@ -151,6 +151,7 @@ const mouseUpControls = function (e) {
     }
 
     // Mouse up
+    console.log('isMouseAction set 3');
     libraryBase.jspreadsheet.isMouseAction = false;
 }
 
@@ -402,11 +403,13 @@ const mouseDownControls = function (e) {
         }
 
         if (libraryBase.jspreadsheet.current.edition) {
+            console.log('isMouseAction set 1');
             libraryBase.jspreadsheet.isMouseAction = false;
         } else {
             libraryBase.jspreadsheet.isMouseAction = true;
         }
     } else {
+        console.log('isMouseAction set 2');
         libraryBase.jspreadsheet.isMouseAction = false;
     }
 }
@@ -426,6 +429,7 @@ const mouseMoveControls = function (e) {
     }
 
     if (!mouseButton) {
+        console.log('isMouseAction set 4');
         libraryBase.jspreadsheet.isMouseAction = false;
     }
 
@@ -637,6 +641,7 @@ const mouseOverControls = function (e) {
     }
 
     if (!mouseButton) {
+        console.log('isMouseAction set 5');
         libraryBase.jspreadsheet.isMouseAction = false;
     }
 
