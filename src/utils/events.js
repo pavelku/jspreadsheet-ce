@@ -729,15 +729,15 @@ const mouseOverControls = function (e) {
 
                                         if (!libraryBase.jspreadsheet.current.preventOnSelection)
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                        else {
-                                            if (libraryBase.jspreadsheet.current.mouseOverDirection == "up" || libraryBase.jspreadsheet.current.mouseOverDirection == "sellDownAndThanUp")
-                                            {
-                                                updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], columnId, rowId, e);    
-                                            }
-                                            else {
-                                                updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                            }
-                                        }
+                                        // else {
+                                        //     if (libraryBase.jspreadsheet.current.mouseOverDirection == "up" || libraryBase.jspreadsheet.current.mouseOverDirection == "sellDownAndThanUp")
+                                        //     {
+                                        //         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], columnId, rowId, e);    
+                                        //     }
+                                        //     else {
+                                        //         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        //     }
+                                        // }
 
                                         if (libraryBase.jspreadsheet.current.preventOnSelection) {
                                             libraryBase.jspreadsheet.current.preventOnSelection = false;
