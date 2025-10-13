@@ -2478,12 +2478,12 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     console.log('choose selection ', obj.keyDirection);
-    
-    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
+
+    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 1) {
         obj.selectedCell[1] = startRowIndex;
         obj.selectedCell[3] = endRowIndex;
     }
-    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 1) {
+    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 3) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;
     }
