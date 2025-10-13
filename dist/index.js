@@ -2226,7 +2226,6 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
 
-            console.log('!!!! MOUSE DOWN UP WITH SCHIFT KEY');
             const startRowIndex = obj.getRowData(y1)[0];
             const endRowIndex = obj.getRowData(y2)[0];   
 
@@ -2272,6 +2271,14 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, obj.startSelRow);
                 const endPos = Math.min(endRowPos, obj.endSelRow);
+
+                if (startPos < endPos) {
+                    obj.mouseOverDirection = 'down';
+                }
+                else {
+                    obj.mouseOverDirection = 'up';
+                }
+                
                 chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
 
