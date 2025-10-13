@@ -385,18 +385,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // mysi jedu dolu
             if (obj.mouseOverDirection == "down") {
                 const endRowIndex = obj.getRowData(y2)[0];    
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
-                if (!obj.startSelRow) {
-                    obj.startSelRow = obj.getRowData(y1)[0];    
-                }
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;                
             }
             // mysi jedu nahoru
             else if (obj.mouseOverDirection == "up") {
-                const startRowIndex = obj.getRowData(y1)[0];
-                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
-                if (!obj.endSelRow) {
-                    obj.endSelRow = obj.getRowData(y2)[0];    
-                }
+                const startRowIndex = obj.getRowData(y2)[0];
+                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;                
             }
             // vybral jsem oblast ze shora dolu a pak jedu nahoru
             else if (obj.mouseOverDirection == "sellDownAndThanUp") {
