@@ -371,38 +371,48 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         obj.startSelRow = obj.getRowData(y1)[0];
         obj.endSelRow = obj.getRowData(y2)[0];
     }
-    
-    if (!obj.preventOnSelection || obj.mouseOverControls) {
-        obj.startSelCol = x1;
-        obj.endSelCol = x2;
 
-        if (!obj.preventOnSelection) {
-            if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-                obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-            }
+    if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+        obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
+        // obj.scrollDirection = "down";
+    }            
 
-            if (obj.getRowData(y1)[0] < obj.startSelRow) {
-                obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;             
-             }
-
-            // if (obj.getRowData(y1)[0] < obj.startSelRow)
-            //     obj.startSelRow = obj.getRowData(y1)[0];
-
-            // if (obj.getRowData(y2)[0] < obj.endSelRow)
-            //     obj.endSelRow = obj.getRowData(y2)[0];
-        }
-        else {
-            if (y1 <= y2) 
-            {
-                obj.endSelRow = obj.getRowData(y2)[0];
-            }
-            else {
-                obj.startSelRow = obj.getRowData(y1)[0];                
-            }
-        }
-
-       // console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
+    if (obj.getRowData(y1)[0] < obj.startSelRow) {
+        obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+        // obj.scrollDirection = "up";
     }
+    
+    // if (!obj.preventOnSelection || obj.mouseOverControls) {
+    //     obj.startSelCol = x1;
+    //     obj.endSelCol = x2;
+
+    //     if (!obj.preventOnSelection) {
+    //         if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+    //             obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
+    //         }
+
+    //         if (obj.getRowData(y1)[0] < obj.startSelRow) {
+    //             obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;             
+    //          }
+
+    //         // if (obj.getRowData(y1)[0] < obj.startSelRow)
+    //         //     obj.startSelRow = obj.getRowData(y1)[0];
+
+    //         // if (obj.getRowData(y2)[0] < obj.endSelRow)
+    //         //     obj.endSelRow = obj.getRowData(y2)[0];
+    //     }
+    //     else {
+    //         if (y1 <= y2) 
+    //         {
+    //             obj.endSelRow = obj.getRowData(y2)[0];
+    //         }
+    //         else {
+    //             obj.startSelRow = obj.getRowData(y1)[0];                
+    //         }
+    //     }
+
+    //    // console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
+    // }
 
     // TODO NEW FUNC -> copy
     // if (origin){
@@ -458,7 +468,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     //     obj.preventOnSelection = false;
     // } 
 
-    // console.log('--updateSelectionFromCoords-- at the end  startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
+    console.log('--updateSelectionFromCoords-- at the end  startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
 
     // Find corner cell
     updateCornerPosition.call(obj);

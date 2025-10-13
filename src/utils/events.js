@@ -698,35 +698,57 @@ const mouseOverControls = function (e) {
                                         const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
                                         const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell2)[0] : undefined;
 
-                                        console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ' y2 = ', cell2, ', preventOnSelection = ', preventOnSelection);
+                                        console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection);
                                         console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
+
+                                        if (!cell2) {
+                                            console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        }
+                                        else if (cell2 > cell1 && rowId > cell2) {
+                                            console.log('--1. mouseOverControls-- MOVE DOWN');
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        }
+                                        else if (cell1 < cell2 && rowId < y2) {
+                                            console.log('--2. mouseOverControls-- MOVE UP');
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
+                                        }
+                                        else if (cell2 > cell1 && rowId < y2) {
+                                            console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        }
+                                        else if (cell1 > cell2 && rowId > cell2) {
+                                            console.log('--4. mouseOverControls-- MOVE UP SELECTED AND THAN MOVE DOWN');
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
+                                        }
+
 
 
                                         // console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
                                         //     ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,
                                         //     ', preventOnSelection = ', preventOnSelection);
 
-                                        libraryBase.jspreadsheet.current.mouseOverControls = true;
-                                        if (cell1 <= cell2) {
-                                            console.log('--mouseOverControls-- mensi');
-                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                        }
-                                        else {
-                                            if (libraryBase.jspreadsheet.current.preventOnSelection)
-                                            {                                                
-                                                console.log('--mouseOverControls-- mensi');
-                                                updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
-                                            }
-                                            else 
-                                            {
-                                                updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
-                                            }
-                                        }
+                                        // libraryBase.jspreadsheet.current.mouseOverControls = true;
+                                        // if (cell1 <= cell2) {
+                                        //     console.log('--mouseOverControls-- mensi');
+                                        //     updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        // }
+                                        // else {
+                                        //     if (libraryBase.jspreadsheet.current.preventOnSelection)
+                                        //     {                                                
+                                        //         console.log('--mouseOverControls-- mensi');
+                                        //         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
+                                        //     }
+                                        //     else 
+                                        //     {
+                                        //         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        //     }
+                                        // }
 
-                                        libraryBase.jspreadsheet.current.mouseOverControls = false;
-                                        if (libraryBase.jspreadsheet.current.preventOnSelection) {
-                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
-                                        }
+                                        // libraryBase.jspreadsheet.current.mouseOverControls = false;
+                                        // if (libraryBase.jspreadsheet.current.preventOnSelection) {
+                                        //     libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        // }
 
 
 
