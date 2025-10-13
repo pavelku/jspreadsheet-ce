@@ -363,57 +363,65 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // vyvolano mysi
     if (origin) {
-        console.log('MYSS');
+        console.log('mouse');
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
 
+            console.log('!! first mousedown');
+
+            // prvni klik nastav start sel row
             const startRowIndex = obj.getRowData(y1)[0];
             const endRowIndex = obj.getRowData(y2)[0];   
 
-            obj.oldEndSelRow = obj.endSelRow;
             obj.startSelCol = x1;
-            obj.endSelCol = x2;            
             obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;            
-            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+            // obj.endSelCol = x2;            
+            
+            // obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
         // pohyb mysi
-        else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
-            console.log('!! mouseover');
+        else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {            
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
-            
-            // mysi jedu dolu
-            if (obj.mouseOverDirection == "down") {
-                const endRowIndex = obj.getRowData(y2)[0];    
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;                
-            }
-            // mysi jedu nahoru
-            else if (obj.mouseOverDirection == "up") {
-                const startRowIndex = obj.getRowData(y2)[0];
-                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;                
-            }
-            // vybral jsem oblast ze shora dolu a pak jedu nahoru
-            else if (obj.mouseOverDirection == "sellDownAndThanUp") {
-                const endRowIndex = obj.getRowData(y2)[0];    
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
-            }
-            // vybral jsem oblast ze zdola nahoru a pak jedu dolu
-            else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
-                const startRowIndex = obj.getRowData(y2)[0];    
-                obj.startSelRow = startRowIndex;
-            }           
+            if (origin.type == "mouseover")
+            {
+                console.log('!! mouseover');
+                // mysi jedu dolu
+                if (obj.mouseOverDirection == "down") {
+                    const endRowIndex = obj.getRowData(y2)[0];    
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;                
+                }
+                // mysi jedu nahoru
+                else if (obj.mouseOverDirection == "up") {
+                    const startRowIndex = obj.getRowData(y2)[0];
+                    obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;                
+                }
+                // vybral jsem oblast ze shora dolu a pak jedu nahoru
+                else if (obj.mouseOverDirection == "sellDownAndThanUp") {
+                    const endRowIndex = obj.getRowData(y2)[0];    
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+                }
+                // vybral jsem oblast ze zdola nahoru a pak jedu dolu
+                else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
+                    const startRowIndex = obj.getRowData(y2)[0];    
+                    obj.startSelRow = startRowIndex;
+                }      
+            }     
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
-                var data = obj.getData();
+                // druhy klik -> nastav end position
+                var data = obj.getData();                
+                obj.endSelRow = obj.getRowData(y2)[0];    
+
                 const firstRowPos = data[0][0];
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, obj.startSelRow);
                 const endPos = Math.min(endRowPos, obj.endSelRow);
 
-                 const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
+                const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
                 const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
                 
                 if (y1 < y2)
