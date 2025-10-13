@@ -2306,12 +2306,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
             // vybrana jedna radka
             else {
-                if (obj.keyDirection == 1) {
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
-                }
-                else if (obj.keyDirection == 3) {
-                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
-                }
+                obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
             }
         }
     }
