@@ -470,7 +470,6 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
-
             // 0 = doleva
             // 1 = nahoru
             // 2 = doprava
@@ -535,6 +534,9 @@ export const chooseSelection = function (startPos, endPos) {
     if (!obj.keyDirectionDone) {
         const y1 = obj.selectedCell[1];
         const y2 = obj.selectedCell[3];
+
+        obj.startSelCol = obj.selectedCell[0];
+        obj.endSelCol = obj.selectedCell[2];
 
         const endRowIndex = obj.getRowData(y2)[0]; 
         const startRowIndex = obj.getRowData(y1)[0]; 
