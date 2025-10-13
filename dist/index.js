@@ -2234,8 +2234,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
             obj.startSelCol = x1;
             obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;            
-            // obj.endSelCol = x2;            
-            
+            obj.startSelRow = undefined;
+            obj.endSelCol = undefined;
+            // obj.endSelCol = x2;    
             // obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
@@ -2283,7 +2284,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
                 const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
                 
-                if (y1 < y2)
+                if (obj.startSelRow < obj.endSelRow)
                 {
                     obj.mouseOverDirection = 'down';                    
                 }
@@ -2306,6 +2307,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.preventOnSelection = true;
                 console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
                 refreshSelection.call(obj);    
+                return;
             }
 
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
