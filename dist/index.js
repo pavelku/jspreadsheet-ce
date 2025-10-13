@@ -1074,6 +1074,7 @@ const updateScroll = function(direction) {
 
     console.log('cell height = ', h2, ', container top = ', y1, ', cell top =', y2, ', new y = ', y, ', direction = ', direction, 'obj.content.scrollTop =', obj.content.scrollTop,
         ' y = ', y, ', h1 = ', h1);
+    obj.keyDirection = direction;
 
     // Top position check
     if (y > (obj.content.scrollTop + 30) && ((y + 5) < (obj.content.scrollTop + h1))) {
@@ -2255,6 +2256,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endRowIndex = obj.getRowData(y2)[0];    
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             }
+            // vybral jsem oblast ze zdola nahoru a pak jedu dolu
             else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
                 const startRowIndex = obj.getRowData(y2)[0];    
                 obj.startSelRow = startRowIndex;
@@ -2274,6 +2276,24 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
         else {
             resetMousePos();
+        }
+    }
+    // pohyb mysi
+    else {
+        obj.startSelCol = x1;
+        obj.endSelCol = x2;     
+        
+        // 0 = doleva
+        // 1 = nahoru
+        // 2 = doprava
+        // 3 = dolu
+        console.log('pohyb klavesnici smer = ', obj.keyDirection);
+        if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;            
+            console.log('go down');
+        } else if (startRowIndex < obj.startSelRow) {
+            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            console.log('go up');
         }
     }
 
@@ -2448,16 +2468,6 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     refreshSelection.call(obj);
-
-    if (obj.isMouseAction)
-    {
-        console.log('chooseSelection ISMOUSEACTION, obj = ', obj);        
-    }
-    else {
-        // refreshSelection.call(obj);
-        console.log('chooseSelection NO MOUSE ACTION, obj = ', obj);
-    }
-
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
@@ -8551,7 +8561,7 @@ const mouseOverControls = function (e) {
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
 
-                                        console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection, ', mouseOverDirection = ', libraryBase.jspreadsheet.current.mouseOverDirection);
+                                        // console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection, ', mouseOverDirection = ', libraryBase.jspreadsheet.current.mouseOverDirection);
                                         // console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
 
 

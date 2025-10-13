@@ -1021,6 +1021,7 @@ export const updateScroll = function(direction) {
 
     console.log('cell height = ', h2, ', container top = ', y1, ', cell top =', y2, ', new y = ', y, ', direction = ', direction, 'obj.content.scrollTop =', obj.content.scrollTop,
         ' y = ', y, ', h1 = ', h1);
+    obj.keyDirection = direction;
 
     // Top position check
     if (y > (obj.content.scrollTop + 30) && ((y + 5) < (obj.content.scrollTop + h1))) {

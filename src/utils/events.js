@@ -730,7 +730,7 @@ const mouseOverControls = function (e) {
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
 
-                                        console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection, ', mouseOverDirection = ', libraryBase.jspreadsheet.current.mouseOverDirection);
+                                        // console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection, ', mouseOverDirection = ', libraryBase.jspreadsheet.current.mouseOverDirection);
                                         // console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
 
 

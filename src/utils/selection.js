@@ -396,6 +396,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endRowIndex = obj.getRowData(y2)[0];    
                 obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             }
+            // vybral jsem oblast ze zdola nahoru a pak jedu dolu
             else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
                 const startRowIndex = obj.getRowData(y2)[0];    
                 obj.startSelRow = startRowIndex;
@@ -415,6 +416,24 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
         else {
             resetMousePos();
+        }
+    }
+    // pohyb mysi
+    else {
+        obj.startSelCol = x1;
+        obj.endSelCol = x2;     
+        
+        // 0 = doleva
+        // 1 = nahoru
+        // 2 = doprava
+        // 3 = dolu
+        console.log('pohyb klavesnici smer = ', obj.keyDirection);
+        if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;            
+            console.log('go down');
+        } else if (startRowIndex < obj.startSelRow) {
+            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            console.log('go up');
         }
     }
 
@@ -589,16 +608,6 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     refreshSelection.call(obj);
-
-    if (obj.isMouseAction)
-    {
-        console.log('chooseSelection ISMOUSEACTION, obj = ', obj);        
-    }
-    else {
-        // refreshSelection.call(obj);
-        console.log('chooseSelection NO MOUSE ACTION, obj = ', obj);
-    }
-
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
