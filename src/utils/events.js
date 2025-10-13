@@ -703,24 +703,31 @@ const mouseOverControls = function (e) {
 
                                         if (!cell2) {
                                             console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
+                                            libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell2 >= cell1 && rowId > cell2) {
                                             console.log('--1. mouseOverControls-- MOVE DOWN');
-                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                            libraryBase.jspreadsheet.current.mouseOverDirection = 'down';
+                                            // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell1 <= cell2 && rowId < cell1) {
                                             console.log('--2. mouseOverControls-- MOVE UP');
-                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
+                                            libraryBase.jspreadsheet.current.mouseOverDirection = 'up';
+                                            // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
                                         else if (cell2 > cell1 && rowId < cell2) {
                                             console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
-                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                            libraryBase.jspreadsheet.current.mouseOverDirection = 'sellDownAndThanUp';
+                                            // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell1 > cell2 && rowId > cell2) {
                                             console.log('--4. mouseOverControls-- MOVE UP SELECTED AND THAN MOVE DOWN');
-                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
+                                            libraryBase.jspreadsheet.current.mouseOverDirection = 'sellUpnAndThanDown';
+                                            // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
+
+                                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
 
 
 
