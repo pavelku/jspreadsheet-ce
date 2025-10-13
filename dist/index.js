@@ -8055,6 +8055,9 @@ const mouseDownControls = function (e) {
         mouseButton = e.which;
     }
 
+    libraryBase.jspreadsheet.current.keyDirection = "-1";
+    libraryBase.jspreadsheet.current.keyDirectionDone = true;
+
     // Get elements
     const jssTable = getElement(e.target);
 
