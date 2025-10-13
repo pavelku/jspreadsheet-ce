@@ -2419,7 +2419,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     // }
     // console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    console.log('--chooseSelection-- start new PosId from scroll = [',startPos, ',', endPos,'], oldPosId = [', obj.startSelRow, ',', obj.endSelRow ,']');
+    // console.log('--chooseSelection-- start new PosId from scroll = [',startPos, ',', endPos,'], oldPosId = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
@@ -2434,9 +2434,9 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     obj.preventOnSelection = true;
-    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
-        , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
-        , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
+    // console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
+    //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
+    //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
@@ -8498,31 +8498,31 @@ const mouseOverControls = function (e) {
                                         const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
                                         const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell2)[0] : undefined;
 
-                                        console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection);
-                                        console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
+                                        // console.log('--mouseOverControls-- indexes row = ', rowId, 'y1 = ', cell1, ', y2 = ', cell2, ', preventOnSelection = ', preventOnSelection);
+                                        // console.log('--mouseOverControls-- rowToId = ', rowToId, 'y1Id = ', cell1ToId, ' y2Id = ', cell2ToId);
 
                                         if (!cell2) {
-                                            console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
+                                            // console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell2 > cell1 && rowId > cell2) {
-                                            console.log('--1. mouseOverControls-- MOVE DOWN');
+                                            // console.log('--1. mouseOverControls-- MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'down';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell1 > cell2 && rowId < cell2) {
-                                            console.log('--2. mouseOverControls-- MOVE UP');
+                                            // console.log('--2. mouseOverControls-- MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'up';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
                                         else if (cell2 > cell1 && rowId < cell2) {
-                                            console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
+                                            //console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'sellDownAndThanUp';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
                                         else if (cell1 > cell2 && rowId > cell2) {
-                                            console.log('--4. mouseOverControls-- MOVE UP SELECTED AND THAN MOVE DOWN');
+                                           // console.log('--4. mouseOverControls-- MOVE UP SELECTED AND THAN MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'sellUpnAndThanDown';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }

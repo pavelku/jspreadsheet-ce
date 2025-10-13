@@ -560,7 +560,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     // }
     // console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    console.log('--chooseSelection-- start new PosId from scroll = [',startPos, ',', endPos,'], oldPosId = [', obj.startSelRow, ',', obj.endSelRow ,']');
+    // console.log('--chooseSelection-- start new PosId from scroll = [',startPos, ',', endPos,'], oldPosId = [', obj.startSelRow, ',', obj.endSelRow ,']');
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
@@ -575,9 +575,9 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     obj.preventOnSelection = true;
-    console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
-        , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
-        , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
+    // console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
+    //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
+    //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
