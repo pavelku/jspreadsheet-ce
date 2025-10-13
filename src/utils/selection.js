@@ -412,7 +412,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const startPos = Math.max(firstRowPos, obj.startSelRow);
                 const endPos = Math.min(endRowPos, obj.endSelRow);
 
-                if (firstRowPos < endRowPos) {
+                if (startPos < endPos) {
                     obj.mouseOverDirection = 'down';                    
                 }
                 else {
