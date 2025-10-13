@@ -412,20 +412,33 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, obj.startSelRow);
                 const endPos = Math.min(endRowPos, obj.endSelRow);
+
+                 const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
+                const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
                 
                 if (y1 < y2)
                 {
-                    obj.mouseOverDirection = 'down';
-                    chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
+                    obj.mouseOverDirection = 'down';                    
                 }
                 else {
-                    obj.mouseOverDirection = 'up';
-                    chooseSelection.call(obj, endPos, startPos, obj.scrollDirection);
+                    obj.mouseOverDirection = 'up';                    
+                }
+
+                if (obj.mouseOverDirection == "down") {
+                    obj.selectedCell[1] = startRowIndex;
+                    obj.selectedCell[3] = endRowIndex;
+                    obj.proceedKeyboard = true;
+                }
+                else if (obj.mouseOverDirection == "up") {
+                    obj.selectedCell[1] = endRowIndex;
+                    obj.selectedCell[3] = startRowIndex;
+                    obj.proceedKeyboard = true;
                 }
 
                 obj.keyDirectionDone = true;
+                obj.preventOnSelection = true;
                 console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
-                
+                refreshSelection.call(obj);    
             }
 
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
