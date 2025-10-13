@@ -411,9 +411,20 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 const endRowPos = data[data.length-1][0];
                 const startPos = Math.max(firstRowPos, obj.startSelRow);
                 const endPos = Math.min(endRowPos, obj.endSelRow);
-                obj.mouseOverDirection = 'down';
+                
+                if (startPos < endPos)
+                {
+                    obj.mouseOverDirection = 'down';
+                    chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
+                }
+                else {
+                    obj.mouseOverDirection = 'up';
+                    chooseSelection.call(obj, endPos, startPos, obj.scrollDirection);
+                }
+
+                obj.keyDirectionDone = true;
                 console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
-                chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
+                
             }
 
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
@@ -470,7 +481,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
 
 
-export const chooseSelection = function (startPos, endPos, scrollDirection) {
+export const chooseSelection = function (startPos, endPos) {
     const obj = this;
 
     var data = obj.getData();
