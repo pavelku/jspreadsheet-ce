@@ -2233,9 +2233,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             const endRowIndex = obj.getRowData(y2)[0];   
 
             obj.startSelCol = x1;
-            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;            
-            obj.startSelRow = undefined;
-            obj.endSelCol = undefined;
+            obj.startSelRow = startRowIndex;            
+            obj.endSelRow = startRowIndex;            
+            obj.endSelCol = x2 ? x2 : x1;
             // obj.endSelCol = x2;    
             // obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
