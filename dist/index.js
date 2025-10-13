@@ -2220,26 +2220,86 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
+    // vyvolano mysus
+    if (origin){
+
+        if (origin.type == "mousedown" && !origin.shiftKey){
+            obj.startSelCol = x1;
+            obj.endSelCol = x2;
+            obj.oldStartSelRow = obj.startSelRow;
+            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            obj.oldEndSelRow = obj.endSelRow;
+            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+            console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
+        }
+        else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
+            console.log('!! mouseover')
+            obj.startSelCol = x1;
+            obj.endSelCol = x2;     
+
+            // mysi jedu dolu
+            if (obj.mouseOverDirection == "down") {
+                const endRowIndex = obj.getRowData(y2)[0];    
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+                if (!obj.startSelRow) {
+                    obj.startSelRow = obj.getRowData(y1)[0];    
+                }
+            }
+            // mysi jedu nahoru
+            else if (obj.mouseOverDirection == "up") {
+                const startRowIndex = obj.getRowData(y1)[0];
+                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+                if (!obj.endSelRow) {
+                    obj.endSelRow = obj.getRowData(y2)[0];    
+                }
+            }
+            // vybral jsem oblast ze shora dolu a pak jedu nahoru
+            else if (obj.mouseOverDirection == "sellDownAndThanUp") {
+                const endRowIndex = obj.getRowData(y2)[0];    
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+            }
+            else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
+                const startRowIndex = obj.getRowData(y2)[0];    
+                obj.startSelRow = startRowIndex;
+            }           
+
+            if (origin.type == "mousedown" && origin.shiftKey)
+            {
+                var data = obj.getData();
+                const firstRowPos = data[0][0];
+                const endRowPos = data[data.length-1][0];
+                const startPos = Math.max(firstRowPos, obj.startSelRow);
+                const endPos = Math.min(endRowPos, obj.endSelRow);
+                chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
+            }
+
+            // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
+        }
+        else {
+            resetMousePos();
+        }
+    }
+
     // console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
-    obj.startSelCol = x1;
+    // obj.startSelCol = x1;
     // console.log('after set = ', origin);    
     // const val = obj.getRowData(y1)[0];
     // console.log('after set getRowData ', val);
 
-    if (!obj.startSelRow || !obj.endSelRow) {
-        obj.startSelRow = obj.getRowData(y1)[0];
-        obj.endSelRow = obj.getRowData(y2)[0];
-    }
+    // if (!obj.startSelRow || !obj.endSelRow) {
+    //     obj.startSelRow = obj.getRowData(y1)[0];
+    //     obj.endSelRow = obj.getRowData(y2)[0];
+    // }
 
-    if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-        obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
-        // obj.scrollDirection = "down";
-    }            
+    // if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
+    //     obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
+    //     // obj.scrollDirection = "down";
+    // }            
 
-    if (obj.getRowData(y1)[0] < obj.startSelRow) {
-        obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-        // obj.scrollDirection = "up";
-    }
+    // if (obj.getRowData(y1)[0] < obj.startSelRow) {
+    //     obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
+    //     // obj.scrollDirection = "up";
+    // }
     
     // if (!obj.preventOnSelection || obj.mouseOverControls) {
     //     obj.startSelCol = x1;
