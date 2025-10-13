@@ -418,7 +418,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             resetMousePos();
         }
     }
-    // pohyb mysi
+    // pohyb na klavesnici
     else {
         // if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
