@@ -2311,7 +2311,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
             }
 
-            obj.keyDirection = -1;
+            // obj.keyDirection = -1;
         // }
         // }
     }
@@ -2477,6 +2477,8 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
     //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+    console.log('choose selection ', obj.keyDirection);
+    
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
         obj.selectedCell[1] = startRowIndex;
         obj.selectedCell[3] = endRowIndex;
