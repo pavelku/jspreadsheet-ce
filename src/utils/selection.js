@@ -608,22 +608,22 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     //     obj.endSelRow = newEndRowId;
     // }
 
-    obj.preventOnSelection = true;
+    // obj.preventOnSelection = true;
     // console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
     //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
     //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp") {
+    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
         obj.selectedCell[1] = startRowIndex;
         obj.selectedCell[3] = endRowIndex;
     }
-    else {
+    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 1) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;
     }
 
     refreshSelection.call(obj);
-    obj.preventOnSelection = false;
+    // obj.preventOnSelection = false;
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
