@@ -420,20 +420,25 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb mysi
     else {
-        obj.startSelCol = x1;
-        obj.endSelCol = x2;     
-        
-        // 0 = doleva
-        // 1 = nahoru
-        // 2 = doprava
-        // 3 = dolu
-        console.log('pohyb klavesnici smer = ', obj.keyDirection);
-        if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
-            obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;            
-            console.log('go down');
-        } else if (startRowIndex < obj.startSelRow) {
-            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
-            console.log('go up');
+        if (!obj.preventOnSelection) {
+            obj.startSelCol = x1;
+            obj.endSelCol = x2;     
+
+            // 0 = doleva
+            // 1 = nahoru
+            // 2 = doprava
+            // 3 = dolu
+            const endRowIndex = obj.getRowData(y2)[0]; 
+            const startRowIndex = obj.getRowData(y1)[0]; 
+            
+            console.log('pohyb klavesnici smer = ', obj.keyDirection);
+            if ((!selectWholeColumn ? endRowIndex : obj.totalItemsInQuery) > obj.endSelRow) {
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;;            
+                console.log('go down');
+            } else if (startRowIndex < obj.startSelRow) {
+                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+                console.log('go up');
+            }
         }
     }
 
@@ -608,6 +613,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
     }
 
     refreshSelection.call(obj);
+    obj.preventOnSelection = false;
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     // obj.preventOnSelection = false;
 
