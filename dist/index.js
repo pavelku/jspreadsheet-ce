@@ -2223,15 +2223,19 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // vyvolano mysus
     if (origin){
 
+        // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
-            obj.startSelCol = x1;
-            obj.endSelCol = x2;
-            obj.oldStartSelRow = obj.startSelRow;
-            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;
+            const startRowIndex = obj.getRowData(y1)[0];
+            const endRowIndex = obj.getRowData(y2)[0];   
+
             obj.oldEndSelRow = obj.endSelRow;
+            obj.startSelCol = x1;
+            obj.endSelCol = x2;            
+            obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;            
             obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
         }
+        // pohyb mysi
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
             console.log('!! mouseover')
             obj.startSelCol = x1;
