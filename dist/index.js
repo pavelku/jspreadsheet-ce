@@ -2279,7 +2279,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb mysi
     else {
-        if (!obj.preventOnSelection) {
+        // if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
@@ -2308,7 +2308,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             else {
                 obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
             }
-        }
+        // }
     }
 
     // console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
