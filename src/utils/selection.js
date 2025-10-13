@@ -380,7 +380,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             if (obj.getRowData(y1)[0] < obj.startSelRow)
                 obj.startSelRow = obj.getRowData(y1)[0];
 
-            if (obj.getRowData(y2)[0] > obj.endSelRow)
+            if (obj.getRowData(y2)[0] < obj.endSelRow)
                 obj.endSelRow = obj.getRowData(y2)[0];
         }
         else {
