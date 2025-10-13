@@ -2437,7 +2437,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     // console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
     //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
     //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
-    obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
+    // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
     // obj.preventOnSelection = false;
 
