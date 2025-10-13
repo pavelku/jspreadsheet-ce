@@ -58,6 +58,7 @@ export const up = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
+        console.log('!!!! UP WITH SCHIFT KEY');
         if (obj.selectedCell[3] > 0) {
             upVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
@@ -227,6 +228,7 @@ export const down = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
+        console.log('!!!! DOWN WITH SCHIFT KEY');
         if (obj.selectedCell[3] < obj.records.length - 1) {
             downVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }

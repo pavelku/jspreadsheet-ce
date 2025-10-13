@@ -2225,6 +2225,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         console.log('MYSS');
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
+
+            console.log('!!!! MOUSE DOWN UP WITH SCHIFT KEY');
             const startRowIndex = obj.getRowData(y1)[0];
             const endRowIndex = obj.getRowData(y2)[0];   
 
@@ -2237,7 +2239,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         }
         // pohyb mysi
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
-            console.log('!! mouseover')
+            console.log('!! mouseover');
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
@@ -2264,6 +2266,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
+                console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY');
                 var data = obj.getData();
                 const firstRowPos = data[0][0];
                 const endRowPos = data[data.length-1][0];
@@ -2316,114 +2319,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.preventOnSelection = false;
         }
         // }
-    }
-
-    // console.log('origin = ', origin, ', obj.preventOnSelection = ', obj.preventOnSelection);
-    // obj.startSelCol = x1;
-    // console.log('after set = ', origin);    
-    // const val = obj.getRowData(y1)[0];
-    // console.log('after set getRowData ', val);
-
-    // if (!obj.startSelRow || !obj.endSelRow) {
-    //     obj.startSelRow = obj.getRowData(y1)[0];
-    //     obj.endSelRow = obj.getRowData(y2)[0];
-    // }
-
-    // if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-    //     obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
-    //     // obj.scrollDirection = "down";
-    // }            
-
-    // if (obj.getRowData(y1)[0] < obj.startSelRow) {
-    //     obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-    //     // obj.scrollDirection = "up";
-    // }
-    
-    // if (!obj.preventOnSelection || obj.mouseOverControls) {
-    //     obj.startSelCol = x1;
-    //     obj.endSelCol = x2;
-
-    //     if (!obj.preventOnSelection) {
-    //         if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-    //             obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-    //         }
-
-    //         if (obj.getRowData(y1)[0] < obj.startSelRow) {
-    //             obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;             
-    //          }
-
-    //         // if (obj.getRowData(y1)[0] < obj.startSelRow)
-    //         //     obj.startSelRow = obj.getRowData(y1)[0];
-
-    //         // if (obj.getRowData(y2)[0] < obj.endSelRow)
-    //         //     obj.endSelRow = obj.getRowData(y2)[0];
-    //     }
-    //     else {
-    //         if (y1 <= y2) 
-    //         {
-    //             obj.endSelRow = obj.getRowData(y2)[0];
-    //         }
-    //         else {
-    //             obj.startSelRow = obj.getRowData(y1)[0];                
-    //         }
-    //     }
-
-    //    // console.log('--updateSelectionFromCoords-- SetPositions selRows = [', obj.startSelRow, ',', obj.endSelRow,']');
-    // }
-
-    // TODO NEW FUNC -> copy
-    // if (origin){
-
-    //     if (origin.type == "mousedown" && !origin.shiftKey){
-    //         obj.startSelCol = x1;
-    //         obj.endSelCol = x2;
-    //         obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-    //         obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-    //         console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
-    //     }
-    //     else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {
-    //         obj.startSelCol = x1;
-    //         obj.endSelCol = x2;            
-    //         if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-    //             obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;;
-    //             obj.scrollDirection = "down";
-    //         }            
-
-    //         if (obj.getRowData(y1)[0] < obj.startSelRow) {
-    //             obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-    //             obj.scrollDirection = "up";
-    //         }
-
-    //         if (origin.type == "mousedown" && origin.shiftKey)
-    //         {
-    //             var data = obj.getData();
-    //             const firstRowPos = data[0][0];
-    //             const endRowPos = data[data.length-1][0];
-    //             const startPos = Math.max(firstRowPos, obj.startSelRow);
-    //             const endPos = Math.min(endRowPos, obj.endSelRow);
-    //             chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
-    //         }
-    //     }
-    //     else {
-    //         resetMousePos();
-    //     }
-    // }
-    // else if (!obj.preventOnSelection){
-    //     obj.startSelCol = x1;
-    //     obj.endSelCol = x2;
-        
-    //     if (obj.getRowData(y1)[0] < obj.startSelRow) {
-    //         obj.startSelRow = !selectWholeColumn ? obj.getRowData(y1)[0] : 1;
-    //     }
-
-    //     if ((!selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery) > obj.endSelRow) {
-    //         obj.endSelRow = !selectWholeColumn ? obj.getRowData(y2)[0] : obj.totalItemsInQuery;
-    //     }
-    // }
-    // else if (obj.preventOnSelection)
-    // {
-    //     obj.preventOnSelection = false;
-    // } 
+    }    
 
     console.log('--updateSelectionFromCoords-- at the end  startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
 
@@ -2437,48 +2333,10 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     const obj = this;
 
     var data = obj.getData();
-    // console.log('chooseSelection obj = ', obj, ', data = ', data);
-
-    // const firstRowPos = data[0][0];
-    // const endRowPos = data[data.length-1][0];
-
-    // const startPos = Math.max(firstRowPos, obj.startSelRow);
-    // const endPos = Math.min(endRowPos, obj.endSelRow);
-
-    // console.log('startPOs = ', startPos, ' firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, 'endPos = ', endPos);
-
-    // const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
-    // const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startR
-    // const newStartRowId = obj.getRowData(startRowIndex)[0];
-
-    // if (obj.startSelRow > newStartRowId) {
-    //     obj.startSelRow = newStartRowId;
-    // }
-    // const newEndRowId = obj.getRowData(endRowIndex)[0];
-    // if (obj.endSelRow < newEndRowId) {
-    //     obj.endSelRow = newEndRowId;
-    // }
-    // console.log('obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-    // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    // console.log('--chooseSelection-- start new PosId from scroll = [',startPos, ',', endPos,'], oldPosId = [', obj.startSelRow, ',', obj.endSelRow ,']');
+   
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
-    
-    // const newStartRowId = obj.getRowData(startRowIndex)[0];
-    // if (obj.startSelRow > newStartRowId) {
-    //     obj.startSelRow = newStartRowId;
-    // }
-    // const newEndRowId = obj.getRowData(endRowIndex)[0];
-    // if (obj.endSelRow < newEndRowId) {
-    //     obj.endSelRow = newEndRowId;
-    // }
-
-    // obj.preventOnSelection = true;
-    // console.log('--chooseSelection-- AFTER CHANGE rowIndex in Grid = [', startRowIndex, ',', endRowIndex
-    //     , '], new set row PosIds = [', obj.startSelRow, ',', obj.endSelRow ,']'
-    //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
-    // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     console.log('choose selection ', obj.keyDirection);
     
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
@@ -2522,20 +2380,7 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.preventOnSelection = true;
     }
 
-    refreshSelection.call(obj);
-    // obj.preventOnSelection = false;
-    // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
-    // obj.preventOnSelection = false;
-
-    // console.log('--chooseSelection-- AFTER UPDATESelFromCoords rowIndex = [', startRowIndex, ',', endRowIndex, '], rows = [', obj.startSelRow, ',', obj.endSelRow ,']');
-    
-    // if ((scrollDirection == "up" && obj.lastScrollDirection == "down") || (scrollDirection == "down" && obj.lastScrollDirection == "up")) {
-    //     obj.preventOnSelection = true;
-    //     obj.scrollDirection = scrollDirection;
-    // }
-
-    // obj.endSelRow = endRowIndex;    
-    // obj.updateSelectionFromCoords(obj.startSelCol, scrollDirection == "down" ? startRowIndex : endRowIndex,  obj.endSelCol, scrollDirection == "down" ? endRowIndex : startRowIndex);
+    refreshSelection.call(obj);    
 }
 
 const getDataByNrPos = (data, curPosNr, startIndex) =>{
@@ -5641,6 +5486,7 @@ const up = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
+        console.log('!!!! UP WITH SCHIFT KEY');
         if (obj.selectedCell[3] > 0) {
             upVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
@@ -5810,6 +5656,7 @@ const down = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
+        console.log('!!!! DOWN WITH SCHIFT KEY');
         if (obj.selectedCell[3] < obj.records.length - 1) {
             downVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
