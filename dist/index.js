@@ -2222,6 +2222,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // vyvolano mysi
     if (origin) {
+        console.log('MYSS');
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
             const startRowIndex = obj.getRowData(y1)[0];
@@ -2279,7 +2280,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb na klavesnici
     else {
-        console.log('keyboard input obj.keyDirection = ', obj.keyDirection);
+        console.log('keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.proceedKeyboard = ', obj.proceedKeyboard);
         // if (obj.keyDirection != -1) {
         // if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
@@ -2478,14 +2479,16 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
     //     , ', counted position = [', newStartRowId, ',', newEndRowId ,']');    
     // obj.updateSelectionFromCoords(obj.startSelCol, startRowIndex,  obj.endSelCol, endRowIndex);
     console.log('choose selection ', obj.keyDirection);
-
-    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 1) {
+    
+    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
         obj.selectedCell[1] = startRowIndex;
         obj.selectedCell[3] = endRowIndex;
+        obj.proceedKeyboard = true;
     }
-    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 3) {
+    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 1) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;
+        obj.proceedKeyboard = true;
     }
 
     refreshSelection.call(obj);
