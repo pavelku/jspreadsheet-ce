@@ -735,7 +735,7 @@ const mouseOverControls = function (e) {
                                                 updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], columnId, rowId, e);    
                                             }
                                             else {
-
+                                                updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                             }
                                         }
 
