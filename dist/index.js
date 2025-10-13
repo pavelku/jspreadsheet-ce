@@ -2290,27 +2290,27 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // 1 = nahoru
             // 2 = doprava
             // 3 = dolu
-            const endRowIndex = obj.getRowData(y2)[0]; 
-            const startRowIndex = obj.getRowData(y1)[0]; 
+            // const endRowIndex = obj.getRowData(y2)[0]; 
+            // const startRowIndex = obj.getRowData(y1)[0]; 
 
-            console.log('pohyb klavesnici smer = ', obj.keyDirection);
+            // console.log('pohyb klavesnici smer = ', obj.keyDirection);
 
-            // vybrana oblast ze shora dolu
-            if (y1 < y2) {   
-                if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
-                }
-            }
-            // vybrana oblast ze zdola nahoru
-            else if (y1 > y2) {  
-                if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                    obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
-                }
-            }
-            // vybrana jedna radka - pomoci sipek
-            else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-                obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
-            }
+            // // vybrana oblast ze shora dolu
+            // if (y1 < y2) {   
+            //     if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+            //         obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+            //     }
+            // }
+            // // vybrana oblast ze zdola nahoru
+            // else if (y1 > y2) {  
+            //     if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+            //         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+            //     }
+            // }
+            // // vybrana jedna radka - pomoci sipek
+            // else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
+            //     obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
+            // }
 
             // obj.keyDirection = -1;
         // }
@@ -2489,6 +2489,35 @@ const chooseSelection = function (startPos, endPos, scrollDirection) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;
         obj.proceedKeyboard = true;
+    }
+
+    if (obj.keyDirection != -1) {
+        const y1 = obj.selectedCell[1];
+        const y2 = obj.selectedCell[3];
+
+        const endRowIndex = obj.getRowData(y2)[0]; 
+        const startRowIndex = obj.getRowData(y1)[0]; 
+
+        console.log('pohyb klavesnici smer = ', obj.keyDirection);
+
+        // vybrana oblast ze shora dolu
+        if (y1 < y2) {   
+            if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+            }
+        }
+        // vybrana oblast ze zdola nahoru
+        else if (y1 > y2) {  
+            if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+                obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
+            }
+        }
+        // vybrana jedna radka - pomoci sipek
+        else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
+            obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
+        }
+
+        obj.keyDirection = -1;
     }
 
     refreshSelection.call(obj);
