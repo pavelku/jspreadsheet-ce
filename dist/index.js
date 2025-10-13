@@ -2305,9 +2305,9 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }
             }
             // vybrana jedna radka
-            else {
-                obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
-            }
+            // else {
+            //     obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
+            // }
         // }
     }
 
