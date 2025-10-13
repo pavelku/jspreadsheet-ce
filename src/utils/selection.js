@@ -361,9 +361,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    // vyvolano mysus
-    if (origin){
-
+    // vyvolano mysi
+    if (origin) {
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
             const startRowIndex = obj.getRowData(y1)[0];

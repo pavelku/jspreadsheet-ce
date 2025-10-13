@@ -2220,9 +2220,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
-    // vyvolano mysus
-    if (origin){
-
+    // vyvolano mysi
+    if (origin) {
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
             const startRowIndex = obj.getRowData(y1)[0];
@@ -8507,12 +8506,12 @@ const mouseOverControls = function (e) {
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell2 >= cell1 && rowId > cell2) {
+                                        else if (cell2 > cell1 && rowId > cell2) {
                                             console.log('--1. mouseOverControls-- MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'down';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell1 <= cell2 && rowId < cell1) {
+                                        else if (cell1 > cell2 && rowId < cell2) {
                                             console.log('--2. mouseOverControls-- MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'up';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
@@ -8528,9 +8527,21 @@ const mouseOverControls = function (e) {
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
 
-                                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (!libraryBase.jspreadsheet.current.preventOnSelection)
+                                            selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        else {
+                                            if (libraryBase.jspreadsheet.current.mouseOverDirection == "up" || libraryBase.jspreadsheet.current.mouseOverDirection == "sellDownAndThanUp")
+                                            {
+                                                selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], columnId, rowId, e);    
+                                            }
+                                            else {
 
+                                            }
+                                        }
 
+                                        if (libraryBase.jspreadsheet.current.preventOnSelection) {
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
 
                                         // console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
                                         //     ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,

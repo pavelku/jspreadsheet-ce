@@ -706,12 +706,12 @@ const mouseOverControls = function (e) {
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell2 >= cell1 && rowId > cell2) {
+                                        else if (cell2 > cell1 && rowId > cell2) {
                                             console.log('--1. mouseOverControls-- MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'down';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell1 <= cell2 && rowId < cell1) {
+                                        else if (cell1 > cell2 && rowId < cell2) {
                                             console.log('--2. mouseOverControls-- MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'up';
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
@@ -727,9 +727,21 @@ const mouseOverControls = function (e) {
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], e);
                                         }
 
-                                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        if (!libraryBase.jspreadsheet.current.preventOnSelection)
+                                            updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
+                                        else {
+                                            if (libraryBase.jspreadsheet.current.mouseOverDirection == "up" || libraryBase.jspreadsheet.current.mouseOverDirection == "sellDownAndThanUp")
+                                            {
+                                                updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[2], libraryBase.jspreadsheet.current.selectedCell[3], columnId, rowId, e);    
+                                            }
+                                            else {
 
+                                            }
+                                        }
 
+                                        if (libraryBase.jspreadsheet.current.preventOnSelection) {
+                                            libraryBase.jspreadsheet.current.preventOnSelection = false;
+                                        }
 
                                         // console.log('--mouseOverControls--, selectedCell = ', libraryBase.jspreadsheet.current.selectedCell,
                                         //     ', mouseMovePos = [', rowId, ',', columnId, '], selPos = [', startSelRow, ',', endSelRow, '], scrollDirection = ', scrollDirection,
