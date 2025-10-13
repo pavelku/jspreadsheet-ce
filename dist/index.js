@@ -2304,10 +2304,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
                 }
             }
-            // vybrana jedna radka
-            // else {
-            //     obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
-            // }
+            // vybrana jedna radka - pomoci sipek
+            else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
+                obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
+            }
         // }
     }
 
@@ -7998,7 +7998,7 @@ const mouseUpControls = function (e) {
 
     // Mouse up    
     libraryBase.jspreadsheet.isMouseAction = false;
-    libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
+    // libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
 }
 
 const mouseDownControls = function (e) {
@@ -8250,14 +8250,14 @@ const mouseDownControls = function (e) {
 
         if (libraryBase.jspreadsheet.current.edition) {            
             libraryBase.jspreadsheet.isMouseAction = false;
-            libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
+            // libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
         } else {
             libraryBase.jspreadsheet.isMouseAction = true;
-            libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
+            // libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
         }
     } else {        
         libraryBase.jspreadsheet.isMouseAction = false;
-        libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
+        // libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
     }
 }
 
@@ -8277,7 +8277,7 @@ const mouseMoveControls = function (e) {
 
     if (!mouseButton) {        
         libraryBase.jspreadsheet.isMouseAction = false;
-        libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
+        // libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
     }
 
     // console.log('mouseMoveControls, e = ', e, ', libraryBase.jspreadsheet.isMouseAction = ', libraryBase.jspreadsheet.isMouseAction);
@@ -8489,7 +8489,7 @@ const mouseOverControls = function (e) {
 
     if (!mouseButton) {        
         libraryBase.jspreadsheet.isMouseAction = false;
-        libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
+        // libraryBase.jspreadsheet.current.isMouseAction = libraryBase.jspreadsheet.isMouseAction;
     }
 
     if (libraryBase.jspreadsheet.current && libraryBase.jspreadsheet.isMouseAction == true) {
@@ -9293,18 +9293,22 @@ const keyDownControls = function (e) {
             if (e.which == 37) {
                 libraryBase.jspreadsheet.current.keyDirection = 0;                
                 left.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
+                libraryBase.jspreadsheet.current.keyDirection = -1;
                 e.preventDefault();
             } else if (e.which == 39) {
                 libraryBase.jspreadsheet.current.keyDirection = 2;                
                 right.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
+                libraryBase.jspreadsheet.current.keyDirection = -1;
                 e.preventDefault();
             } else if (e.which == 38) {
                 libraryBase.jspreadsheet.current.keyDirection = 1;                
                 up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
+                libraryBase.jspreadsheet.current.keyDirection = -1;
                 e.preventDefault();
             } else if (e.which == 40) {
                 libraryBase.jspreadsheet.current.keyDirection = 3;                
                 down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
+                libraryBase.jspreadsheet.current.keyDirection = -1;
                 e.preventDefault();
             } else if (e.which == 36) {
                 first.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
