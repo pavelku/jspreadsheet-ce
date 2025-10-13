@@ -2279,6 +2279,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb na klavesnici
     else {
+        console.log('keyboard input obj.keyDirection = ', obj.keyDirection);
         if (obj.keyDirection != -1) {
         // if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
