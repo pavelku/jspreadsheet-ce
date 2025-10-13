@@ -383,26 +383,28 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
-            // mysi jedu dolu
-            if (obj.mouseOverDirection == "down") {
-                const endRowIndex = obj.getRowData(y2)[0];    
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;                
+            if (origin.type == "mouseover") {
+                // mysi jedu dolu
+                if (obj.mouseOverDirection == "down") {
+                    const endRowIndex = obj.getRowData(y2)[0];    
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;                
+                }
+                // mysi jedu nahoru
+                else if (obj.mouseOverDirection == "up") {
+                    const startRowIndex = obj.getRowData(y2)[0];
+                    obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;                
+                }
+                // vybral jsem oblast ze shora dolu a pak jedu nahoru
+                else if (obj.mouseOverDirection == "sellDownAndThanUp") {
+                    const endRowIndex = obj.getRowData(y2)[0];    
+                    obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
+                }
+                // vybral jsem oblast ze zdola nahoru a pak jedu dolu
+                else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
+                    const startRowIndex = obj.getRowData(y2)[0];    
+                    obj.startSelRow = startRowIndex;
+                }           
             }
-            // mysi jedu nahoru
-            else if (obj.mouseOverDirection == "up") {
-                const startRowIndex = obj.getRowData(y2)[0];
-                obj.startSelRow = !selectWholeColumn ? startRowIndex : 1;                
-            }
-            // vybral jsem oblast ze shora dolu a pak jedu nahoru
-            else if (obj.mouseOverDirection == "sellDownAndThanUp") {
-                const endRowIndex = obj.getRowData(y2)[0];    
-                obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
-            }
-            // vybral jsem oblast ze zdola nahoru a pak jedu dolu
-            else if (obj.mouseOverDirection == "sellUpnAndThanDown") { 
-                const startRowIndex = obj.getRowData(y2)[0];    
-                obj.startSelRow = startRowIndex;
-            }           
 
             if (origin.type == "mousedown" && origin.shiftKey)
             {
