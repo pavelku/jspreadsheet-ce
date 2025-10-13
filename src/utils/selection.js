@@ -423,7 +423,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     else {
         console.log('keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.proceedKeyboard = ', obj.proceedKeyboard);
         // if (obj.keyDirection != -1) {
-        // if (!obj.preventOnSelection) {
+        if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
 
@@ -431,30 +431,31 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // 1 = nahoru
             // 2 = doprava
             // 3 = dolu
-            // const endRowIndex = obj.getRowData(y2)[0]; 
-            // const startRowIndex = obj.getRowData(y1)[0]; 
+            const endRowIndex = obj.getRowData(y2)[0]; 
+            const startRowIndex = obj.getRowData(y1)[0]; 
 
-            // console.log('pohyb klavesnici smer = ', obj.keyDirection);
+            console.log('pohyb klavesnici smer = ', obj.keyDirection);
 
-            // // vybrana oblast ze shora dolu
-            // if (y1 < y2) {   
-            //     if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-            //         obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
-            //     }
-            // }
-            // // vybrana oblast ze zdola nahoru
-            // else if (y1 > y2) {  
-            //     if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-            //         obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                
-            //     }
-            // }
-            // // vybrana jedna radka - pomoci sipek
-            // else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-            //     obj.endSelRow = obj.startSelRow = !selectWholeColumn ? endRowIndex : 1;                                
-            // }
-
-            // obj.keyDirection = -1;
-        // }
+            // vybrana oblast ze shora dolu
+            if (y1 < y2) {   
+                if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+                    obj.endSelRow = endRowIndex;
+                }
+            }
+            // vybrana oblast ze zdola nahoru
+            else if (y1 > y2) {  
+                if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+                    obj.startSelRow = endRowIndex;                
+                }
+            }
+            // vybrana jedna radka - pomoci sipek
+            else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
+                obj.endSelRow = obj.startSelRow = !endRowIndex;                                
+            }            
+        }
+        else {
+            obj.preventOnSelection = false;
+        }
         // }
     }
 
@@ -659,6 +660,7 @@ export const chooseSelection = function (startPos, endPos, scrollDirection) {
         }
 
         obj.keyDirection = -1;
+        obj.preventOnSelection = true;
     }
 
     refreshSelection.call(obj);
