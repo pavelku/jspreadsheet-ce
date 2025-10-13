@@ -2274,12 +2274,12 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
                 if (startPos < endPos) {
                     obj.mouseOverDirection = 'down';
+                    chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
                 }
                 else {
                     obj.mouseOverDirection = 'up';
+                    chooseSelection.call(obj, endPos, startPos, obj.scrollDirection);
                 }
-                
-                chooseSelection.call(obj, startPos, endPos, obj.scrollDirection);
             }
 
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
