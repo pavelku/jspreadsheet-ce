@@ -8448,15 +8448,15 @@ const mouseOverControls = function (e) {
                                             console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell2 > cell1 && rowId > cell2) {
+                                        else if (cell2 >= cell1 && rowId > cell2) {
                                             console.log('--1. mouseOverControls-- MOVE DOWN');
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell1 < cell2 && rowId < y2) {
+                                        else if (cell1 <= cell2 && rowId < cell2) {
                                             console.log('--2. mouseOverControls-- MOVE UP');
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, columnId, rowId, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], e);
                                         }
-                                        else if (cell2 > cell1 && rowId < y2) {
+                                        else if (cell2 > cell1 && rowId < cell2) {
                                             console.log('--3. mouseOverControls-- MOVE DOWN SELECTED AND THAN MOVE UP');
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
