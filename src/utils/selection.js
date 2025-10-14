@@ -361,6 +361,11 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
 
+    if (obj.showOnlySelected) {
+        obj.showOnlySelected = false;
+        return;
+    }
+
     // vyvolano mysi
     if (origin) {
         console.log('mouse');
@@ -415,6 +420,17 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 else if (obj.mouseOverDirection == "none") { 
                     const startRowIndex = obj.getRowData(y1)[0];    
                     obj.startSelRow = obj.startSelRow = startRowIndex;
+                }        
+                
+                if (obj.mouseOverDirection == "down") {
+                    if (y1 == 1 || y1 == 2) {
+                        const helpIdStartRow = obj.getRowData(0)[0];
+                        if (obj.startSelRow >= helpIdStartRow && helpIdStartRow <= obj.endSelRow) {
+                            obj.showOnlySelected = true;
+                            obj.selectedCell[1] = 0;
+                            refreshSelection.call(obj);
+                        }
+                    }
                 }
             }     
 
