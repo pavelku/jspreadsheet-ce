@@ -2323,8 +2323,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // pohyb na klavesnici
     else {
         console.log('updateSelectionFromCoords- keyboard input obj.keyDirection = ', obj.keyDirection);
-        // if (obj.keyDirection != -1) {
-        if (!obj.preventOnSelection) {
+        if (obj.keyDirection != -1) {
+        // if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
             // 0 = doleva
@@ -2352,11 +2352,11 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
             //     obj.endSelRow = obj.startSelRow = endRowIndex;                                
             // }            
-        }
-        else {
-            obj.preventOnSelection = false;
-        }
         // }
+        // else {
+        //     obj.preventOnSelection = false;
+        // }
+        }
     }    
 
     console.log('--updateSelectionFromCoords-- at the end  startPos = [', obj.startSelRow, ',', obj.startSelCol, '], endPos = [', obj.endSelRow, ',', obj.endSelCol, ']');
@@ -2386,38 +2386,38 @@ const chooseSelection = function (startPos, endPos) {
         obj.selectedCell[3] = startRowIndex;
     }
 
-    if (!obj.keyDirectionDone) {
-        const y1 = obj.selectedCell[1];
-        const y2 = obj.selectedCell[3];
+    // if (!obj.keyDirectionDone) {
+    //     const y1 = obj.selectedCell[1];
+    //     const y2 = obj.selectedCell[3];
 
-        obj.startSelCol = obj.selectedCell[0];
-        obj.endSelCol = obj.selectedCell[2];
+    //     obj.startSelCol = obj.selectedCell[0];
+    //     obj.endSelCol = obj.selectedCell[2];
 
-        const endRowIndex = obj.getRowData(y2)[0]; 
-        const startRowIndex = obj.getRowData(y1)[0]; 
+    //     const endRowIndex = obj.getRowData(y2)[0]; 
+    //     const startRowIndex = obj.getRowData(y1)[0]; 
 
-        console.log('choose selection - pohyb klavesnici smer = ', obj.keyDirection, ', y1 = ', y1, ', y2 = y2');
+    //     console.log('choose selection - pohyb klavesnici smer = ', obj.keyDirection, ', y1 = ', y1, ', y2 = y2');
 
-        // vybrana oblast ze shora dolu
-        if (y1 < y2) {   
-            if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                obj.endSelRow = endRowIndex;
-            }
-        }
-        // vybrana oblast ze zdola nahoru
-        else if (y1 > y2) {  
-            if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                obj.startSelRow = endRowIndex;                
-            }
-        }
-        // vybrana jedna radka - pomoci sipek
-        else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-            obj.endSelRow = obj.startSelRow = endRowIndex;                                
-        }
+    //     // vybrana oblast ze shora dolu
+    //     if (y1 < y2) {   
+    //         if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+    //             obj.endSelRow = endRowIndex;
+    //         }
+    //     }
+    //     // vybrana oblast ze zdola nahoru
+    //     else if (y1 > y2) {  
+    //         if (obj.keyDirection == 1 || obj.keyDirection == 3) {
+    //             obj.startSelRow = endRowIndex;                
+    //         }
+    //     }
+    //     // vybrana jedna radka - pomoci sipek
+    //     else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
+    //         obj.endSelRow = obj.startSelRow = endRowIndex;                                
+    //     }
 
-        obj.keyDirectionDone = true;        
-    }
-    obj.preventOnSelection = true;
+    //     obj.keyDirectionDone = true;        
+    // }
+    // obj.preventOnSelection = true;
 
     refreshSelection.call(obj);    
 }
