@@ -490,9 +490,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }
             }
             // vybrana jedna radka - pomoci sipek
-            else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-                obj.endSelRow = obj.startSelRow = endRowIndex;                                
-            }            
+            // else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
+            //     obj.endSelRow = obj.startSelRow = endRowIndex;                                
+            // }            
         }
         else {
             obj.preventOnSelection = false;
