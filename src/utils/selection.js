@@ -363,7 +363,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // vyvolano mysi
     if (origin) {
-        console.log('mouse');
+        console.log('mouse, origin = ', origin);
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
 
