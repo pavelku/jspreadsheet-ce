@@ -367,7 +367,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         // kliknu na libovolnou bunku (bez mouse move)
         if (origin.type == "mousedown" && !origin.shiftKey){
 
-            console.log('!! first mousedown');
+            console.log('!! first mouse, mouseOverDirection set none');
 
             // prvni klik nastav start sel row
             const startRowIndex = obj.getRowData(y1)[0];

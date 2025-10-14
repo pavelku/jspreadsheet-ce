@@ -709,10 +709,10 @@ const mouseOverControls = function (e) {
                                         const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
                                         const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell2)[0] : undefined;
                                        
-                                        console.log('mouseOverControls cell1 = ', cell1, ', cell2 = ', cell2, ', rowId = ', rowId);
+                                        console.log('mouseOverControls cell1 = ', cell1, ', cell2 = ', cell2, ', rowId = ', rowId, ' mouseoverdirection = ', libraryBase.jspreadsheet.current.mouseOverDirection);
 
                                         if (!cell2) {
-                                            // console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
+                                            console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             libraryBase.jspreadsheet.current.keyDirection = -1;  
                                             libraryBase.jspreadsheet.current.keyDirectionDone = true;
@@ -1480,13 +1480,15 @@ const keyDownControls = function (e) {
                 e.preventDefault();
             } else if (e.which == 38) {
                 libraryBase.jspreadsheet.current.keyDirection = 1;      
-                libraryBase.jspreadsheet.current.keyDirectionDone = false;               
+                libraryBase.jspreadsheet.current.keyDirectionDone = false;   
+                console.log('up call keyboard mouseOverDirection set none');
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
                 up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
                 e.preventDefault();
             } else if (e.which == 40) {
                 libraryBase.jspreadsheet.current.keyDirection = 3;    
-                libraryBase.jspreadsheet.current.keyDirectionDone = false;                 
+                libraryBase.jspreadsheet.current.keyDirectionDone = false;      
+                console.log('down call keyboard mouseOverDirection set none');           
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
                 down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
                 e.preventDefault();
