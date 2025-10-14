@@ -540,6 +540,17 @@ export const chooseSelection = function (startPos, endPos) {
         obj.selectedCell[3] = startRowIndex;        
     }
 
+    // scroll down -> zacatek se odroluje
+    if (obj.mouseOverDirection == "down") {
+        if (startRowIndex != 0 && startRowIndex < 5 && endRowIndex < 3)
+        {
+            console.log('!!! obezle');
+            obj.selectedCell[1] = 0;
+            obj.keyDirectionDone = true;
+        }
+    }
+
+
     if (!obj.keyDirectionDone) {
 
         const y1 = obj.selectedCell[1];
