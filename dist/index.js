@@ -2377,11 +2377,7 @@ const chooseSelection = function (startPos, endPos) {
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
-    const oldY1 = obj.selectedCell[1];
-    const oldY2 = obj.selectedCell[3];
-
-    console.log('choose selection ', obj.keyDirection, 'old cell Y = [',oldY1, '|', oldY2, ']');
-
+    console.log('choose selection ', obj.keyDirection);    
     
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
         obj.selectedCell[1] = startRowIndex;
@@ -2395,25 +2391,26 @@ const chooseSelection = function (startPos, endPos) {
     }
 
     if (!obj.keyDirectionDone) {
-        obj.startSelCol = obj.selectedCell[0];
-        obj.endSelCol = obj.selectedCell[2];
 
         const y1 = obj.selectedCell[1];
         const y2 = obj.selectedCell[3];
 
+        obj.startSelCol = obj.selectedCell[0];
+        obj.endSelCol = obj.selectedCell[2];
+
         const endRowIndex = obj.getRowData(y2)[0]; 
         const startRowIndex = obj.getRowData(y1)[0]; 
 
-        console.log('choose selection pohyb klavesnici smer = ', obj.keyDirection, 'new cell Y = [',y1, '|', y2, ']');
+        console.log('pohyb klavesnici smer = ', obj.keyDirection);
 
         // vybrana oblast ze shora dolu
-        if (oldY1 < oldY2) {   
+        if (y1 < y2) {   
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.endSelRow = endRowIndex;
             }
         }
         // vybrana oblast ze zdola nahoru
-        else if (oldY1 > oldY2) {  
+        else if (y1 > y2) {  
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.startSelRow = endRowIndex;                
             }
