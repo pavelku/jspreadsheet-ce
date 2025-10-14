@@ -2218,12 +2218,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
 
     // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
-    _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
-
-    if (obj.showOnlySelected) {
-        obj.showOnlySelected = false;
-        return;
-    }
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);    
 
     // vyvolano mysi
     if (origin) {
@@ -2280,17 +2275,6 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     const startRowIndex = obj.getRowData(y1)[0];    
                     obj.startSelRow = obj.startSelRow = startRowIndex;
                 }        
-                
-                if (obj.mouseOverDirection == "down") {
-                    if (y1 == 1 || y1 == 2) {
-                        const helpIdStartRow = obj.getRowData(0)[0];
-                        if (obj.startSelRow >= helpIdStartRow && helpIdStartRow <= obj.endSelRow) {
-                            obj.showOnlySelected = true;
-                            obj.selectedCell[1] = 0;
-                            refreshSelection.call(obj);
-                        }
-                    }
-                }
             }     
 
             // TODO comment mousedown with shift key
@@ -2413,6 +2397,18 @@ const chooseSelection = function (startPos, endPos) {
     else if (obj.keyOverDirection == "equal" || obj.mouseOverDirection == "none") {
         obj.selectedCell[1] = startRowIndex;
         obj.selectedCell[3] = startRowIndex;        
+    }
+
+    // obezle pri scrollu -> offst 4 radky
+    if (obj.mouseOverDirection == "down") {
+        if (startRowIndex == 1 || startRowIndex == 2) {
+            console.log('obezle ?');
+            const helpIdStartRow = obj.getRowData(0)[0];
+            if (obj.startSelRow >= helpIdStartRow && helpIdStartRow <= obj.endSelRow) {
+                console.log('obezle jo stary start index', obj.selectedCell[1], ', novy start idnex = ', 0);
+                obj.selectedCell[1] = 0;
+            }
+        }
     }
 
     if (!obj.keyDirectionDone) {
