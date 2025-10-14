@@ -441,13 +441,11 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 
                 if (obj.mouseOverDirection == "down") {
                     obj.selectedCell[1] = startRowIndex;
-                    obj.selectedCell[3] = endRowIndex;
-                    obj.proceedKeyboard = true;
+                    obj.selectedCell[3] = endRowIndex;                    
                 }
                 else if (obj.mouseOverDirection == "up") {
                     obj.selectedCell[1] = endRowIndex;
                     obj.selectedCell[3] = startRowIndex;
-                    obj.proceedKeyboard = true;
                 }
 
                 obj.keyDirectionDone = true;
@@ -465,7 +463,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb na klavesnici
     else {
-        console.log('keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.proceedKeyboard = ', obj.proceedKeyboard);
+        console.log('updateSelectionFromCoords- keyboard input obj.keyDirection = ', obj.keyDirection);
         // if (obj.keyDirection != -1) {
         if (!obj.preventOnSelection) {
             obj.startSelCol = x1;
@@ -493,7 +491,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
             // vybrana jedna radka - pomoci sipek
             else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-                obj.endSelRow = obj.startSelRow = !endRowIndex;                                
+                obj.endSelRow = obj.startSelRow = endRowIndex;                                
             }            
         }
         else {
@@ -522,13 +520,11 @@ export const chooseSelection = function (startPos, endPos) {
     
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
         obj.selectedCell[1] = startRowIndex;
-        obj.selectedCell[3] = endRowIndex;
-        obj.proceedKeyboard = true;
+        obj.selectedCell[3] = endRowIndex;        
     }
     else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 1) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;
-        obj.proceedKeyboard = true;
     }
 
     if (!obj.keyDirectionDone) {
@@ -541,7 +537,7 @@ export const chooseSelection = function (startPos, endPos) {
         const endRowIndex = obj.getRowData(y2)[0]; 
         const startRowIndex = obj.getRowData(y1)[0]; 
 
-        console.log('pohyb klavesnici smer = ', obj.keyDirection);
+        console.log('choose selection - pohyb klavesnici smer = ', obj.keyDirection, ', y1 = ', y1, ', y2 = y2');
 
         // vybrana oblast ze shora dolu
         if (y1 < y2) {   
@@ -557,7 +553,7 @@ export const chooseSelection = function (startPos, endPos) {
         }
         // vybrana jedna radka - pomoci sipek
         else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-            obj.endSelRow = obj.startSelRow = !endRowIndex;                                
+            obj.endSelRow = obj.startSelRow = endRowIndex;                                
         }
 
         obj.keyDirectionDone = true;
