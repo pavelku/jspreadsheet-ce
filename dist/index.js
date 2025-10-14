@@ -8517,9 +8517,9 @@ const mouseOverControls = function (e) {
                                         const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
                                         const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell2)[0] : undefined;
                                        
-                                        console.log('mouseOverControls cell1 = ', cell1, ', cell2 = ', cell2, ', rowId = ', rowId, ' mouseoverdirection = ', libraryBase.jspreadsheet.current.mouseOverDirection);
+                                        console.log('mouseOverControls cell1 = ', cell1, ', cell2 = ', cell2, ', rowId = ', rowId, ' mouseoverdirection = ', libraryBase.jspreadsheet.current.mouseOverDirection, ', libraryBase.jspreadsheet.current.selectedCell = ', libraryBase.jspreadsheet.current.selectedCell);
 
-                                        if (!cell2) {
+                                        if (libraryBase.jspreadsheet.current.selectedCell[3] == undefined) {
                                             console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
                                             libraryBase.jspreadsheet.current.keyDirection = -1;  
