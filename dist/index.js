@@ -2336,7 +2336,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             const endRowIndex = obj.getRowData(y2)[0]; 
             const startRowIndex = obj.getRowData(y1)[0]; 
 
-            console.log('pohyb klavesnici smer = ', obj.keyDirection);
+            console.log('keyboard input obj.keyDirection - pohyb klavesnici smer = ', obj.keyDirection);
 
             // vybrana oblast ze shora dolu
             if (y1 < y2) {   
@@ -2378,6 +2378,9 @@ const chooseSelection = function (startPos, endPos) {
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
     console.log('choose selection ', obj.keyDirection);
+
+    const y1 = obj.selectedCell[1];
+    const y2 = obj.selectedCell[3];
     
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
         obj.selectedCell[1] = startRowIndex;
@@ -2391,9 +2394,6 @@ const chooseSelection = function (startPos, endPos) {
     }
 
     if (!obj.keyDirectionDone) {
-        const y1 = obj.selectedCell[1];
-        const y2 = obj.selectedCell[3];
-
         obj.startSelCol = obj.selectedCell[0];
         obj.endSelCol = obj.selectedCell[2];
 
