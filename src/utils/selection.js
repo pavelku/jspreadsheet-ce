@@ -441,13 +441,11 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 
                 if (obj.mouseOverDirection == "down") {
                     obj.selectedCell[1] = startRowIndex;
-                    obj.selectedCell[3] = endRowIndex;
-                    obj.proceedKeyboard = true;
+                    obj.selectedCell[3] = endRowIndex;                    
                 }
                 else if (obj.mouseOverDirection == "up") {
                     obj.selectedCell[1] = endRowIndex;
-                    obj.selectedCell[3] = startRowIndex;
-                    obj.proceedKeyboard = true;
+                    obj.selectedCell[3] = startRowIndex;                    
                 }
 
                 obj.keyDirectionDone = true;
@@ -465,7 +463,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb na klavesnici
     else {
-        console.log('keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.proceedKeyboard = ', obj.proceedKeyboard);
+        console.log('keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.keyDirectionDone = ', obj.keyDirectionDone);
         // if (obj.keyDirection != -1) {
         if (!obj.keyDirectionDone) {
             obj.startSelCol = x1;
@@ -493,7 +491,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
             // vybrana jedna radka - pomoci sipek
             else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-                obj.endSelRow = obj.startSelRow = !endRowIndex;                                
+                obj.endSelRow = obj.startSelRow = endRowIndex;                                
             }            
         }
         else {
@@ -518,17 +516,19 @@ export const chooseSelection = function (startPos, endPos) {
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
-    console.log('choose selection ', obj.keyDirection);    
+    console.log('choose selection ', obj.keyDirection, ', obj.keyOverDirection = ', obj.keyOverDirection);    
     
-    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyDirection == 3) {
+    if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyOverDirection == "down") { // || obj.keyOverDirection == "3") {
         obj.selectedCell[1] = startRowIndex;
-        obj.selectedCell[3] = endRowIndex;
-        obj.proceedKeyboard = true;
+        obj.selectedCell[3] = endRowIndex;        
     }
-    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyDirection == 1) {
+    else if (obj.mouseOverDirection == "up" || obj.mouseOverDirection == "sellUpnAndThanDown" || obj.keyOverDirection == "up") { //|| obj.keyDirection == 1) {
         obj.selectedCell[1] = endRowIndex;
-        obj.selectedCell[3] = startRowIndex;
-        obj.proceedKeyboard = true;
+        obj.selectedCell[3] = startRowIndex;        
+    }
+    else if (obj.keyOverDirection == "equal") {
+        obj.selectedCell[1] = startRowIndex;
+        obj.selectedCell[3] = startRowIndex;        
     }
 
     if (!obj.keyDirectionDone) {
@@ -545,20 +545,20 @@ export const chooseSelection = function (startPos, endPos) {
         console.log('pohyb klavesnici smer = ', obj.keyDirection);
 
         // vybrana oblast ze shora dolu
-        if (y1 < y2) {   
+        if (obj.keyOverDirection == "down") {// (y1 < y2) {   
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.endSelRow = endRowIndex;
             }
         }
         // vybrana oblast ze zdola nahoru
-        else if (y1 > y2) {  
+        else if (obj.keyOverDirection == "up") { // if (y1 > y2) {  
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.startSelRow = endRowIndex;                
             }
         }
         // vybrana jedna radka - pomoci sipek
         else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-            obj.endSelRow = obj.startSelRow = !endRowIndex;                                
+            obj.endSelRow = obj.startSelRow = endRowIndex;                                
         }
 
         obj.keyDirectionDone = true;

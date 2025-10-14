@@ -71,6 +71,10 @@ export const up = function(shiftKey, ctrlKey) {
     }
 
     // Update selection
+    const cell1 = parseInt(libraryBase.jspreadsheet.current.selectedCell[1]);
+    const cell2 = parseInt(libraryBase.jspreadsheet.current.selectedCell[3]);
+    obj.keyOverDirection = cell2 > cell1 ? "down" : (cell2 < cell1 ? "up" : "equal");
+
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
@@ -240,6 +244,9 @@ export const down = function(shiftKey, ctrlKey) {
         obj.selectedCell[3] = obj.selectedCell[1];
     }
 
+    const cell1 = parseInt(libraryBase.jspreadsheet.current.selectedCell[1]);
+    const cell2 = parseInt(libraryBase.jspreadsheet.current.selectedCell[3]);
+    obj.keyOverDirection = cell2 > cell1 ? "down" : (cell2 < cell1 ? "up" : "equal");
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
