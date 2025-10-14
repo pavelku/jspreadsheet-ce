@@ -411,49 +411,50 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 }      
             }     
 
-            if (origin.type == "mousedown" && origin.shiftKey)
-            {
-                // druhy klik -> nastav end position
-                var data = obj.getData();                
-                obj.endSelRow = obj.getRowData(y2)[0];    
+            // TODO comment mousedown with shift key
+            // if (origin.type == "mousedown" && origin.shiftKey)
+            // {
+            //     // druhy klik -> nastav end position
+            //     var data = obj.getData();                
+            //     obj.endSelRow = obj.getRowData(y2)[0];    
 
-                if (obj.startSelRow < obj.endSelRow)
-                {
-                    obj.mouseOverDirection = 'down';                    
-                }
-                else {
-                    obj.mouseOverDirection = 'up';                    
-                }
+            //     if (obj.startSelRow < obj.endSelRow)
+            //     {
+            //         obj.mouseOverDirection = 'down';                    
+            //     }
+            //     else {
+            //         obj.mouseOverDirection = 'up';                    
+            //     }
 
-                if (obj.startSelRow > obj.endSelRow) {
-                    const tmpStart = obj.startSelRow;
-                    obj.startSelRow = obj.endSelRow;
-                    obj.endSelRow = tmpStart;
-                }
+            //     if (obj.startSelRow > obj.endSelRow) {
+            //         const tmpStart = obj.startSelRow;
+            //         obj.startSelRow = obj.endSelRow;
+            //         obj.endSelRow = tmpStart;
+            //     }
 
-                const firstRowPos = data[0][0];
-                const endRowPos = data[data.length-1][0];
-                const startPos = Math.max(firstRowPos, obj.startSelRow);
-                const endPos = Math.min(endRowPos, obj.endSelRow);
+            //     const firstRowPos = data[0][0];
+            //     const endRowPos = data[data.length-1][0];
+            //     const startPos = Math.max(firstRowPos, obj.startSelRow);
+            //     const endPos = Math.min(endRowPos, obj.endSelRow);
 
-                const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
-                const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
+            //     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
+            //     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
                 
-                if (obj.mouseOverDirection == "down") {
-                    obj.selectedCell[1] = startRowIndex;
-                    obj.selectedCell[3] = endRowIndex;                    
-                }
-                else if (obj.mouseOverDirection == "up") {
-                    obj.selectedCell[1] = endRowIndex;
-                    obj.selectedCell[3] = startRowIndex;                    
-                }
+            //     if (obj.mouseOverDirection == "down") {
+            //         obj.selectedCell[1] = startRowIndex;
+            //         obj.selectedCell[3] = endRowIndex;                    
+            //     }
+            //     else if (obj.mouseOverDirection == "up") {
+            //         obj.selectedCell[1] = endRowIndex;
+            //         obj.selectedCell[3] = startRowIndex;                    
+            //     }
 
-                obj.keyDirectionDone = true;
-                obj.preventOnSelection = true;
-                console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
-                refreshSelection.call(obj);    
-                return;
-            }
+            //     obj.keyDirectionDone = true;
+            //     obj.preventOnSelection = true;
+            //     console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
+            //     refreshSelection.call(obj);    
+            //     return;
+            // }
 
             // console.log('OnSelect MODE AFTER - obj.startSelRow = ', obj.startSelRow, ' obj.endSelRow = ', obj.endSelRow);
         }
@@ -463,7 +464,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     }
     // pohyb na klavesnici
     else {
-        console.log('keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.keyDirectionDone = ', obj.keyDirectionDone);
+        console.log('--updateSelectionFromCoords-- keyboard input obj.keyDirection = ', obj.keyDirection, 'obj.keyDirectionDone = ', obj.keyDirectionDone, ', obj.keyOverDirection = ', obj.keyOverDirection);
         // if (obj.keyDirection != -1) {
         if (!obj.keyDirectionDone) {
             obj.startSelCol = x1;
@@ -473,25 +474,26 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // 2 = doprava
             // 3 = dolu
             const endRowIndex = obj.getRowData(y2)[0]; 
-            const startRowIndex = obj.getRowData(y1)[0]; 
-
-            console.log('keyboard input obj.keyDirection - pohyb klavesnici smer = ', obj.keyDirection);
+            const startRowIndex = obj.getRowData(y1)[0];            
 
             // vybrana oblast ze shora dolu
             if (y1 < y2) {   
                 if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                     obj.endSelRow = endRowIndex;
+                    console.log('--updateSelectionFromCoords-- 1 - keyboard input endSelRow set = ', obj.endSelRow);
                 }
             }
             // vybrana oblast ze zdola nahoru
             else if (y1 > y2) {  
                 if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                    obj.startSelRow = endRowIndex;                
+                    obj.startSelRow = endRowIndex;   
+                    console.log('--updateSelectionFromCoords-- 2 - keyboard input endSelRow set = ', obj.endSelRow);             
                 }
             }
             // vybrana jedna radka - pomoci sipek
             else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
                 obj.endSelRow = obj.startSelRow = endRowIndex;                                
+                console.log('--updateSelectionFromCoords-- 3 - keyboard input endSelRow set = ', obj.endSelRow);             
             }            
         }
         else {
@@ -516,7 +518,7 @@ export const chooseSelection = function (startPos, endPos) {
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
-    console.log('choose selection ', obj.keyDirection, ', obj.keyOverDirection = ', obj.keyOverDirection);    
+    console.log('choose selection ', obj.keyDirection, ', obj.keyOverDirection = ', obj.keyOverDirection, ', obj.mouseOverDirection = ', obj.mouseOverDirection);    
     
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyOverDirection == "down") { // || obj.keyOverDirection == "3") {
         obj.selectedCell[1] = startRowIndex;
@@ -542,23 +544,26 @@ export const chooseSelection = function (startPos, endPos) {
         const endRowIndex = obj.getRowData(y2)[0]; 
         const startRowIndex = obj.getRowData(y1)[0]; 
 
-        console.log('pohyb klavesnici smer = ', obj.keyDirection);
+        console.log('chooseSelection pohyb klavesnici smer = ', obj.keyDirection);
 
         // vybrana oblast ze shora dolu
         if (obj.keyOverDirection == "down") {// (y1 < y2) {   
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.endSelRow = endRowIndex;
+                console.log('chooseSelection 1 - endSelRow set = ', obj.endSelRow);
             }
         }
         // vybrana oblast ze zdola nahoru
         else if (obj.keyOverDirection == "up") { // if (y1 > y2) {  
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.startSelRow = endRowIndex;                
+                console.log('chooseSelection 2 - endSelRow set = ', obj.endSelRow);
             }
         }
         // vybrana jedna radka - pomoci sipek
         else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-            obj.endSelRow = obj.startSelRow = endRowIndex;                                
+            obj.endSelRow = obj.startSelRow = endRowIndex;                         
+            console.log('chooseSelection 3 - endSelRow set = ', obj.endSelRow);       
         }
 
         obj.keyDirectionDone = true;
