@@ -497,6 +497,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         // else {
         //     obj.preventOnSelection = false;
         // }
+            obj.keyDirection = -1;
         }
     }    
 
