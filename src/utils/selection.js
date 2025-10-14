@@ -377,6 +377,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             obj.startSelRow = startRowIndex;            
             obj.endSelRow = startRowIndex;            
             obj.endSelCol = x2 ? x2 : x1;
+            obj.mouseOverDirection = "none";
+            obj.keyOverDirection = "none";                                         
+
             // obj.endSelCol = x2;    
             // obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
             console.log('New Selection = [', obj.startSelRow , ',', obj.endSelRow, ']');
