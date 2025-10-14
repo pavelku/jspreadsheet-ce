@@ -8502,6 +8502,8 @@ const mouseOverControls = function (e) {
                                         const cell1ToId = cell1 ? libraryBase.jspreadsheet.current.getRowData(cell1)[0] : undefined;
                                         const cell2ToId = cell2 ? libraryBase.jspreadsheet.current.getRowData(cell2)[0] : undefined;
                                        
+                                        console.log('mouseOverControls cell1 = ', cell1, ', cell2 = ', cell2, ', rowId = ', rowId);
+
                                         if (!cell2) {
                                             // console.log('--0. mouseOverControls-- vybrana pouze jedna bunka');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'none';
