@@ -2271,6 +2271,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     const startRowIndex = obj.getRowData(y2)[0];    
                     obj.startSelRow = startRowIndex;
                 }      
+                else if (obj.mouseOverDirection == "none") { 
+                    const startRowIndex = obj.getRowData(y1)[0];    
+                    obj.startSelRow = obj.startSelRow = startRowIndex;
+                }
             }     
 
             // TODO comment mousedown with shift key
@@ -2390,7 +2394,7 @@ const chooseSelection = function (startPos, endPos) {
         obj.selectedCell[1] = endRowIndex;
         obj.selectedCell[3] = startRowIndex;        
     }
-    else if (obj.keyOverDirection == "equal") {
+    else if (obj.keyOverDirection == "equal" || obj.mouseOverDirection == "none") {
         obj.selectedCell[1] = startRowIndex;
         obj.selectedCell[3] = startRowIndex;        
     }
@@ -8512,7 +8516,7 @@ const mouseOverControls = function (e) {
                                             libraryBase.jspreadsheet.current.keyOverDirection = "none";
                                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell2 > cell1 && rowId > cell2) {
+                                        else if (cell2 >= cell1 && rowId > cell2) {
                                             // console.log('--1. mouseOverControls-- MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'down';                                            
                                             libraryBase.jspreadsheet.current.keyOverDirection = "none";
@@ -8520,7 +8524,7 @@ const mouseOverControls = function (e) {
                                             libraryBase.jspreadsheet.current.keyDirectionDone = true;
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell1 > cell2 && rowId < cell2) {
+                                        else if (cell1 >= cell2 && rowId < cell2) {
                                             // console.log('--2. mouseOverControls-- MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'up';    
                                             libraryBase.jspreadsheet.current.keyOverDirection = "none";

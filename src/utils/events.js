@@ -719,7 +719,7 @@ const mouseOverControls = function (e) {
                                             libraryBase.jspreadsheet.current.keyOverDirection = "none";
                                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell2 > cell1 && rowId > cell2) {
+                                        else if (cell2 >= cell1 && rowId > cell2) {
                                             // console.log('--1. mouseOverControls-- MOVE DOWN');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'down';                                            
                                             libraryBase.jspreadsheet.current.keyOverDirection = "none";
@@ -727,7 +727,7 @@ const mouseOverControls = function (e) {
                                             libraryBase.jspreadsheet.current.keyDirectionDone = true;
                                             // updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, libraryBase.jspreadsheet.current.selectedCell[0], libraryBase.jspreadsheet.current.selectedCell[1], columnId, rowId, e);
                                         }
-                                        else if (cell1 > cell2 && rowId < cell2) {
+                                        else if (cell1 >= cell2 && rowId < cell2) {
                                             // console.log('--2. mouseOverControls-- MOVE UP');
                                             libraryBase.jspreadsheet.current.mouseOverDirection = 'up';    
                                             libraryBase.jspreadsheet.current.keyOverDirection = "none";
