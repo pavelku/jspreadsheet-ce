@@ -556,9 +556,9 @@ export const chooseSelection = function (startPos, endPos) {
             obj.endSelRow = obj.startSelRow = endRowIndex;                                
         }
 
-        obj.keyDirectionDone = true;
-        obj.preventOnSelection = true;
+        obj.keyDirectionDone = true;        
     }
+    obj.preventOnSelection = true;
 
     refreshSelection.call(obj);    
 }
