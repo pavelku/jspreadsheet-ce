@@ -600,8 +600,16 @@ export const chooseSelection = function (startPos, endPos) {
         }
         // vybrana jedna radka - pomoci sipek
         else if (obj.keyDirection == 3 || obj.keyDirection == 1) {
-            obj.endSelRow = obj.startSelRow = endRowIndex;                         
-            console.log('chooseSelection 3 - endSelRow set = ', obj.endSelRow);       
+            if (obj.keyDirection == 1) {
+                obj.endSelRow = endRowIndex;                                
+                console.log('--chooseSelection-- 3 - keyboard input endSelRow set = ', obj.endSelRow);             
+            }
+            else if (obj.keyDirection == 3) {
+                obj.startSelRow = startRowIndex;   
+                console.log('--chooseSelection-- 4 - keyboard input startSelRow set = ', obj.startSelRow);             
+            }           
+            // obj.endSelRow = obj.startSelRow = endRowIndex;                         
+            // console.log('chooseSelection 3 - endSelRow set = ', obj.endSelRow);       
         }
 
         obj.keyDirectionDone = true;
