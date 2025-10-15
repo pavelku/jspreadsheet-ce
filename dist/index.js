@@ -2019,7 +2019,7 @@ const removeCopyingSelection = function() {
 const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
-    console.log('--updateSelectionFromCoords-- y1 = [', y1, '] y2 = [', y2, '], scrollDirection ', obj.scrollDirection, ', mouseOverDirection = ', obj.mouseOverDirection);
+    console.log('--updateSelectionFromCoords-- y1 = [', y1, '] y2 = [', y2, '] x1 = [', x1, '] x2 = [', x2, '], scrollDirection ', obj.scrollDirection, ', mouseOverDirection = ', obj.mouseOverDirection);
 
     var selectWholeColumn = false;
     var isRowSelected = false;
@@ -8492,7 +8492,7 @@ const mouseOverControls = function (e) {
                         const o = libraryBase.jspreadsheet.current.selectedHeader;
                         const d = columnId;
                         // Update selection
-                        console.log('select header 3');
+                        console.log('select header 3: ', o, '-', 0, '-', d, '-',libraryBase.jspreadsheet.current.options.data[0].length - 1);
                         selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data[0].length - 1, e);
                     }
                 }
@@ -8504,7 +8504,7 @@ const mouseOverControls = function (e) {
                             const o = libraryBase.jspreadsheet.current.selectedRow;
                             const d = rowId;
                             // Update selection
-                            console.log('select row header 1');
+                            console.log('select row header 1: ', 0 , '-', o, '-', libraryBase.jspreadsheet.current.options.data[0].length - 1, '-', d);
                             selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, 0, o, libraryBase.jspreadsheet.current.options.data[0].length - 1, d, e);
                         }
                     } else {

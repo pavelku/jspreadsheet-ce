@@ -160,7 +160,7 @@ export const removeCopyingSelection = function() {
 export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     const obj = this;
 
-    console.log('--updateSelectionFromCoords-- y1 = [', y1, '] y2 = [', y2, '], scrollDirection ', obj.scrollDirection, ', mouseOverDirection = ', obj.mouseOverDirection);
+    console.log('--updateSelectionFromCoords-- y1 = [', y1, '] y2 = [', y2, '] x1 = [', x1, '] x2 = [', x2, '], scrollDirection ', obj.scrollDirection, ', mouseOverDirection = ', obj.mouseOverDirection);
 
     var selectWholeColumn = false;
     var isRowSelected = false;

@@ -674,7 +674,7 @@ const mouseOverControls = function (e) {
                         const o = libraryBase.jspreadsheet.current.selectedHeader;
                         const d = columnId;
                         // Update selection
-                        console.log('select header 3');
+                        console.log('select header 3: ', o, '-', 0, '-', d, '-',libraryBase.jspreadsheet.current.options.data[0].length - 1);
                         updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data[0].length - 1, e);
                     }
                 }
@@ -686,7 +686,7 @@ const mouseOverControls = function (e) {
                             const o = libraryBase.jspreadsheet.current.selectedRow;
                             const d = rowId;
                             // Update selection
-                            console.log('select row header 1');
+                            console.log('select row header 1: ', 0 , '-', o, '-', libraryBase.jspreadsheet.current.options.data[0].length - 1, '-', d);
                             updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, 0, o, libraryBase.jspreadsheet.current.options.data[0].length - 1, d, e);
                         }
                     } else {
