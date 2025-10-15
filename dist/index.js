@@ -9323,14 +9323,16 @@ const keyDownControls = function (e) {
                 libraryBase.jspreadsheet.current.keyDirectionDone = false;   
                 console.log('up call keyboard mouseOverDirection set none');
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
-                up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
+                up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);      
+                libraryBase.jspreadsheet.current.keyDirectionDone = true;             
                 e.preventDefault();
             } else if (e.which == 40) {
                 libraryBase.jspreadsheet.current.keyDirection = 3;    
                 libraryBase.jspreadsheet.current.keyDirectionDone = false;      
                 console.log('down call keyboard mouseOverDirection set none');           
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
-                down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                
+                down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);   
+                libraryBase.jspreadsheet.current.keyDirectionDone = true;                          
                 e.preventDefault();
             } else if (e.which == 36) {
                 first.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);
