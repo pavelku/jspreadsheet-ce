@@ -373,12 +373,22 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             const startRowIndex = obj.getRowData(y1)[0];
             const endRowIndex = obj.getRowData(y2)[0];   
 
-            obj.startSelCol = x1;
-            obj.startSelRow = startRowIndex;            
-            obj.endSelRow = startRowIndex;            
-            obj.endSelCol = x2 ? x2 : x1;
-            obj.mouseOverDirection = "none";
-            obj.keyOverDirection = "none";                                         
+            if (!selectWholeColumn) {
+                obj.startSelCol = x1;
+                obj.startSelRow = startRowIndex;            
+                obj.endSelRow = startRowIndex;            
+                obj.endSelCol = x2 ? x2 : x1;
+                obj.mouseOverDirection = "none";
+                obj.keyOverDirection = "none";                                         
+            }
+            else {
+                obj.startSelCol = x1;
+                obj.endSelCol = x2 ? x2 : x1;
+                obj.startSelRow = 1;     
+                obj.endSelRow = obj.totalItemsInQuery;
+                obj.mouseOverDirection = "down";
+                obj.keyOverDirection = "none";                                         
+            }
 
             // obj.endSelCol = x2;    
             // obj.endSelRow = !selectWholeColumn ? endRowIndex : obj.totalItemsInQuery;
