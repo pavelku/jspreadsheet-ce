@@ -675,7 +675,7 @@ const mouseOverControls = function (e) {
                         const d = columnId;
                         // Update selection
                         console.log('select header 3');
-                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data.length - 1, e);
+                        updateSelectionFromCoords.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data[0].length - 1, e);
                     }
                 }
 
