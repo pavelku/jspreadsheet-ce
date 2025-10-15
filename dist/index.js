@@ -8493,7 +8493,7 @@ const mouseOverControls = function (e) {
                         const d = columnId;
                         // Update selection
                         console.log('select header 3: ', o, '-', 0, '-', d, '-',libraryBase.jspreadsheet.current.options.data[0].length - 1);
-                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.options.data[0].length - 1, e);
+                        selection/* updateSelectionFromCoords */.AH.call(libraryBase.jspreadsheet.current, o, 0, d, libraryBase.jspreadsheet.current.totalItemsInQuery, e);
                     }
                 }
 
