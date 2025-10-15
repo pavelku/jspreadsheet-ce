@@ -2404,7 +2404,7 @@ const chooseSelection = function (startPos, endPos) {
     
     const startRowIndex = getDataByNrPos(data, startPos <= endPos ? startPos : endPos, 0);
     const endRowIndex = getDataByNrPos(data, startPos < endPos ? endPos : startPos, 0); // startRowIndex   
-    console.log('choose selection ', obj.keyDirection, ', obj.keyOverDirection = ', obj.keyOverDirection, ', obj.mouseOverDirection = ', obj.mouseOverDirection);    
+    console.log('choose selection ', obj.keyDirection, ', obj.keyOverDirection = ', obj.keyOverDirection, ', obj.mouseOverDirection = ', obj.mouseOverDirection, ', obj.keyDirectionDone = ', obj.keyDirectionDone);    
     
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyOverDirection == "down") { // || obj.keyOverDirection == "3") {
         obj.selectedCell[1] = startRowIndex;
@@ -2454,7 +2454,7 @@ const chooseSelection = function (startPos, endPos) {
         else if (obj.keyOverDirection == "up") { // if (y1 > y2) {  
             if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                 obj.startSelRow = endRowIndex;                
-                console.log('chooseSelection 2 - endSelRow set = ', obj.endSelRow);
+                console.log('chooseSelection 2 - startSelRow set = ', obj.startSelRow);
             }
         }
         // vybrana jedna radka - pomoci sipek
