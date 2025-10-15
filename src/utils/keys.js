@@ -60,6 +60,7 @@ export const up = function(shiftKey, ctrlKey) {
     if (shiftKey) {
         console.log('!!!! UP WITH SCHIFT KEY');
         if (obj.selectedCell[3] > 0) {
+            console.log('!!!! UP WITH SCHIFT KEY - call upvisible !!!');
             upVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
     } else {
@@ -74,7 +75,7 @@ export const up = function(shiftKey, ctrlKey) {
     const cell1 = parseInt(obj.selectedCell[1]);
     const cell2 = parseInt(obj.selectedCell[3]);
     obj.keyOverDirection = cell2 > cell1 ? "down" : (cell2 < cell1 ? "up" : "equal");
-
+    console.log('!!!! UP ', obj.keyOverDirection, ', selectedCell = ', obj.selectedCell);
     obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
@@ -100,6 +101,7 @@ export const up = function(shiftKey, ctrlKey) {
         }
     }
 
+    console.log('!!!! UP call scroll');
     updateScroll.call(obj, 1);
 }
 
