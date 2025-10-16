@@ -2372,7 +2372,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                     const firstVisibleRow = obj.getRowData(0)[0];            
                     console.log('??? firstVisibleRow = ', firstVisibleRow);
-                    if (firstVisibleRow >= obj.startSelRow) {
+                    if (obj.startSelRow >= firstVisibleRow) {
                         obj.startSelRow = endRowIndex;   
                         console.log('--updateSelectionFromCoords-- 2 - keyboard input endSelRow set = ', obj.endSelRow);             
                     }
@@ -5590,6 +5590,41 @@ const upVisible = function(group, direction) {
     } else {
         obj.selectedCell[2] = x;
         obj.selectedCell[3] = y;
+    }
+
+    if (group == 1) {
+        const lastVisibleRow = obj.getRowData(obj.rows.length - 1)[0];            
+        const firstVisibleRow = obj.getRowData(0)[0];            
+        const y1 = parseInt(obj.selectedCell[1]);
+        const y2 = parseInt(obj.selectedCell[3]);
+
+        console.log('upVisible with shift gridVisible = [', firstVisibleRow, ',', firstVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
+
+        // oblast zhora dolu
+        if (obj.endSelRow > lastVisibleRow) {
+            console.log('upVisible with shift - set selected cell rows - 1, lastVisibleRow = ', lastVisibleRow, ', obj.endSelRow = ', obj.endSelRow);
+            if (y1 < y2) {
+                obj.selectedCell[3] = obj.rows.length - 1;
+            }
+
+            if (y1 > y2) {
+                obj.selectedCell[1] = obj.rows.length - 1;
+            }
+        }
+
+        // oblast zdola nahoru                
+        if (obj.startSelRow < firstVisibleRow) {
+            console.log('upVisible with shift - zdola nahoru vybrano, firstVisibleRow = ', firstVisibleRow, ', obj.startSelRow = ', obj.startSelRow);
+            if (y1 < y2) {
+                obj.selectedCell[1] = 0; 
+            }           
+
+            if (y1 > y2) {
+                obj.selectedCell[3] = 0;            
+            }
+        }
+
+        console.log('upVisible with shift obj.selectedCell = ', obj.selectedCell);
     }
 }
 

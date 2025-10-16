@@ -513,7 +513,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 if (obj.keyDirection == 1 || obj.keyDirection == 3) {
                     const firstVisibleRow = obj.getRowData(0)[0];            
                     console.log('??? firstVisibleRow = ', firstVisibleRow);
-                    if (firstVisibleRow >= obj.startSelRow) {
+                    if (obj.startSelRow >= firstVisibleRow) {
                         obj.startSelRow = endRowIndex;   
                         console.log('--updateSelectionFromCoords-- 2 - keyboard input endSelRow set = ', obj.endSelRow);             
                     }
