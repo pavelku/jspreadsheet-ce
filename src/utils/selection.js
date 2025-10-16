@@ -197,7 +197,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     if (x1 >= obj.headers.length) {
         x1 = obj.headers.length - 1;
     }
-    if (y1 >= obj.rows.length) {
+    if (y1 >= obj.rows.length) {        
         y1 = obj.rows.length - 1;
     }
     if (x2 >= obj.headers.length) {
@@ -496,15 +496,31 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             // vybrana oblast ze shora dolu
             if (y1 < y2) {   
                 if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                    obj.endSelRow = endRowIndex;
-                    console.log('--updateSelectionFromCoords-- 1 - keyboard input endSelRow set = ', obj.endSelRow);
+                    const lastVisibleRow = obj.getRowData(obj.rows.length - 1)[0];            
+                    console.log('??? lastVisibleRow = ', lastVisibleRow);
+                    if (obj.endSelRow <= lastVisibleRow) {
+                        obj.endSelRow = endRowIndex;
+                        console.log('--updateSelectionFromCoords-- 1 - keyboard input endSelRow set = ', obj.endSelRow);
+                    }
+                    else {
+                        obj.endSelRow = obj.endSelRow - 1;
+                        console.log('??? --updateSelectionFromCoords-- 1-1 Without visible location - keyboard input endSelRow set = ', obj.endSelRow);
+                    }
                 }
             }
             // vybrana oblast ze zdola nahoru
             else if (y1 > y2) {  
                 if (obj.keyDirection == 1 || obj.keyDirection == 3) {
-                    obj.startSelRow = endRowIndex;   
-                    console.log('--updateSelectionFromCoords-- 2 - keyboard input endSelRow set = ', obj.endSelRow);             
+                    const firstVisibleRow = obj.getRowData(0)[0];            
+                    console.log('??? firstVisibleRow = ', firstVisibleRow);
+                    if (firstVisibleRow >= obj.startSelRow) {
+                        obj.startSelRow = endRowIndex;   
+                        console.log('--updateSelectionFromCoords-- 2 - keyboard input endSelRow set = ', obj.endSelRow);             
+                    }
+                    else {
+                        obj.startSelRow = obj.startSelRow + 1;
+                        console.log('??? --updateSelectionFromCoords-- 2-1 Without visible location - keyboard input endSelRow set = ', obj.endSelRow);             
+                    }
                 }
             }
             // vybrana jedna radka - pomoci sipek
