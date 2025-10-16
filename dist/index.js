@@ -2384,10 +2384,10 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     }
                     else {
                         if (obj.keyDirection == 1) {
-                            obj.startSelRow = obj.startSelRow + 1;
+                            obj.startSelRow = obj.startSelRow - 1;
                         }
                         else if (obj.startSelRow > 1) {
-                            obj.startSelRow = obj.startSelRow - 1;
+                            obj.startSelRow = obj.startSelRow + 1;
                         }
                         console.log('??? --updateSelectionFromCoords-- 2-1 Without visible location - keyboard input endSelRow set = ', obj.endSelRow);             
                     }
@@ -5821,40 +5821,40 @@ const downVisible = function(group, direction) {
         obj.selectedCell[3] = y;
     }
 
-     if (group == 1) {
-        const lastVisibleRow = obj.getRowData(obj.rows.length - 1)[0];            
-        const firstVisibleRow = obj.getRowData(0)[0];            
-        const y1 = parseInt(obj.selectedCell[1]);
-        const y2 = parseInt(obj.selectedCell[3]);
+    //  if (group == 1) {
+    //     const lastVisibleRow = obj.getRowData(obj.rows.length - 1)[0];            
+    //     const firstVisibleRow = obj.getRowData(0)[0];            
+    //     const y1 = parseInt(obj.selectedCell[1]);
+    //     const y2 = parseInt(obj.selectedCell[3]);
 
-        console.log('downVisible with shift gridVisible = [', firstVisibleRow, ',', lastVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
+    //     console.log('downVisible with shift gridVisible = [', firstVisibleRow, ',', lastVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
 
-        // oblast zhora dolu
-        if (obj.endSelRow > lastVisibleRow) {
-            console.log('downVisible with shift - set selected cell rows - 1, lastVisibleRow = ', lastVisibleRow, ', obj.endSelRow = ', obj.endSelRow);
-            if (y1 < y2) {
-                obj.selectedCell[3] = obj.rows.length - 1;
-            }
+    //     // oblast zhora dolu
+    //     if (obj.endSelRow > lastVisibleRow) {
+    //         console.log('downVisible with shift - set selected cell rows - 1, lastVisibleRow = ', lastVisibleRow, ', obj.endSelRow = ', obj.endSelRow);
+    //         if (y1 < y2) {
+    //             obj.selectedCell[3] = obj.rows.length - 1;
+    //         }
 
-            if (y1 > y2) {
-                obj.selectedCell[1] = obj.rows.length - 1;
-            }
-        }
+    //         if (y1 > y2) {
+    //             obj.selectedCell[1] = obj.rows.length - 1;
+    //         }
+    //     }
 
-        // oblast zdola nahoru                
-        if (obj.startSelRow < firstVisibleRow) {
-            console.log('downVisible with shift - zdola nahoru vybrano, firstVisibleRow = ', firstVisibleRow, ', obj.startSelRow = ', obj.startSelRow);
-            if (y1 < y2) {
-                obj.selectedCell[1] = 0; 
-            }           
+    //     // oblast zdola nahoru                
+    //     if (obj.startSelRow < firstVisibleRow) {
+    //         console.log('downVisible with shift - zdola nahoru vybrano, firstVisibleRow = ', firstVisibleRow, ', obj.startSelRow = ', obj.startSelRow);
+    //         if (y1 < y2) {
+    //             obj.selectedCell[1] = 0; 
+    //         }           
 
-            if (y1 > y2) {
-                obj.selectedCell[3] = 0;            
-            }
-        }
+    //         if (y1 > y2) {
+    //             obj.selectedCell[3] = 0;            
+    //         }
+    //     }
 
-        console.log('downVisible with shift obj.selectedCell = ', obj.selectedCell);
-    }
+    //     console.log('downVisible with shift obj.selectedCell = ', obj.selectedCell);
+    // }
 }
 
 const down = function(shiftKey, ctrlKey) {
