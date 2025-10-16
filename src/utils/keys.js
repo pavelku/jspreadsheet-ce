@@ -305,7 +305,7 @@ export const down = function(shiftKey, ctrlKey) {
     const obj = this;
 
     if (shiftKey) {
-        console.log('!!!! DOWN WITH SCHIFT KEY');
+        console.log('!!!! DOWN WITH SCHIFT KEY obj.selectedCell[3] = ', obj.selectedCell[3], ', obj.records.length - 1', obj.records.length - 1);
         if (obj.selectedCell[3] < obj.records.length - 1) {
             downVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
