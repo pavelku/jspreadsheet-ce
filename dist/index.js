@@ -5597,8 +5597,7 @@ const upVisible = function(group, direction) {
         const firstVisibleRow = obj.getRowData(0)[0];            
         const y1 = parseInt(obj.selectedCell[1]);
         const y2 = parseInt(obj.selectedCell[3]);
-        
-        obj.keyOverDirection = y2 > y1 ? "down" : (y2 < y1 ? "up" : "equal");            
+
         console.log('upVisible with shift gridVisible = [', firstVisibleRow, ',', lastVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
 
         // oblast zhora dolu
@@ -5611,8 +5610,6 @@ const upVisible = function(group, direction) {
             if (y1 > y2) {
                 obj.selectedCell[1] = obj.rows.length - 1;
             }
-
-            obj.keyOverDirection = "up";
         }
 
         // oblast zdola nahoru                
@@ -5625,9 +5622,7 @@ const upVisible = function(group, direction) {
             if (y1 > y2) {
                 obj.selectedCell[3] = 0;            
             }
-
-            obj.keyOverDirection = "up";
-        }       
+        }
 
         console.log('upVisible with shift obj.selectedCell = ', obj.selectedCell);
     }
@@ -5642,22 +5637,21 @@ const up = function(shiftKey, ctrlKey) {
             console.log('!!!! UP WITH SCHIFT KEY - call upvisible !!!');
             upVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
-        else {
-            const cell1 = parseInt(obj.selectedCell[1]);
-            const cell2 = parseInt(obj.selectedCell[3]);
-            obj.keyOverDirection = cell2 > cell1 ? "down" : (cell2 < cell1 ? "up" : "equal");    
-        }
     } else {
         if (obj.selectedCell[1] > 0) {
             upVisible.call(obj, 0, ctrlKey ? 0 : 1)
         }
         obj.selectedCell[2] = obj.selectedCell[0];
         obj.selectedCell[3] = obj.selectedCell[1];
-        
-        const cell1 = parseInt(obj.selectedCell[1]);
-        const cell2 = parseInt(obj.selectedCell[3]);
-        obj.keyOverDirection = cell2 > cell1 ? "down" : (cell2 < cell1 ? "up" : "equal");    
-    }   
+    }
+
+    // Update selection
+    const cell1 = parseInt(obj.selectedCell[1]);
+    const cell2 = parseInt(obj.selectedCell[3]);
+    obj.keyOverDirection = cell2 > cell1 ? "down" : (cell2 < cell1 ? "up" : "equal");
+    // obj.keyOverDirection = cell2 > cell1 ? "down" : "up";
+    console.log('!!!! UP ', obj.keyOverDirection, ', selectedCell = ', obj.selectedCell);
+    obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 
     // Change page
     if (obj.options.lazyLoading == true) {
@@ -5684,10 +5678,6 @@ const up = function(shiftKey, ctrlKey) {
 
     console.log('!!!! UP call scroll');
     internal/* updateScroll */.Rs.call(obj, 1);
-    // Update selection
-    // obj.keyOverDirection = cell2 > cell1 ? "down" : "up";
-    console.log('!!!! UP ', obj.keyOverDirection, ', selectedCell = ', obj.selectedCell);
-    obj.updateSelectionFromCoords(obj.selectedCell[0], obj.selectedCell[1], obj.selectedCell[2], obj.selectedCell[3]);
 }
 
 const rightGet = function(x, y) {
