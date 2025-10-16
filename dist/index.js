@@ -5597,7 +5597,8 @@ const upVisible = function(group, direction) {
         const firstVisibleRow = obj.getRowData(0)[0];            
         const y1 = parseInt(obj.selectedCell[1]);
         const y2 = parseInt(obj.selectedCell[3]);
-
+        
+        obj.keyOverDirection = y2 > y1 ? "down" : (y2 < y1 ? "up" : "equal");            
         console.log('upVisible with shift gridVisible = [', firstVisibleRow, ',', lastVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
 
         // oblast zhora dolu
@@ -5610,6 +5611,8 @@ const upVisible = function(group, direction) {
             if (y1 > y2) {
                 obj.selectedCell[1] = obj.rows.length - 1;
             }
+
+            obj.keyOverDirection = "up";
         }
 
         // oblast zdola nahoru                
@@ -5622,9 +5625,9 @@ const upVisible = function(group, direction) {
             if (y1 > y2) {
                 obj.selectedCell[3] = 0;            
             }
-        }
 
-        obj.keyOverDirection = y2 > y1 ? "down" : (y2 < y1 ? "up" : "equal");    
+            obj.keyOverDirection = "up";
+        }       
 
         console.log('upVisible with shift obj.selectedCell = ', obj.selectedCell);
     }
