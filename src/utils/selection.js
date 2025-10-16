@@ -503,7 +503,13 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         console.log('--updateSelectionFromCoords-- 1 - keyboard input endSelRow set = ', obj.endSelRow);
                     }
                     else {
-                        obj.endSelRow = obj.endSelRow - 1;
+                        if (obj.keyDirection == 1) {
+                            obj.endSelRow = obj.endSelRow - 1;
+                        }
+                        else if (obj.endSelRow < obj.totalItemsInQuery) {
+                            obj.endSelRow = obj.endSelRow + 1;
+                        }
+
                         console.log('??? --updateSelectionFromCoords-- 1-1 Without visible location - keyboard input endSelRow set = ', obj.endSelRow);
                     }
                 }
@@ -518,7 +524,12 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         console.log('--updateSelectionFromCoords-- 2 - keyboard input endSelRow set = ', obj.endSelRow);             
                     }
                     else {
-                        obj.startSelRow = obj.startSelRow + 1;
+                        if (obj.keyDirection == 1) {
+                            obj.startSelRow = obj.startSelRow + 1;
+                        }
+                        else if (obj.startSelRow > 1) {
+                            obj.startSelRow = obj.startSelRow - 1;
+                        }
                         console.log('??? --updateSelectionFromCoords-- 2-1 Without visible location - keyboard input endSelRow set = ', obj.endSelRow);             
                     }
                 }

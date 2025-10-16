@@ -265,40 +265,40 @@ const downVisible = function(group, direction) {
         obj.selectedCell[3] = y;
     }
 
-     if (group == 1) {
-        const lastVisibleRow = obj.getRowData(obj.rows.length - 1)[0];            
-        const firstVisibleRow = obj.getRowData(0)[0];            
-        const y1 = parseInt(obj.selectedCell[1]);
-        const y2 = parseInt(obj.selectedCell[3]);
+    //  if (group == 1) {
+    //     const lastVisibleRow = obj.getRowData(obj.rows.length - 1)[0];            
+    //     const firstVisibleRow = obj.getRowData(0)[0];            
+    //     const y1 = parseInt(obj.selectedCell[1]);
+    //     const y2 = parseInt(obj.selectedCell[3]);
 
-        console.log('downVisible with shift gridVisible = [', firstVisibleRow, ',', lastVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
+    //     console.log('downVisible with shift gridVisible = [', firstVisibleRow, ',', lastVisibleRow, '] selectedCell = [', y1, ',', y2, ']');        
 
-        // oblast zhora dolu
-        if (obj.endSelRow > lastVisibleRow) {
-            console.log('downVisible with shift - set selected cell rows - 1, lastVisibleRow = ', lastVisibleRow, ', obj.endSelRow = ', obj.endSelRow);
-            if (y1 < y2) {
-                obj.selectedCell[3] = obj.rows.length - 1;
-            }
+    //     // oblast zhora dolu
+    //     if (obj.endSelRow > lastVisibleRow) {
+    //         console.log('downVisible with shift - set selected cell rows - 1, lastVisibleRow = ', lastVisibleRow, ', obj.endSelRow = ', obj.endSelRow);
+    //         if (y1 < y2) {
+    //             obj.selectedCell[3] = obj.rows.length - 1;
+    //         }
 
-            if (y1 > y2) {
-                obj.selectedCell[1] = obj.rows.length - 1;
-            }
-        }
+    //         if (y1 > y2) {
+    //             obj.selectedCell[1] = obj.rows.length - 1;
+    //         }
+    //     }
 
-        // oblast zdola nahoru                
-        if (obj.startSelRow < firstVisibleRow) {
-            console.log('downVisible with shift - zdola nahoru vybrano, firstVisibleRow = ', firstVisibleRow, ', obj.startSelRow = ', obj.startSelRow);
-            if (y1 < y2) {
-                obj.selectedCell[1] = 0; 
-            }           
+    //     // oblast zdola nahoru                
+    //     if (obj.startSelRow < firstVisibleRow) {
+    //         console.log('downVisible with shift - zdola nahoru vybrano, firstVisibleRow = ', firstVisibleRow, ', obj.startSelRow = ', obj.startSelRow);
+    //         if (y1 < y2) {
+    //             obj.selectedCell[1] = 0; 
+    //         }           
 
-            if (y1 > y2) {
-                obj.selectedCell[3] = 0;            
-            }
-        }
+    //         if (y1 > y2) {
+    //             obj.selectedCell[3] = 0;            
+    //         }
+    //     }
 
-        console.log('downVisible with shift obj.selectedCell = ', obj.selectedCell);
-    }
+    //     console.log('downVisible with shift obj.selectedCell = ', obj.selectedCell);
+    // }
 }
 
 export const down = function(shiftKey, ctrlKey) {
@@ -306,7 +306,7 @@ export const down = function(shiftKey, ctrlKey) {
 
     if (shiftKey) {
         console.log('!!!! DOWN WITH SCHIFT KEY obj.selectedCell[3] = ', obj.selectedCell[3], ', obj.records.length - 1', obj.records.length - 1);
-        if (obj.selectedCell[3] <= obj.records.length - 1) {
+        if (obj.selectedCell[3] < obj.records.length - 1) {
             downVisible.call(obj, 1, ctrlKey ? 0 : 1)
         }
     } else {
