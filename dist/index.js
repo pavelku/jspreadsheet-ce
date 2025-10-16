@@ -2391,7 +2391,7 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         else if (obj.startSelRow > 1) {
                             obj.startSelRow = obj.startSelRow + 1;
                         }
-                        console.log('??? --updateSelectionFromCoords-- 2-1 Without visible location - keyboard input endSelRow set = ', obj.endSelRow);             
+                        console.log('??? --updateSelectionFromCoords-- 2-1 Without visible location - keyboard input startSelRow set = ', obj.startSelRow);             
                     }
                 }
             }
