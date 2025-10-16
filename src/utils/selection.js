@@ -503,7 +503,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                         console.log('--updateSelectionFromCoords-- 1 - keyboard input endSelRow set = ', obj.endSelRow);
                     }
                     else {
-                        if (obj.keyDirection == 1) {
+                        if (obj.keyDirection == 1) {                            
                             obj.endSelRow = obj.endSelRow - 1;
                         }
                         else if (obj.endSelRow < obj.totalItemsInQuery) {
@@ -525,7 +525,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                     }
                     else {
                         if (obj.keyDirection == 1) {
-                            obj.startSelRow = obj.startSelRow - 1;
+                            if (obj.startSelRow > 1) {
+                                obj.startSelRow = obj.startSelRow - 1;
+                            }
                         }
                         else if (obj.startSelRow > 1) {
                             obj.startSelRow = obj.startSelRow + 1;
