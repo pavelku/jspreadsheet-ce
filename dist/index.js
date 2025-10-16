@@ -2384,18 +2384,24 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
             }
             // vybrana jedna radka - pomoci sipek
             else {
-                // if (obj.keyDirection == 1) {
-                //     obj.endSelRow = endRowIndex;                                
-                //     console.log('--updateSelectionFromCoords-- 3 - keyboard input endSelRow set = ', obj.endSelRow);             
-                // }
-                // else if (obj.keyDirection == 3) {
-                //     obj.startSelRow = startRowIndex;   
-                //     console.log('--updateSelectionFromCoords-- 4 - keyboard input startSelRow set = ', obj.startSelRow);             
-                // }
-                // else {
+                if (obj.shifKey)
+                {
+                    if (obj.keyDirection == 1) {
+                        obj.endSelRow = endRowIndex;                                
+                        console.log('--updateSelectionFromCoords-- 3 - keyboard input endSelRow set = ', obj.endSelRow);             
+                    }
+                    else if (obj.keyDirection == 3) {
+                        obj.startSelRow = startRowIndex;   
+                        console.log('--updateSelectionFromCoords-- 4 - keyboard input startSelRow set = ', obj.startSelRow);             
+                    }
+                    else {
+                        obj.endSelRow = obj.startSelRow = endRowIndex;                         
+                        console.log('--updateSelectionFromCoords-- 5 - keyboard input startSelRow and endSelRow set = ', obj.startSelRow);             
+                    }
+                }
+                else {
                     obj.endSelRow = obj.startSelRow = endRowIndex;                         
-                    console.log('--updateSelectionFromCoords-- 5 - keyboard input startSelRow and endSelRow set = ', obj.startSelRow);             
-                // }
+                }
             }            
         }
         else {
@@ -9368,7 +9374,8 @@ const keyDownControls = function (e) {
                 libraryBase.jspreadsheet.current.keyDirectionDone = false;   
                 console.log('up call keyboard mouseOverDirection set none');
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
-                up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);      
+                libraryBase.jspreadsheet.current.shifKey = e.shiftKey; 
+                up.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);                      
                 libraryBase.jspreadsheet.current.keyDirectionDone = true;             
                 e.preventDefault();
             } else if (e.which == 40) {
@@ -9376,6 +9383,7 @@ const keyDownControls = function (e) {
                 libraryBase.jspreadsheet.current.keyDirectionDone = false;      
                 console.log('down call keyboard mouseOverDirection set none');           
                 libraryBase.jspreadsheet.current.mouseOverDirection = "none";
+                libraryBase.jspreadsheet.current.shifKey = e.shiftKey; 
                 down.call(libraryBase.jspreadsheet.current, e.shiftKey, e.ctrlKey);   
                 libraryBase.jspreadsheet.current.keyDirectionDone = true;                          
                 e.preventDefault();
