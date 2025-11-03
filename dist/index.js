@@ -6229,24 +6229,8 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
             Math.max(obj.selectedCell[1], obj.selectedCell[3]),
         ];
 
-        console.log('copy called in grid, strLabel = ', strLabel);
-        if (strLabel.startsWith('"') && strLabel.endsWith('"')) {
-            console.log('strLabel startswith and endsWith "');
-
-            var regex = new RegExp('""', 'g');
-            strLabel = strLabel.replace(regex, '\"');                        
-            
-            var regex2 = new RegExp('"\r\n"', 'g');
-            strLabel = strLabel.replace(regex2, "\r\n");      
-
-            strLabel = strLabel.substring(1, strLabel.length-1);
-
-            console.log('END strLabel startswith and endsWith ", strLabel = ', strLabel);
-        }
-
-        console.log('before on copy call');
         const result = dispatch/* default */.A.call(obj, 'oncopy', obj, selectedRange, strLabel, isCut, includeHeaders);
-        console.log('after on copy call');
+
         if (result) {
             strLabel = result;
         } else if (result === false) {
@@ -6254,8 +6238,6 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
         }
 
         if (strLabel.startsWith('"') && strLabel.endsWith('"')) {
-            console.log('strLabel startswith and endsWith "');
-
             var regex = new RegExp('""', 'g');
             strLabel = strLabel.replace(regex, '\"');                        
             
@@ -6263,8 +6245,6 @@ const copy = function(highlighted, delimiter, returnData, includeHeaders, downlo
             strLabel = strLabel.replace(regex2, "\r\n");      
 
             strLabel = strLabel.substring(1, strLabel.length-1);
-
-            console.log('strLabel startswith and endsWith ", strLabel = ', strLabel);
         }
 
         obj.textarea.value = strLabel;
