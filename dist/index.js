@@ -2442,7 +2442,8 @@ const chooseSelection = function (startPos, endPos) {
     console.log('choose selection ', obj.keyDirection, ', obj.keyOverDirection = ', obj.keyOverDirection, ', obj.mouseOverDirection = ', obj.mouseOverDirection, ', obj.keyDirectionDone = ', obj.keyDirectionDone);    
     
     if (! obj.selectedCell) {
-        return;
+        // return
+        obj.selectedCell = [obj.startSelCol, obj.startSelRow, obj.endCellCol, obj.endSelRow];
     }
 
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyOverDirection == "down") { // || obj.keyOverDirection == "3") {
