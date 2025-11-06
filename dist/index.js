@@ -2443,7 +2443,7 @@ const chooseSelection = function (startPos, endPos) {
     
     if (! obj.selectedCell) {
         // return
-        obj.selectedCell = [obj.startSelCol, obj.startSelRow, obj.endCellCol, obj.endSelRow];
+        obj.selectedCell = [obj.startSelCol, obj.startSelRow, obj.endSelCol, obj.endSelRow];
     }
 
     if (obj.mouseOverDirection == "down" || obj.mouseOverDirection == "sellDownAndThanUp" || obj.keyOverDirection == "down") { // || obj.keyOverDirection == "3") {
