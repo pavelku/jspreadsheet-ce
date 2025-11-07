@@ -41,8 +41,7 @@ export const createCellHeader = function(colNumber) {
 
     // Create header cell
     obj.headers[colNumber] = document.createElement('td');
-    const columnName = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || getColumnName(colNumber);
-    obj.headers[colNumber].textContent = columnName != " " ? columnName : "&nbsp;";
+    obj.headers[colNumber].textContent = (obj.options.columns && obj.options.columns[colNumber] && obj.options.columns[colNumber].title) || getColumnName(colNumber);
 
     if (colNumber == 0) {
         const filterSpan = document.createElement('button');
