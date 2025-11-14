@@ -365,7 +365,7 @@ const parseValue = function(i, j, value, cell) {
             }
         }
         else {
-            if ((options.type == "string" || options.type == "dynamic") && value && value != "") {
+            if ((options.type == "string" || options.type == "dynamic") && value && (typeof value === 'string')) {
                 var regex = new RegExp("\r\n", "g");                
                 value = value.replace(regex, '↵');                
             }
