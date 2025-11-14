@@ -190,7 +190,8 @@
 
 .jss_worksheet > tbody > tr > td.readonly
 {
-    color:rgba(0,0,0,0.3)
+    color:rgba(0,0,0,0.3);
+    white-space: pre;
 }
 .jss_worksheet > tbody > tr.selected > td:first-child
 {
