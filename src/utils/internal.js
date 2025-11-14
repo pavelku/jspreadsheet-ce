@@ -274,8 +274,7 @@ export const parseValue = function(i, j, value, cell) {
 
     // Column options
     const options = obj.options.columns && obj.options.columns[i];
-    console.log('1 - parseValue options = ', options, ' params ', i, j, value, cell);
-
+    
     if (options && ! isFormula(value)) {
         // Mask options
         let opt = null;
@@ -313,16 +312,12 @@ export const parseValue = function(i, j, value, cell) {
             }
         }
         else {
-            console.log('2 - parseValue options = ', options.type, ' params ', i, j, value, cell);
             if (options.type == "string" && value && value != "") {
                 var regex = new RegExp("\r\n", "g");
                 value = value.replace(regex, '↵');
             }
         }
-    }
-    else {
-        console.log('4 - parseValue options = ', options, ' params ', i, j, value, cell);
-    }
+    }    
 
     return value;
 }
