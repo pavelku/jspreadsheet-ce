@@ -312,11 +312,9 @@ export const parseValue = function(i, j, value, cell) {
             }
         }
         else {
-            if (options.type == "string" && value && value != "") {
-                var regex = new RegExp("\r\n", "g");
-                var regex2 = new RegExp("\n\r", "g");
-                value = value.replace(regex, '↵');
-                value = value.replace(regex2, '↵');
+            if ((options.type == "string" || options.type == "dynamic") && value && value != "") {
+                var regex = new RegExp("\r\n", "g");                
+                value = value.replace(regex, '↵');                
             }
         }
     }    
