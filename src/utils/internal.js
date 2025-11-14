@@ -274,6 +274,8 @@ export const parseValue = function(i, j, value, cell) {
 
     // Column options
     const options = obj.options.columns && obj.options.columns[i];
+    console.log('1 - parseValue options = ', options, ' params ', i, j, value, cell);
+
     if (options && ! isFormula(value)) {
         // Mask options
         let opt = null;
@@ -310,6 +312,9 @@ export const parseValue = function(i, j, value, cell) {
                 value = masked;
             }
         }
+    }
+    else {
+        console.log('2 - parseValue options = ', options, ' params ', i, j, value, cell);
     }
 
     return value;
