@@ -6569,7 +6569,7 @@ const getNumberOfColumns = function() {
 const createCellHeader = function(colNumber) {
     const obj = this;
 
-    console.log('createCellHeader, colNumber = ', colNumber, ' options = ', obj.options.columns[colNumber]);
+    // console.log('createCellHeader, colNumber = ', colNumber, ' options = ', obj.options.columns[colNumber]);
 
 
     // Create col global control
@@ -9705,7 +9705,7 @@ const updateFreezePosition = function () {
 
 const scrollControls = function (e) {
     const obj = this;
-    console.log('scrollControls', e);
+    // console.log('scrollControls', e);
     return;
     // removed by dead control flow
 {}

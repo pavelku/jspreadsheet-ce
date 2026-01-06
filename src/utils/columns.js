@@ -32,7 +32,7 @@ export const getNumberOfColumns = function() {
 export const createCellHeader = function(colNumber) {
     const obj = this;
 
-    console.log('createCellHeader, colNumber = ', colNumber, ' options = ', obj.options.columns[colNumber]);
+    // console.log('createCellHeader, colNumber = ', colNumber, ' options = ', obj.options.columns[colNumber]);
 
 
     // Create col global control
