@@ -6593,7 +6593,7 @@ const createCellHeader = function(colNumber) {
             console.log('after dispatch -> clear all filters');
         }
         obj.headers[colNumber].appendChild(filterSpan);
-        console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
+        // console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
     }
     else if (obj.options.columns[colNumber]?.filterable) {
         const filterSpan = document.createElement('button');
@@ -6608,7 +6608,7 @@ const createCellHeader = function(colNumber) {
             console.log('after dispatch -> onfiltercolumn');
         }
         obj.headers[colNumber].appendChild(filterSpan);
-        console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
+        // console.log('createCellHeader, after appendChild = ', obj.headers[colNumber]);
     }
 
 
