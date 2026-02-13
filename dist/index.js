@@ -2434,6 +2434,8 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // Find corner cell
     updateCornerPosition.call(obj);
+
+    _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onupdateselectioncoords', obj, obj.startSelRow, obj.startSelCol, obj.endSelRow, obj.endSelCol);
 }
 
 

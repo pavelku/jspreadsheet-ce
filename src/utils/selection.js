@@ -568,6 +568,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // Find corner cell
     updateCornerPosition.call(obj);
+
+    dispatch.call(obj, 'onupdateselectioncoords', obj, obj.startSelRow, obj.startSelCol, obj.endSelRow, obj.endSelCol);
 }
 
 
