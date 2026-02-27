@@ -2341,6 +2341,11 @@ const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.preventOnSelection = true;
                 console.log('!!!! mousedown in updateFromCoords DOWN WITH SCHIFT KEY, direction  = ', obj.mouseOverDirection, 'firstRowPos = ', firstRowPos, ', endRowPos = ', endRowPos, ' obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);                
                 refreshSelection.call(obj);    
+
+                if (posChanged) {
+                   _dispatch_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.call(obj, 'onupdateselectioncoords', obj, obj.startSelRow, obj.startSelCol, obj.endSelRow, obj.endSelCol);
+                }
+                
                 return;
             }
 
