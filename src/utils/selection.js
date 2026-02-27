@@ -360,6 +360,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
 
     // console.log('before onselection obj.startSelCol = ', obj.startSelCol, ', obj.endSelCol = ', obj.endSelCol, ', obj.startSelRow = ', obj.startSelRow, ', obj.endSelRow = ', obj.endSelRow);
     dispatch.call(obj, 'onselection', obj, borderLeft, borderTop, borderRight, borderBottom, origin);
+    var posChanged = false;
 
     // vyvolano mysi
     if (origin) {
@@ -379,7 +380,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.endSelRow = startRowIndex;            
                 obj.endSelCol = x2 ? x2 : x1;
                 obj.mouseOverDirection = "none";
-                obj.keyOverDirection = "none";                                         
+                obj.keyOverDirection = "none";  
+                posChanged = true;                                       
             }
             else {
                 obj.startSelCol = x1;
@@ -387,7 +389,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
                 obj.startSelRow = 1;     
                 obj.endSelRow = obj.totalItemsInQuery;
                 obj.mouseOverDirection = "down";
-                obj.keyOverDirection = "none";                                         
+                obj.keyOverDirection = "none";   
+                posChanged = true;                                      
             }
 
             // obj.endSelCol = x2;    
@@ -398,6 +401,8 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         else if (origin.type == "mouseover" || (origin.type == "mousedown" && origin.shiftKey)) {            
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
+            
+            posChanged = true; 
 
             if (origin.type == "mouseover")
             {
@@ -486,6 +491,7 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
         if (!obj.keyDirectionDone) {
             obj.startSelCol = x1;
             obj.endSelCol = x2;     
+            posChanged = true; 
             // 0 = doleva
             // 1 = nahoru
             // 2 = doprava
@@ -569,7 +575,9 @@ export const updateSelectionFromCoords = function(x1, y1, x2, y2, origin) {
     // Find corner cell
     updateCornerPosition.call(obj);
 
-    dispatch.call(obj, 'onupdateselectioncoords', obj, obj.startSelRow, obj.startSelCol, obj.endSelRow, obj.endSelCol);
+    if (posChanged) {
+        dispatch.call(obj, 'onupdateselectioncoords', obj, obj.startSelRow, obj.startSelCol, obj.endSelRow, obj.endSelCol);
+    }
 }
 
 
