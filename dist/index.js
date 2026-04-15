@@ -8029,6 +8029,12 @@ const mouseUpControls = function (e) {
                 const newWidth = parseInt(libraryBase.jspreadsheet.current.cols[libraryBase.jspreadsheet.current.resizing.column].colElement.getAttribute('width'));
                 // Columns
                 const columns = libraryBase.jspreadsheet.current.getSelectedColumns();
+                const rows = libraryBase.jspreadsheet.current.getSelectedRows();
+                const totalRows = libraryBase.jspreadsheet.current.rows.length;
+                const totalColumns = libraryBase.jspreadsheet.current.cols.length;
+
+                console.log('onResize selColumns = ', columns.length, ', rows = ', rows.length, ', totalColumns = ', totalColumns, ', totalRows = ', totalRows);
+
                 if (columns.length > 1) {
                     const currentWidth = [];
                     for (let i = 0; i < columns.length; i++) {
