@@ -8035,7 +8035,7 @@ const mouseUpControls = function (e) {
 
                 console.log('onResize selColumns = ', columns.length, ', rows = ', rows.length, ', totalColumns = ', totalColumns, ', totalRows = ', totalRows);
 
-                if (columns.length > 1) {
+                if (columns.length > 1 && rows.length == totalRows) {
                     const currentWidth = [];
                     for (let i = 0; i < columns.length; i++) {
                         currentWidth.push(parseInt(libraryBase.jspreadsheet.current.cols[columns[i]].colElement.getAttribute('width')));
